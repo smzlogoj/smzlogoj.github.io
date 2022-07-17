@@ -14637,6 +14637,29 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 </div>
 
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Representación gráfica de los datos ausentes</span>
+<span class="n">datos_long</span> <span class="o">&lt;-</span> <span class="n">df_penguins</span> <span class="o">%&gt;%</span>  <span class="nf">mutate</span><span class="p">(</span><span class="n">ausente</span> <span class="o">=</span> <span class="nf">is.na</span><span class="p">(</span><span class="n">valor</span><span class="p">))</span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">datos_long</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">variable</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">PassengerId</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">ausente</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">geom_raster</span><span class="p">()</span> <span class="o">+</span>
+  <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;gray60&quot;</span><span class="p">,</span> <span class="s">&quot;orangered2&quot;</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">theme_bw</span><span class="p">()</span> <span class="o">+</span>
+  <span class="nf">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Valores ausentes por variable&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span> <span class="o">=</span> <span class="s">&quot;bottom&quot;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
