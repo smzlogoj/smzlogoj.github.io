@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>index</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>krustal</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14579,43 +14579,38 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><H1>Palmer Penguins Dataset</H1>
-<img width = 60% src = 'https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png'></p>
+<h2>Kruskal-Wallis test</h2><p>Como se vio, al realizar el test anova, algunas de las variables para ciertos 
+grupos no pasaban el test de shapiro, ni el test de Levene</p>
 
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h2>Indice:</h2></p>
-<ol>
-    <li><a href = 'analisis_exploratorio.html'>Análisis exploratorio de los datos.</a> </li>
-    <li><a href = 'anova.html'>ANOVA una vía.</a>  </li>
-    <li><a href = 'krustal.html'>Kruskal-Wallis test.</a>  </li>
-    <li><a href = 'correlaciones.html'>Correlaciones.</a>  </li>
-    <li><a href = 'clustering.html'>Clustering.</a>  </li>
-    <li><a href = 'logistic_ws.html'>Logistic Regresion.</a>  </li>
-    <li><a href = 'lda_qda.html'>LDA y QDA.</a>  </li>
-    <li><a href = 'plsda.html'>PLS-DA.</a>  </li>
-    <li><a href = 'knn.html'>K-Nearest Neighbours.</a>  </li>
-</ol>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">load</span><span class="p">(</span><span class="s">&#39;.RData&#39;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
 </div>
 </div>
 </div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#39;palmerpenguins&#39;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14636,12 +14631,26 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>Installing package into ‘/home/smzlogoj/R/x86_64-suse-linux-gnu-library/4.2’
-(as ‘lib’ is unspecified)
 
-</pre>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<table class="dataframe">
+<caption>A data.frame: 6 × 8</caption>
+<thead>
+	<tr><th></th><th scope=col>species</th><th scope=col>island</th><th scope=col>bill_length_mm</th><th scope=col>bill_depth_mm</th><th scope=col>flipper_length_mm</th><th scope=col>body_mass_g</th><th scope=col>sex</th><th scope=col>year</th></tr>
+	<tr><th></th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1ATm</th><td>Adelie</td><td>Torgersen</td><td>39.1</td><td>18.7</td><td>181</td><td>3750</td><td>male  </td><td>2007</td></tr>
+	<tr><th scope=row>2ATf</th><td>Adelie</td><td>Torgersen</td><td>39.5</td><td>17.4</td><td>186</td><td>3800</td><td>female</td><td>2007</td></tr>
+	<tr><th scope=row>3ATf</th><td>Adelie</td><td>Torgersen</td><td>40.3</td><td>18.0</td><td>195</td><td>3250</td><td>female</td><td>2007</td></tr>
+	<tr><th scope=row>4ATf</th><td>Adelie</td><td>Torgersen</td><td>36.7</td><td>19.3</td><td>193</td><td>3450</td><td>female</td><td>2007</td></tr>
+	<tr><th scope=row>5ATm</th><td>Adelie</td><td>Torgersen</td><td>39.3</td><td>20.6</td><td>190</td><td>3650</td><td>male  </td><td>2007</td></tr>
+	<tr><th scope=row>6ATf</th><td>Adelie</td><td>Torgersen</td><td>38.9</td><td>17.8</td><td>181</td><td>3625</td><td>female</td><td>2007</td></tr>
+</tbody>
+</table>
+
 </div>
+
 </div>
 
 </div>
@@ -14653,12 +14662,11 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">palmerpenguins</span><span class="p">)</span>
-<span class="nf">data</span><span class="p">(</span><span class="n">package</span> <span class="o">=</span> <span class="s">&#39;palmerpenguins&#39;</span><span class="p">)</span>
-<span class="nf">citation</span><span class="p">(</span><span class="s">&quot;palmerpenguins&quot;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">krus_body</span> <span class="o">&lt;-</span> <span class="nf">kruskal.test</span><span class="p">(</span><span class="n">body_mass_g</span> <span class="o">~</span> <span class="nf">interaction</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">sex</span><span class="p">),</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">krus_body</span>
 </pre></div>
 
      </div>
@@ -14683,21 +14691,10 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 <div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
 <pre>
-To cite palmerpenguins in publications use:
+	Kruskal-Wallis rank sum test
 
-  Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer
-  Archipelago (Antarctica) penguin data. R package version 0.1.0.
-  https://allisonhorst.github.io/palmerpenguins/
-
-A BibTeX entry for LaTeX users is
-
-  @Manual{,
-    title = {palmerpenguins: Palmer Archipelago (Antarctica) penguin data},
-    author = {Allison Marie Horst and Alison Presmanes Hill and Kristen B Gorman},
-    year = {2020},
-    note = {R package version 0.1.0},
-    url = {https://allisonhorst.github.io/palmerpenguins/},
-  }
+data:  body_mass_g by interaction(species, sex)
+Kruskal-Wallis chi-squared = 276.01, df = 5, p-value &lt; 2.2e-16
 </pre>
 </div>
 
@@ -14712,85 +14709,11 @@ A BibTeX entry for LaTeX users is
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="n">df_penguins</span> <span class="o">&lt;-</span> <span class="n">penguins</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">df_penguins</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<table class="dataframe">
-<caption>A tibble: 6 × 8</caption>
-<thead>
-	<tr><th scope=col>species</th><th scope=col>island</th><th scope=col>bill_length_mm</th><th scope=col>bill_depth_mm</th><th scope=col>flipper_length_mm</th><th scope=col>body_mass_g</th><th scope=col>sex</th><th scope=col>year</th></tr>
-	<tr><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;int&gt;</th></tr>
-</thead>
-<tbody>
-	<tr><td>Adelie</td><td>Torgersen</td><td>39.1</td><td>18.7</td><td>181</td><td>3750</td><td>male  </td><td>2007</td></tr>
-	<tr><td>Adelie</td><td>Torgersen</td><td>39.5</td><td>17.4</td><td>186</td><td>3800</td><td>female</td><td>2007</td></tr>
-	<tr><td>Adelie</td><td>Torgersen</td><td>40.3</td><td>18.0</td><td>195</td><td>3250</td><td>female</td><td>2007</td></tr>
-	<tr><td>Adelie</td><td>Torgersen</td><td>  NA</td><td>  NA</td><td> NA</td><td>  NA</td><td>NA    </td><td>2007</td></tr>
-	<tr><td>Adelie</td><td>Torgersen</td><td>36.7</td><td>19.3</td><td>193</td><td>3450</td><td>female</td><td>2007</td></tr>
-	<tr><td>Adelie</td><td>Torgersen</td><td>39.3</td><td>20.6</td><td>190</td><td>3650</td><td>male  </td><td>2007</td></tr>
-</tbody>
-</table>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3>Columnas del dataset Penguins </h3><ul>
-    <li> <b>species:</b> un factor con el tipo de pingüino (Adélie, Chinstrap and Gentoo)</li>
-    <li> <b>island:</b> un factor con las islas en le archipielago Palmer, Antartida (Biscoe, Dream or Torgersen)</li>
-    <li> <b>bill_length_mm:</b> longitud del pico (milimetros)</li>
-    <li> <b>bill_depth_mm:</b> anchura del pico (milimetros)</li>
-    <li> <b>flipper_length_mm:</b> longitud de la aleta (milimetros)</li>
-    <li> <b>body_mass_g:</b> masa (gramos)</li>
-    <li> <b>sex:</b> un factor del sexo del pingüino (female, male)</li>
-</ul>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">summary</span><span class="p">(</span><span class="n">df_penguins</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">krus_flipper</span> <span class="o">&lt;-</span> <span class="nf">kruskal.test</span><span class="p">(</span><span class="n">flipper_length_mm</span> <span class="o">~</span> <span class="nf">interaction</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">sex</span><span class="p">),</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">krus_flipper</span>
 </pre></div>
 
      </div>
@@ -14814,28 +14737,428 @@ A BibTeX entry for LaTeX users is
 
 
 <div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
-<pre>      species          island    bill_length_mm  bill_depth_mm  
- Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
- Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
- Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
-                                 Mean   :43.92   Mean   :17.15  
-                                 3rd Qu.:48.50   3rd Qu.:18.70  
-                                 Max.   :59.60   Max.   :21.50  
-                                 NA&#39;s   :2       NA&#39;s   :2      
- flipper_length_mm  body_mass_g       sex           year     
- Min.   :172.0     Min.   :2700   female:165   Min.   :2007  
- 1st Qu.:190.0     1st Qu.:3550   male  :168   1st Qu.:2007  
- Median :197.0     Median :4050   NA&#39;s  : 11   Median :2008  
- Mean   :200.9     Mean   :4202                Mean   :2008  
- 3rd Qu.:213.0     3rd Qu.:4750                3rd Qu.:2009  
- Max.   :231.0     Max.   :6300                Max.   :2009  
- NA&#39;s   :2         NA&#39;s   :2                                 </pre>
+<pre>
+	Kruskal-Wallis rank sum test
+
+data:  flipper_length_mm by interaction(species, sex)
+Kruskal-Wallis chi-squared = 260.49, df = 5, p-value &lt; 2.2e-16
+</pre>
 </div>
 
 </div>
 
 </div>
 
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="n">krus_bill_l</span> <span class="o">&lt;-</span> <span class="nf">kruskal.test</span><span class="p">(</span><span class="n">bill_length_mm</span> <span class="o">~</span> <span class="nf">interaction</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">sex</span><span class="p">),</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">krus_bill_l</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>
+	Kruskal-Wallis rank sum test
+
+data:  bill_length_mm by interaction(species, sex)
+Kruskal-Wallis chi-squared = 278.67, df = 5, p-value &lt; 2.2e-16
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="n">krus_bill_d</span> <span class="o">&lt;-</span> <span class="nf">kruskal.test</span><span class="p">(</span><span class="n">bill_depth_mm</span> <span class="o">~</span> <span class="nf">interaction</span><span class="p">(</span><span class="n">species</span><span class="p">,</span> <span class="n">sex</span><span class="p">),</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">krus_bill_d</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>
+	Kruskal-Wallis rank sum test
+
+data:  bill_depth_mm by interaction(species, sex)
+Kruskal-Wallis chi-squared = 270.72, df = 5, p-value &lt; 2.2e-16
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Se observan diferencias significativas para cada una de las variables, aunque no sabemos entre que grupos</p>
+<h4>Comparación entre grupos: pairwise-comparison</h4>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">pairwise.wilcox.test</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">body_mass_g</span><span class="p">,</span> <span class="nf">interaction</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">species</span><span class="p">,</span> <span class="n">df</span><span class="o">$</span><span class="n">sex</span><span class="p">),</span> <span class="n">p.adjust.method</span> <span class="o">=</span> <span class="s">&#39;BH&#39;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>Warning message in wilcox.test.default(xi, xj, paired = paired, ...):
+“cannot compute exact p-value with ties”
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>
+	Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
+
+data:  df$body_mass_g and interaction(df$species, df$sex) 
+
+                 Adelie.female Chinstrap.female Gentoo.female Adelie.male
+Chinstrap.female 0.0069        -                -             -          
+Gentoo.female    &lt; 2e-16       2.9e-15          -             -          
+Adelie.male      &lt; 2e-16       3.2e-10          8.8e-16       -          
+Chinstrap.male   5.3e-11       6.1e-06          2.9e-12       0.1904     
+Gentoo.male      &lt; 2e-16       1.6e-15          &lt; 2e-16       &lt; 2e-16    
+                 Chinstrap.male
+Chinstrap.female -             
+Gentoo.female    -             
+Adelie.male      -             
+Chinstrap.male   -             
+Gentoo.male      1.6e-15       
+
+P value adjustment method: BH </pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">pairwise.wilcox.test</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">flipper_length_mm</span><span class="p">,</span> <span class="nf">interaction</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">species</span><span class="p">,</span> <span class="n">df</span><span class="o">$</span><span class="n">sex</span><span class="p">),</span> <span class="n">p.adjust.method</span> <span class="o">=</span> <span class="s">&#39;BH&#39;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>Warning message in wilcox.test.default(xi, xj, paired = paired, ...):
+“cannot compute exact p-value with ties”
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>
+	Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
+
+data:  df$flipper_length_mm and interaction(df$species, df$sex) 
+
+                 Adelie.female Chinstrap.female Gentoo.female Adelie.male
+Chinstrap.female 0.0011        -                -             -          
+Gentoo.female    &lt; 2e-16       3.1e-15          -             -          
+Adelie.male      2.0e-05       0.6776           &lt; 2e-16       -          
+Chinstrap.male   4.0e-13       2.5e-06          4.0e-13       6.5e-07    
+Gentoo.male      &lt; 2e-16       2.4e-15          1.4e-13       &lt; 2e-16    
+                 Chinstrap.male
+Chinstrap.female -             
+Gentoo.female    -             
+Adelie.male      -             
+Chinstrap.male   -             
+Gentoo.male      3.1e-15       
+
+P value adjustment method: BH </pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">pairwise.wilcox.test</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">bill_length_mm</span><span class="p">,</span> <span class="nf">interaction</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">species</span><span class="p">,</span> <span class="n">df</span><span class="o">$</span><span class="n">sex</span><span class="p">),</span> <span class="n">p.adjust.method</span> <span class="o">=</span> <span class="s">&#39;BH&#39;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>Warning message in wilcox.test.default(xi, xj, paired = paired, ...):
+“cannot compute exact p-value with ties”
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>
+	Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
+
+data:  df$bill_length_mm and interaction(df$species, df$sex) 
+
+                 Adelie.female Chinstrap.female Gentoo.female Adelie.male
+Chinstrap.female 2.5e-16       -                -             -          
+Gentoo.female    &lt; 2e-16       0.12719          -             -          
+Adelie.male      3.6e-13       3.4e-14          &lt; 2e-16       -          
+Chinstrap.male   2.5e-16       2.5e-09          1.0e-14       2.5e-16    
+Gentoo.male      &lt; 2e-16       4.7e-06          7.6e-13       &lt; 2e-16    
+                 Chinstrap.male
+Chinstrap.female -             
+Gentoo.female    -             
+Adelie.male      -             
+Chinstrap.male   -             
+Gentoo.male      0.00012       
+
+P value adjustment method: BH </pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">pairwise.wilcox.test</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">bill_depth_mm</span><span class="p">,</span> <span class="nf">interaction</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">species</span><span class="p">,</span> <span class="n">df</span><span class="o">$</span><span class="n">sex</span><span class="p">),</span> <span class="n">p.adjust.method</span> <span class="o">=</span> <span class="s">&#39;BH&#39;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>Warning message in wilcox.test.default(xi, xj, paired = paired, ...):
+“cannot compute exact p-value with ties”
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>
+	Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
+
+data:  df$bill_depth_mm and interaction(df$species, df$sex) 
+
+                 Adelie.female Chinstrap.female Gentoo.female Adelie.male
+Chinstrap.female 0.91          -                -             -          
+Gentoo.female    &lt; 2e-16       2.8e-15          -             -          
+Adelie.male      9.9e-14       2.4e-10          &lt; 2e-16       -          
+Chinstrap.male   1.0e-11       7.1e-10          2.8e-15       0.17       
+Gentoo.male      &lt; 2e-16       1.1e-13          &lt; 2e-16       &lt; 2e-16    
+                 Chinstrap.male
+Chinstrap.female -             
+Gentoo.female    -             
+Adelie.male      -             
+Chinstrap.male   -             
+Gentoo.male      2.1e-15       
+
+P value adjustment method: BH </pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">save.image</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
 </div>
 
 </div>
