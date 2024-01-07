@@ -1,0 +1,118 @@
+{
+    "cards":[
+        {
+        "titulo": "Usa R!",
+        "descripcion": "Una introducción a la programación. Variables. Funciones.",
+        "categorias":["RBase", "Variables"],
+        "enlace": "html/rbase/index.html"
+        }, 
+        {
+        "titulo": "Vectores",
+        "descripcion": "Crear, modificar y operar con vectores.",
+        "categorias":["RBase", "Variables"],
+        "enlace": "html/rbase/vectores.html"
+        },
+        {
+        "titulo": "Listas",
+        "descripcion": "Crear, modificar y operar con listas.",
+        "categorias":["RBase", "Variables"],
+        "enlace": "html/rbase/listas.html"
+        },
+        {
+        "titulo": "Matrices",
+        "descripcion": "Crear, modificar y operar con matrices.",
+        "categorias":["RBase", "Variables"],
+        "enlace": "html/rbase/matrices.html"
+        },
+        {
+        "titulo": "Dataframes",
+        "descripcion": "Crear, modificar y operar con dataframes.",
+        "categorias":["RBase", "Variables"],
+        "enlace": "html/rbase/dataframes.html"
+        },
+        {
+        "titulo": "Control de flujo",
+        "descripcion": "Estructuras de control de flujo. Bucles. Condicionales",
+        "categorias":["RBase", "bucles", "condicionales"],
+        "enlace": "html/controlflujo/index.html"
+        }, 
+        {
+        "titulo": "Ggplot2",
+        "descripcion": "Introducción a la librería ggplot2. Scatterplot",
+        "categorias":["ggplot2"],
+        "enlace": "html/ggplot2/index.html"
+        },
+        {
+        "titulo": "Histogramas",
+        "descripcion": "Histogramas con ggplot2",
+        "categorias":["ggplot2"],
+        "enlace": "html/ggplot2/histogramas.html"
+        },
+        {
+        "titulo": "Boxplot",
+        "descripcion": "Boxplots con ggplot2",
+        "categorias":["ggplot2"],
+        "enlace": "html/ggplot2/boxplot.html"
+        },
+        {
+        "titulo": "Funciones",
+        "descripcion": "Como crear nuestras propias funciones en R",
+        "categorias":["RBase", "Funciones", "ggplot2"],
+        "enlace": "html/funciones/index.html"
+        },
+        {
+        "titulo": "Colores en ggplot",
+        "descripcion": "Paletas de colores usadas en ggplot",
+        "categorias":["ggplot2"],
+        "enlace": "html/ggplot2/colores.html"
+        },
+        {
+        "titulo": "corrplot",
+        "descripcion": "Correlaciones en R",
+        "categorias":["corrplot"],
+        "enlace": "html/correlaciones/index.html"
+        },
+        {
+        "titulo": "Diagramas network circulares I",
+        "descripcion": "Representación gráfica de relaciones entre nodos",
+        "categorias":["Diagrama network"],
+        "enlace": "html/correlaciones/network.html"
+        },
+        {
+        "titulo": "Diagrama network circulares II",
+        "descripcion": "Caso práctico usando datos de expresión proteínas",
+        "categorias":["Diagrama network", "Expresión de proteínas"],
+        "enlace": "html/correlaciones/mice.html"
+        },
+        {
+        "titulo": "Principal Component Analysis",
+        "descripcion": "Cálculo de PCA en R",
+        "categorias":["PCA", "FactoMineR"],
+        "enlace": "html/pca/index.html"
+        },
+        {
+        "titulo": "Principal Component Analysis II",
+        "descripcion": "PCA aplicado a datos de LC-MS",
+        "categorias":["PCA", "Lipidoma"],
+        "enlace": "html/pca/case1.html"
+        },
+        {
+        "titulo": "VolcanoPlot & Heatmap",
+        "descripcion": "Análisis univariante HPLC-MS",
+        "categorias":["VolcanoPlot", "Heatmap","Lipidoma"],
+        "enlace": "html/univariate/index.html"
+        },
+        {
+            "titulo": "Entrenamiento supervisado",
+            "descripcion": "Aplicacíon de varios modelos de clasificacíon",
+            "categorias":["Clasificación","olive"],
+            "enlace": "html/olive/index.html"
+        },
+        {
+        "titulo": "(O)PLS-DA",
+        "descripcion": "Caso de estudio de busqueda de potenciales biomarcadores lípidicos",
+        "categorias":["PLS-DA", "OPLS-DA","Biomarcadores"],
+        "enlace": "html/oplsda/index.html"
+        }
+    ]
+}
