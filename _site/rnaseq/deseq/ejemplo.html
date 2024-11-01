@@ -122,10 +122,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-rna-seq" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">RNA-seq</span>
@@ -138,6 +134,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../../rnaseq/deseq/ejemplo.html">
  <span class="dropdown-text">Caso practico</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-enriquecimiento-funcional" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Enriquecimiento funcional</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-enriquecimiento-funcional">    
+        <li>
+    <a class="dropdown-item" href="../../enrfun/introduccion.html">
+ <span class="dropdown-text">Enriquecimiento Funcional</span></a>
   </li>  
     </ul>
   </li>
@@ -214,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <details class="code-fold">
-<summary>Codigo funciones</summary>
+<summary>Código funciones</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>createVolcanoPlot <span class="ot">&lt;-</span> <span class="cf">function</span>(d, log2fc, fdr, <span class="at">max.overlaps =</span> <span class="dv">15</span>) {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"UP"</span><span class="ot">=</span><span class="st">"#FC4E07"</span>, <span class="st">"none"</span><span class="ot">=</span><span class="st">"#E7B800"</span>, <span class="st">"DOWN"</span><span class="ot">=</span><span class="st">"#00AFBB"</span>)</span>

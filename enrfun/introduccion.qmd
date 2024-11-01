@@ -1,0 +1,86 @@
+---
+title: "Enriquecimiento Funcional"
+execute:
+    echo: false
+    warning: false
+format: html
+---
+La interpretación de una lista de genes diferencialmente expresados suele ser más util en terminos de vías biológicas.
+
+- ¿Qué es una vía biológica?
+Una vía biológica es una serie de acciones entre las moléculas en una célula que genera un cierto producto o un cambio en la célula. Las células envían y reciben señales a traves de las vías biológicas.
+
+Dado que los genes actuan colectivamente, un modelo más cercano a la biológia subyacente es aquel en el que las vías biológicas son las que se expresan diferencialmente.
+
+Una aproximación sería intentar hacer el análisis de expresión diferencial directamente a nivel de vía biológica, o indirectamente buscando la sobrerepresentación de los genes diferencialmente expresados en cada vía de interes.
+
+Bases de datos como [Reactome](https://reactome.org/) o [KEGG](https://www.genome.jp/kegg/) anotan información de la literatura sobre los genes y las reacciones que forman las vías biológicas. Otras bases de datos como [The Gene Ontology (GO)](https://geneontology.org/) y [Molecular Signatures Database (MSigDB)](https://www.gsea-msigdb.org/gsea/msigdb) definen las vías biológicas en terminos de conjuntos de genes.
+
+## Vías biológicas diferencialmente expresadas
+Para encontras estas vía diferencialmente expresadas en terminos de conjunto de genes diferencialmente expresados, es detectanto un *enriquecimiento funcional*:
+
+- Buscar genes diferencialmente expresados (DE).
+- Para cada conjunto de genes, verificar si estos genes DE pertenecen a ese conjunto en una proporcion que excede la expectativa de encontrarlo solo por azar.
+
+En el caso de que un conjunto de genes contiene más genes DE que los que se podrían esperar por puro azar, decimos que este conjunto de genes esta **enriquecido** en genes DE
+
+## Análisis de sobrerepresentación (ORA)
+
+La forma de valorar si un conjunto de genes esta enriquecido o no es a traves de la [prueba exacta de Fisher](https://es.wikipedia.org/wiki/Prueba_exacta_de_Fisher) (prueba hipergeométrica).
+La prueba es útil para los datos categóricos que resultan de clasificar los objetos en dos formas diferentes. Se utiliza para examinar la significación de la asociación entre los dos tipos de clasificación. En nuestro caso si un gen es DE o no dentro de un conjunto de genes.
+
+El valor de p se calcula con la función de distribución hipergeométrica.
+$$ \textrm{Pr}(X >= k)=\sum_{x=k}^{\textrm{min}(m, n)} \frac{ {m\choose x} {N-m\choose n-x} }{ {N\choose n} }\,. $$
+
+- N: Número total de genes (background).
+- m: Número de genes en la distribución que estan anotados en el conjunto de genes de interes.
+- n: Tamaño de la lista de genes de interes.
+- k: Número de genes de la lista que estan anotados en el conjunto de genes.
+
+**Ejemplo:** Supongamos que tenemos 17980 genes detectados en un estudio de RNA-seq, y 57 genes estan diferencialmente expresados. Entre estos 28 estan anotados en un conjunto de genes.
+
+```{r}
+#| label: datos-fisher
+
+df <- data.frame(gene.not.interest=c(2613, 15310),
+                gene.in.interest=c(28, 29)
+                )
+row.names(df) <- c("In_category", "not_in_category")
+
+df
+```
+```{r}
+#| label: fisher-test
+
+fisher.test(df, alternative = "greater")
+```
+
+## Análisis de Gene Ontology
+
+Es un análisis de enriquecimiento funcional aplicado a cada uno de los conjuntos de genes de la [base da datos de GO](https://geneontology.org/)
+Gene Ontology (GO) es una representación estructurada y estandarizada del conocimiento biológico. GO describe conceptos, tambien conocidos como **términos**, que estan interconectados a traves de relaciones definidas formalmente. GO esta diseñado para ser independiente de la especie. 
+
+### Ontologías
+Un **término GO** pertenece a una de las siguientes tres ontologías: *Biological Process (BP)*, *Molecular Function (MF)* y *Cellular Component (CC)*.
+
+El producto de un gen puede asociarse con o localizarse en una o más componentes celulares y estar activo en uno o más procesos biológicos durante los cuales realiza una o más funciones moleculares. 
+
+Dentro de una ontología los **términos GO** estan relacionados unos con otros a través de relaciones jerarquicas que describen cuando un término GO es más general o nó.
+
+![](https://geneontology.github.io/assets/hexose-biosynthetic-process.png){width=50% fig-align="center"}
+
+## Análisis de enriquecimiento de conjuntos de genes (GSEA)
+
+El análisis de enriquecimiento ORA se basa en los genes identificados como diferencialmente expresados. Pero tiene la limitación de que necesita una lista minimamente grande de genes. Existen contextos donde los cambios de expresión diferencial puede ser pequeña. Los cambios moleculares más relevantes, si bien pequeños, ocurren de forma coordinada en una misma vía biológica. En estos contextos el método ORA suele fallar.
+
+GSEA aborda directamente esta limitación. Todos los genes se pueden utilizar en GSEA (y no solamente los genes DE), esto hace posible detectar situaciones donde todos los genes en el conjunto predefinido cambian un poco pero de manera coordinada.
+
+En GSEA los genes se clasifican segun su fenotipo, Dado un conjunto de genes S definido a priori, el objetivo de GSEA es determinar si los miembros de S se distribuyen aleatoriamente en toda la lista de genes clasificados (L) o se encuentran principalmente en la parte superior o inferior.
+
+![](https://docs.gsea-msigdb.org/GSEA/GSEAUserGuideImages/enrichment-score.jpg){fig-align="center"}
+
+Hay tres elementos claves en GSEA:
+
+- Enrichment Score (ES): representa el grado al cual el conjunto S esta sobrerepresentado an la parte superior o inferior de la lista de genes clasificados L.
+- Nivel de significancia de ES: el valor de p es calculado mediante permutaciones.
+- Ajuste para pruebas multiples.

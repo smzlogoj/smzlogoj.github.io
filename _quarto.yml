@@ -5,12 +5,13 @@ website:
   title: "Tumbleweed"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
       - text: RNA-seq
         menu:
           - rnaseq/deseq/introduccion.qmd
           - rnaseq/deseq/ejemplo.qmd
+      - text: Enriquecimiento funcional
+        menu:
+          - enrfun/introduccion.qmd
       - about.qmd
 
 format:
@@ -19,6 +20,7 @@ format:
     css: styles.css
     toc: true
     number-sections: true
+    highlight-style: dracula
     df-print: kable 
 
 

@@ -4,8 +4,6 @@ execute:
     warning: false
     message: false
     echo: true
-
-highlight-style: dracula
 format: html
 ---
 Para este análisis se usarán varios paquetes de R algunos de los cuales han sido instalados desde los repositorios CRAN y otro de los de Bioconductor.
@@ -22,7 +20,7 @@ library(RColorBrewer)
 ```{r}
 #| label: funciones
 #| code-fold: true
-#| code-summary: "Codigo funciones"
+#| code-summary: "Código funciones"
 #| code-overflow: wrap
 
 createVolcanoPlot <- function(d, log2fc, fdr, max.overlaps = 15) {

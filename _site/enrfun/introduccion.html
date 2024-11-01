@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About – Tumbleweed</title>
+<title>Enriquecimiento Funcional – Tumbleweed</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -67,8 +67,37 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -78,7 +107,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Tumbleweed</span>
     </a>
   </div>
@@ -94,11 +123,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-rna-seq">    
         <li>
-    <a class="dropdown-item" href="./rnaseq/deseq/introduccion.html">
+    <a class="dropdown-item" href="../rnaseq/deseq/introduccion.html">
  <span class="dropdown-text">Análisis de expresión diferencial</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./rnaseq/deseq/ejemplo.html">
+    <a class="dropdown-item" href="../rnaseq/deseq/ejemplo.html">
  <span class="dropdown-text">Caso practico</span></a>
   </li>  
     </ul>
@@ -109,13 +138,13 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-enriquecimiento-funcional">    
         <li>
-    <a class="dropdown-item" href="./enrfun/introduccion.html">
+    <a class="dropdown-item" href="../enrfun/introduccion.html">
  <span class="dropdown-text">Enriquecimiento Funcional</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -129,15 +158,27 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#vías-biológicas-diferencialmente-expresadas" id="toc-vías-biológicas-diferencialmente-expresadas" class="nav-link active" data-scroll-target="#vías-biológicas-diferencialmente-expresadas"><span class="header-section-number">1</span> Vías biológicas diferencialmente expresadas</a></li>
+  <li><a href="#análisis-de-sobrerepresentación-ora" id="toc-análisis-de-sobrerepresentación-ora" class="nav-link" data-scroll-target="#análisis-de-sobrerepresentación-ora"><span class="header-section-number">2</span> Análisis de sobrerepresentación (ORA)</a></li>
+  <li><a href="#análisis-de-gene-ontology" id="toc-análisis-de-gene-ontology" class="nav-link" data-scroll-target="#análisis-de-gene-ontology"><span class="header-section-number">3</span> Análisis de Gene Ontology</a>
+  <ul class="collapse">
+  <li><a href="#ontologías" id="toc-ontologías" class="nav-link" data-scroll-target="#ontologías"><span class="header-section-number">3.1</span> Ontologías</a></li>
+  </ul></li>
+  <li><a href="#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" id="toc-análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" class="nav-link" data-scroll-target="#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea"><span class="header-section-number">4</span> Análisis de enriquecimiento de conjuntos de genes (GSEA)</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Enriquecimiento Funcional</h1>
 </div>
 
 
@@ -154,9 +195,110 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>About this site</p>
+<p>La interpretación de una lista de genes diferencialmente expresados suele ser más util en terminos de vías biológicas.</p>
+<ul>
+<li>¿Qué es una vía biológica? Una vía biológica es una serie de acciones entre las moléculas en una célula que genera un cierto producto o un cambio en la célula. Las células envían y reciben señales a traves de las vías biológicas.</li>
+</ul>
+<p>Dado que los genes actuan colectivamente, un modelo más cercano a la biológia subyacente es aquel en el que las vías biológicas son las que se expresan diferencialmente.</p>
+<p>Una aproximación sería intentar hacer el análisis de expresión diferencial directamente a nivel de vía biológica, o indirectamente buscando la sobrerepresentación de los genes diferencialmente expresados en cada vía de interes.</p>
+<p>Bases de datos como <a href="https://reactome.org/">Reactome</a> o <a href="https://www.genome.jp/kegg/">KEGG</a> anotan información de la literatura sobre los genes y las reacciones que forman las vías biológicas. Otras bases de datos como <a href="https://geneontology.org/">The Gene Ontology (GO)</a> y <a href="https://www.gsea-msigdb.org/gsea/msigdb">Molecular Signatures Database (MSigDB)</a> definen las vías biológicas en terminos de conjuntos de genes.</p>
+<section id="vías-biológicas-diferencialmente-expresadas" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="vías-biológicas-diferencialmente-expresadas"><span class="header-section-number">1</span> Vías biológicas diferencialmente expresadas</h2>
+<p>Para encontras estas vía diferencialmente expresadas en terminos de conjunto de genes diferencialmente expresados, es detectanto un <em>enriquecimiento funcional</em>:</p>
+<ul>
+<li>Buscar genes diferencialmente expresados (DE).</li>
+<li>Para cada conjunto de genes, verificar si estos genes DE pertenecen a ese conjunto en una proporcion que excede la expectativa de encontrarlo solo por azar.</li>
+</ul>
+<p>En el caso de que un conjunto de genes contiene más genes DE que los que se podrían esperar por puro azar, decimos que este conjunto de genes esta <strong>enriquecido</strong> en genes DE</p>
+</section>
+<section id="análisis-de-sobrerepresentación-ora" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="análisis-de-sobrerepresentación-ora"><span class="header-section-number">2</span> Análisis de sobrerepresentación (ORA)</h2>
+<p>La forma de valorar si un conjunto de genes esta enriquecido o no es a traves de la <a href="https://es.wikipedia.org/wiki/Prueba_exacta_de_Fisher">prueba exacta de Fisher</a> (prueba hipergeométrica). La prueba es útil para los datos categóricos que resultan de clasificar los objetos en dos formas diferentes. Se utiliza para examinar la significación de la asociación entre los dos tipos de clasificación. En nuestro caso si un gen es DE o no dentro de un conjunto de genes.</p>
+<p>El valor de p se calcula con la función de distribución hipergeométrica. <span class="math display">\[ \textrm{Pr}(X &gt;= k)=\sum_{x=k}^{\textrm{min}(m, n)} \frac{ {m\choose x} {N-m\choose n-x} }{ {N\choose n} }\,. \]</span></p>
+<ul>
+<li>N: Número total de genes (background).</li>
+<li>m: Número de genes en la distribución que estan anotados en el conjunto de genes de interes.</li>
+<li>n: Tamaño de la lista de genes de interes.</li>
+<li>k: Número de genes de la lista que estan anotados en el conjunto de genes.</li>
+</ul>
+<p><strong>Ejemplo:</strong> Supongamos que tenemos 17980 genes detectados en un estudio de RNA-seq, y 57 genes estan diferencialmente expresados. Entre estos 28 estan anotados en un conjunto de genes.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">gene.not.interest</th>
+<th style="text-align: right;">gene.in.interest</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">In_category</td>
+<td style="text-align: right;">2613</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">not_in_category</td>
+<td style="text-align: right;">15310</td>
+<td style="text-align: right;">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  df
+p-value = 1
+alternative hypothesis: true odds ratio is greater than 1
+95 percent confidence interval:
+ 0.110242      Inf
+sample estimates:
+odds ratio 
+ 0.1767937 </code></pre>
+</div>
+</div>
+</section>
+<section id="análisis-de-gene-ontology" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="análisis-de-gene-ontology"><span class="header-section-number">3</span> Análisis de Gene Ontology</h2>
+<p>Es un análisis de enriquecimiento funcional aplicado a cada uno de los conjuntos de genes de la <a href="https://geneontology.org/">base da datos de GO</a> Gene Ontology (GO) es una representación estructurada y estandarizada del conocimiento biológico. GO describe conceptos, tambien conocidos como <strong>términos</strong>, que estan interconectados a traves de relaciones definidas formalmente. GO esta diseñado para ser independiente de la especie.</p>
+<section id="ontologías" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="ontologías"><span class="header-section-number">3.1</span> Ontologías</h3>
+<p>Un <strong>término GO</strong> pertenece a una de las siguientes tres ontologías: <em>Biological Process (BP)</em>, <em>Molecular Function (MF)</em> y <em>Cellular Component (CC)</em>.</p>
+<p>El producto de un gen puede asociarse con o localizarse en una o más componentes celulares y estar activo en uno o más procesos biológicos durante los cuales realiza una o más funciones moleculares.</p>
+<p>Dentro de una ontología los <strong>términos GO</strong> estan relacionados unos con otros a través de relaciones jerarquicas que describen cuando un término GO es más general o nó.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://geneontology.github.io/assets/hexose-biosynthetic-process.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea"><span class="header-section-number">4</span> Análisis de enriquecimiento de conjuntos de genes (GSEA)</h2>
+<p>El análisis de enriquecimiento ORA se basa en los genes identificados como diferencialmente expresados. Pero tiene la limitación de que necesita una lista minimamente grande de genes. Existen contextos donde los cambios de expresión diferencial puede ser pequeña. Los cambios moleculares más relevantes, si bien pequeños, ocurren de forma coordinada en una misma vía biológica. En estos contextos el método ORA suele fallar.</p>
+<p>GSEA aborda directamente esta limitación. Todos los genes se pueden utilizar en GSEA (y no solamente los genes DE), esto hace posible detectar situaciones donde todos los genes en el conjunto predefinido cambian un poco pero de manera coordinada.</p>
+<p>En GSEA los genes se clasifican segun su fenotipo, Dado un conjunto de genes S definido a priori, el objetivo de GSEA es determinar si los miembros de S se distribuyen aleatoriamente en toda la lista de genes clasificados (L) o se encuentran principalmente en la parte superior o inferior.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://docs.gsea-msigdb.org/GSEA/GSEAUserGuideImages/enrichment-score.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>Hay tres elementos claves en GSEA:</p>
+<ul>
+<li>Enrichment Score (ES): representa el grado al cual el conjunto S esta sobrerepresentado an la parte superior o inferior de la lista de genes clasificados L.</li>
+<li>Nivel de significancia de ES: el valor de p es calculado mediante permutaciones.</li>
+<li>Ajuste para pruebas multiples.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
