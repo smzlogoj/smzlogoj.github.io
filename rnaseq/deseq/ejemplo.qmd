@@ -1,0 +1,279 @@
+---
+title: "Caso practico"
+execute:
+    warning: false
+    message: false
+    echo: true
+
+highlight-style: dracula
+format: html
+---
+Para este análisis se usarán varios paquetes de R algunos de los cuales han sido instalados desde los repositorios CRAN y otro de los de Bioconductor.
+```{r}
+#| label: load-packages
+
+library(DESeq2)
+library(ggplot2)
+library(ggrepel)
+library(pheatmap)
+library(RColorBrewer)
+```
+
+```{r}
+#| label: funciones
+#| code-fold: true
+#| code-summary: "Codigo funciones"
+#| code-overflow: wrap
+
+createVolcanoPlot <- function(d, log2fc, fdr, max.overlaps = 15) {
+
+
+    colors <- c("UP"="#FC4E07", "none"="#E7B800", "DOWN"="#00AFBB")
+    d$class <- 'none'
+    d$class[d$log2FoldChange >= log2fc & d$padj <= fdr] <- 'UP'
+    d$class[d$log2FoldChange <= -1 * log2fc & d$padj <= fdr] <- 'DOWN'
+    d$gene <- rownames(d)
+    
+    up_num=nrow(d[d$class == "UP",])
+    down_num=nrow(d[d$class == "DOWN",])
+    p <- ggplot(d, aes(x = log2FoldChange, y = -1 * log10(padj), 
+                       shape = class, fill = class, color = class, label = gene)) +
+                geom_point(size = 3) +
+                scale_fill_manual(values = colors) +
+                scale_color_manual(values = c('navy', "#E7B800", 'navy')) +
+                scale_shape_manual(values = c(21, 20, 21)) +
+                geom_hline(yintercept = -1 * log10(fdr), linetype="dashed", 
+                              color = "black", size=0.5) +
+                geom_vline(xintercept=c(-1 * log2fc,log2fc), linetype="dashed", 
+                              color = "black", size=0.5) +
+                 geom_label_repel(data = d[d$class %in% c('UP', 'DOWN'),],
+                                  size= 4,
+                                  fontface="bold",
+                                  color="firebrick",
+                                  fill = 'white',
+                                  box.padding=unit(1, "lines"),
+                                  point.padding=unit(0.5, "lines"),
+                                  segment.colour = "firebrick", 
+                                  segment.size = 0.5, 
+                                  segment.alpha = 0.5, 
+                                  max.overlaps = max.overlaps) +
+                theme_bw() +
+                theme(legend.position="top") +
+                annotate(geom = 'text', label = paste0('UP: ', up_num), 
+                         x = Inf, y = Inf, hjust = 1.1, vjust = 1.5) +
+                annotate(geom = 'text', label = paste0('DOWN: ', down_num), 
+                         x = -Inf, y = Inf, hjust = -0.1, vjust = 1.5) + 
+                labs(color = "class")
+    p
+}
+
+crearHeatMap <-function(datos, metadatos) {
+    pheatmap(as.matrix(datos),
+             scale = 'row',
+             clustering_method = 'ward.D2',
+             cutree_cols =  3,
+             cutree_rows = 2,
+             annotation_col = metadatos,
+             fontsize = 8,
+             color = colorRampPalette(c("steelblue", "white", "firebrick3"))(100)
+            )
+}
+```
+
+## Análisis exploratorio de los datos.
+### Cargar datos
+
+Cargamos los datos de la matriz de cuentas sin normalizar:
+
+```{r}
+#| label: tabla-counts
+#| tbl-cap: Matriz de cuentas
+
+df.cts <- read.table("data/Mov10_full_counts.txt", header=T, row.names=1) 
+
+head(df.cts)
+```
+```{r}
+#| label: tabla-metadatos
+#| tbl-cap: Metadatos
+#| 
+metadata <- read.table("data/Mov10_full_meta.txt", header=T, row.names=1) 
+
+metadata
+```
+
+Es importante comprobar que los nombres de las muestras coinciden en los dos ficheros y estan en el orden correcto.
+```{r}
+#| label: check-sample-names
+
+all(names(df.cts) %in% rownames(metadata))
+all(names(df.cts) == rownames(metadata))
+```
+
+
+### DESeq2DataSet
+Lo primero que necesitamos es crear un objeto DESeqDataSet. DESeqDataSet es una clase personalizada del paquete DESeq2 de Bioconductor. Esta clase se utiliza para almacenar los datos y calculos necesarios. Para crear este objeto necesitamos la matriz de cuentas, los metadatos y una "formula" para el diseño. La formula especifica la columna(o columnas) en la tabla de metadatos que se quiere utilizar para el análisis.
+- *Nota:* Es esencial que el nombre de las muestras coincidan en los dos ficheros y esten en el mismo orden.
+```{r}
+#| label: create-DESeq2DataSet-object
+
+dds <- DESeqDataSetFromMatrix(
+                countData = df.cts, 
+                colData = metadata, 
+                design = ~sampletype
+                )
+
+dds
+```
+### Prefiltrado de los datos
+Tipicamente las matrices de RNA-seq contienen muchas filas con ceros, y adicionalmente otras con valores muy bajos de cuentas. Es recomendable eliminar los genes que no aportan (o casi no aportan ) informacion. Aquí realizaremos un filtrado para mantener los genes con un recuento de al menos 10 para una cantidad mínima de muestras. El valor de 10 es razonamble para datos de secuenciación Bulk-RNA. Una recomendación para el número mínimo de muestras es especificar el tamaño de grupo más pequeño.
+```{r}
+nrow(dds)
+smallestGroupSize <- 2
+keep <- rowSums(counts(dds) >= 10) >= smallestGroupSize
+dds <- dds[keep,]
+nrow(dds)
+```
+
+### Normalización de las cuentas
+En DESeq2 la normalización se calcula usando el metodo de la mediana de las relaciones.
+
+```{r}
+#| label: estimate-sizeFactors
+
+dds <- estimateSizeFactors(dds)
+
+dds
+```
+
+### Transformacion cuentas
+Los métodos estadísticos para análisis exploratorio funcionan mejor con datos que tienen similares rangos de varianza a diferentes rangos de medias. En el caso de las cuentas de RNA-seq la varianza crece con la media, con lo cual el PCA estará influenciado por los genes con numeros de cuentas altos.
+La estrategía para evitarlo es tomar el logaritmo de las cuentas normalizadas sumandole una pseudocuenta (para los casos de 0 cuentas, el log de 0 es indefinido). Sin embargo, ahora los genes con pocas cuentas pueden dominar los resuldatos.
+DESeq2 usa una **transformación logaritmica regularizada** como solucion. Para los genes con valores altos el resultado es similar a la transfomación logaritmica log2. Para los genes con valores pequeños los valores se reducen hacia la media de los genes a lo largo de todas las muestras.
+
+```{r}
+rld <- rlog(dds, blind = TRUE)
+
+rld
+```
+
+### Evaluación de calidad
+#### Análisis de componentes principales (PCA)
+Una manera de visualizar las distancias muestra a muestra es el PCA.
+
+```{r}
+#| label: fig-pca
+#| fig-cap: Análisis de componentes principales
+
+plotPCA(rld, intgroup=c('sampletype'))
+```
+
+#### Clustering jerarquico
+Otra metodo es agrupar las muestras basadas en su similitud. En este caso se puede usar la correlación de Pearson para medir la silitud entre muestras.
+Generealmente se espera una correlación bastante alta (>0.95) entre todas las muestras, además se esperan ver las muestras agrupadas de manera similar a lo observado en el PCA.
+
+Las muestras que muestran valores bajos de correlación con las demas muestras (<0.80) representan outliers.
+
+```{r}
+#| label: pheapmat-correlation
+#| fig-cap: Matriz de correlaciones entre las muestras.
+
+# Estraemos la matix rlog del objeto
+rld_mat <- assay(rld) 
+
+# Calculamos las correlaciones
+rld_cor <- cor(rld_mat)
+
+#heatmap
+pheatmap(rld_cor, color =  brewer.pal(6, "Blues"))
+```
+
+## DESeq2
+Para realizar el calculo ejecutamos la funcion **DESeq()**, que requiere como input un objeto del tipo **DESeqDataSet** (la variable *dds*). Reasignando el resultado a la misma variable continuamos llenando los *slots* del objeto DESeqDataSet.
+
+```{r}
+#| label: DESeq
+#| message: true
+
+dds <- DESeq(dds)
+
+dds
+```
+## Wald test
+La función **results()** devuelve los valores de log2 fold changes y los p-values para el Wald test de la comparación.
+
+```{r}
+#| label: tabla-fc
+#| tbl-cap: FC y valores p
+
+res <- results(dds, contrast = c('sampletype', 'MOV10_overexpression', 'control'))
+
+head(as.data.frame(res))
+```
+```{r}
+#| label: resultados-columnas
+#| tbl-cap: Descripción de los resultados
+
+as.data.frame(mcols(res, use.names = TRUE))
+
+```
+
+- **Nota:** Algunos valores de p pueden aparecer como **NA** en la tabla de resultados, esto puede ser debido a que baseMean pueda ser cero, que una fila contenga un valor considerado outlier, o que esa fila sea filtrada por el filtro independiente.
+
+## Contracción de los FC para visualización y clasificación.
+La reducción del tamaño del efecto (estimaciones de LFC) es útil para la visualización y clasificación de genes
+```{r}
+#| label: resultNames
+resultsNames(dds)
+```
+
+```{r}
+#| label: tabla-fc-s
+#| tbl-cap: FC y valores p
+resLFC <- lfcShrink(dds, coef="sampletype_MOV10_overexpression_vs_control", type="ashr")
+
+head(as.data.frame(resLFC))
+```
+
+## Genes diferencialmente expresados
+Para selecionar los genes diferecialmente expresados debemos fijar el umbral. En este caso elegimos un FC = 1.5 y un valor de p ajustado de 0.05
+
+```{r}
+#|label: DGE
+
+padj.cutoff <- 0.05
+lfc.cutoff <- log2(1.5)
+
+df.ashr <- as.data.frame(resLFC)
+
+genes.ashr.up <- rownames(df.ashr[df.ashr$log2FoldChange >= lfc.cutoff & df.ashr$padj <= padj.cutoff, ])
+genes.ashr.down <- rownames(df.ashr[df.ashr$log2FoldChange <= -1 * lfc.cutoff & df.ashr$padj <= padj.cutoff, ])
+
+head(genes.ashr.up)
+head(genes.ashr.down)
+```
+
+### Volcano plot
+```{r}
+#| label: volcano-plot
+#| fig-cap: Volcano plot (MOV10_overexpression vs control)
+
+createVolcanoPlot(df.ashr, lfc.cutoff, padj.cutoff, max.overlaps = 30)
+```
+### Heatmap
+Heatmap de los genes diferecialmente expresados.
+```{r}
+#| label: HeatMap
+#| fig-cap: Heatmap
+#| fig-height: 14
+df.norm <- counts(dds, normalized = TRUE)
+
+df.dge <- df.norm[rownames(df.norm) %in% c(genes.ashr.up, genes.ashr.down), ]
+
+crearHeatMap(df.dge, metadata)
+```
+
+## Referencias
+> https://bookdown.org/ggiaever/2024_RNA-seq-analysis/
+
+> https://bioconductor.org/packages/release/bioc/html/DESeq2.html
