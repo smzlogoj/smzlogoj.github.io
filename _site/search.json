@@ -4,14 +4,14 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site"
+    "text": "Hoy en día, debido al avance de la técnología podemos disponer de una gran cantidad de datos, pero los métodos tradicionales de analizar esta información han quedado obsoletos. No queda más remedio que recurrir a herramientas informaticas.\nEl campo de la biológia no es una excepción, donde existen multitud de bases de datos procedentes de experimentos, y los nuevas técnologías en el laboratorio pueden devolver cantidades masivas de información.\nEn mi experiencia al usuario novel puede llegar a costarle mucho el comenzar con un lenguaje de programacíon. No se sienten capaces o despues de intentarlo durante un tiempo abandonan por sentirse incapaces de obtener resultados.\nCon el proyecto web Tumbleweed se pretende acercar, mediante turoriales y guías, estas herramientas bioinformáticas a usarios sin experiencia previa en programación."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Tumbleweed",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "Hoy en día, debido al avance de la técnología podemos disponer de una gran cantidad de datos, pero los métodos tradicionales de analizar esta información han quedado obsoletos. No queda más remedio que recurrir a herramientas informaticas. El campo de la biológia no es una excepción, donde existen multitud de bases de datos procedentes de experimentos, y los nuevas técnologías en el laboratorio pueden devolver cantidades masivas de información.\nEn mi experiencia al usuario novel puede llegar a costarle mucho el comenzar con un lenguaje de programacíon. No se sienten capaces o despues de intentarlo durante un tiempo abandonan por sentirse incapaces de obtener resultados.\nCon el proyecto web Tumbleweed se pretende acercar, mediante turoriales y guías, estas herramientas bioinformáticas a usarios sin experiencia previa en programación.\n\nJosé Antonio López\nTécnico especilista de laboratorio"
   },
   {
     "objectID": "rnaseq/deseq/introduccion.html",
@@ -117,5 +117,19 @@
     "title": "Enriquecimiento Funcional",
     "section": "4 Análisis de enriquecimiento de conjuntos de genes (GSEA)",
     "text": "4 Análisis de enriquecimiento de conjuntos de genes (GSEA)\nEl análisis de enriquecimiento ORA se basa en los genes identificados como diferencialmente expresados. Pero tiene la limitación de que necesita una lista minimamente grande de genes. Existen contextos donde los cambios de expresión diferencial puede ser pequeña. Los cambios moleculares más relevantes, si bien pequeños, ocurren de forma coordinada en una misma vía biológica. En estos contextos el método ORA suele fallar.\nGSEA aborda directamente esta limitación. Todos los genes se pueden utilizar en GSEA (y no solamente los genes DE), esto hace posible detectar situaciones donde todos los genes en el conjunto predefinido cambian un poco pero de manera coordinada.\nEn GSEA los genes se clasifican segun su fenotipo, Dado un conjunto de genes S definido a priori, el objetivo de GSEA es determinar si los miembros de S se distribuyen aleatoriamente en toda la lista de genes clasificados (L) o se encuentran principalmente en la parte superior o inferior.\n\n\n\n\n\nHay tres elementos claves en GSEA:\n\nEnrichment Score (ES): representa el grado al cual el conjunto S esta sobrerepresentado an la parte superior o inferior de la lista de genes clasificados L.\nNivel de significancia de ES: el valor de p es calculado mediante permutaciones.\nAjuste para pruebas multiples."
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "Tumbleweed",
+    "section": "Education",
+    "text": "Education\nUniversity of California, San Diego | San Diego, CA PhD in Mathematics | Sept 2011 - June 2015\nMacalester College | St. Paul MA B.A in Economics | Sept 2007 - June 2011"
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "Tumbleweed",
+    "section": "Experience",
+    "text": "Experience\nWengo Analytics | Head Data Scientist | April 2018 - present\nGeoScynce | Chief Analyst | Spet 2012 - April 2018"
   }
 ]

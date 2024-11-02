@@ -4,6 +4,7 @@ project:
 website:
   title: "Tumbleweed"
   navbar:
+    pinned: true
     left:
       - text: RNA-seq
         menu:
@@ -16,7 +17,7 @@ website:
 
 format:
   html:
-    theme: united
+    theme: journal
     css: styles.css
     toc: true
     number-sections: true
