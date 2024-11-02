@@ -6,6 +6,9 @@ website:
   navbar:
     pinned: true
     left:
+      - text: R
+        menu:
+          - R/introduccion.qmd
       - text: RNA-seq
         menu:
           - rnaseq/deseq/introduccion.qmd

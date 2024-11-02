@@ -1,0 +1,3 @@
+[submodule "Taller"]
+	path = Taller
+	url = git@github.com:smzlogoj/Taller.git

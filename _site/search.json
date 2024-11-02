@@ -131,5 +131,642 @@
     "title": "Tumbleweed",
     "section": "Experience",
     "text": "Experience\nWengo Analytics | Head Data Scientist | April 2018 - present\nGeoScynce | Chief Analyst | Spet 2012 - April 2018"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#qué-es-ggplot2",
+    "href": "Taller/ggplot2/ggplot2.html#qué-es-ggplot2",
+    "title": "ggplot2",
+    "section": "¿Qué es ggplot2?",
+    "text": "¿Qué es ggplot2?\nggplot2 es un paquete de R para producir visualizaciones de datos. A diferencia de otros paquetes graficos, ggplot2 usa un framework conceptual basado en la gramática de los gráficos. Esto permite crear gráficos de diferentes elementos, en lugar de estar limitados a un conjunto de gráficos predeterminados. A día de hoy es el lider indiscutible en representaciones gráficas en R."
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#estructura",
+    "href": "Taller/ggplot2/ggplot2.html#estructura",
+    "title": "ggplot2",
+    "section": "Estructura",
+    "text": "Estructura\nExisten 7 elementos que se unen como un conjunto de instrucciones para dibujar un gráfico. Un gráfico presenta al menos tres elementos: Data, mapping, layer."
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#estructura-1",
+    "href": "Taller/ggplot2/ggplot2.html#estructura-1",
+    "title": "ggplot2",
+    "section": "Estructura",
+    "text": "Estructura\n\nData: Los datos que se van a representar, generalmente será un data frame.\nMappings:Características estéticas (aes) que describiran cómo queremos que los datos se vean en el gráfico (posición, color, relleno, forma, tamaño, etc..).\nLayers: Es la capa que muestra como aparecen los datos. Cada una de ellas tiene 3 partes importantes:\n\nGeometría: (geom) Determina como se muestra cada punto, linea, etc..\nTransformación estadisticas: (stat) Que puede computar nuevas variables de los datos.\nAjuste de posición: Determina donde se muestra cada parte de datos."
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#instalación",
+    "href": "Taller/ggplot2/ggplot2.html#instalación",
+    "title": "ggplot2",
+    "section": "Instalación",
+    "text": "Instalación\nEl paquete ggplot2 no se encuentra en R-base, para su uso es necesario descargarlo e instalarlo desde los repositorios de CRAN.\ninstall.packages('ggplot2')\nPara poder usarlo hay que cargarlo en el sistema usando la función library()\n\nlibrary('ggplot2')"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#diamonds",
+    "href": "Taller/ggplot2/ggplot2.html#diamonds",
+    "title": "ggplot2",
+    "section": "Diamonds",
+    "text": "Diamonds\nEn el paquete ggplot2 esta incluido el dataset Diamonds que contiene el precio y otros atributos de 54.000 diamantes.\n\nlibrary('ggplot2')\ndf &lt;- diamonds\nsummary(df)\n\n\n\n     carat               cut        color        clarity          depth      \n Min.   :0.2000   Fair     : 1610   D: 6775   SI1    :13065   Min.   :43.00  \n 1st Qu.:0.4000   Good     : 4906   E: 9797   VS2    :12258   1st Qu.:61.00  \n Median :0.7000   Very Good:12082   F: 9542   SI2    : 9194   Median :61.80  \n Mean   :0.7979   Premium  :13791   G:11292   VS1    : 8171   Mean   :61.75  \n 3rd Qu.:1.0400   Ideal    :21551   H: 8304   VVS2   : 5066   3rd Qu.:62.50  \n Max.   :5.0100                     I: 5422   VVS1   : 3655   Max.   :79.00  \n                                    J: 2808   (Other): 2531                  \n     table           price             x                y         \n Min.   :43.00   Min.   :  326   Min.   : 0.000   Min.   : 0.000  \n 1st Qu.:56.00   1st Qu.:  950   1st Qu.: 4.710   1st Qu.: 4.720  \n Median :57.00   Median : 2401   Median : 5.700   Median : 5.710  \n Mean   :57.46   Mean   : 3933   Mean   : 5.731   Mean   : 5.735  \n 3rd Qu.:59.00   3rd Qu.: 5324   3rd Qu.: 6.540   3rd Qu.: 6.540  \n Max.   :95.00   Max.   :18823   Max.   :10.740   Max.   :58.900  \n                                                                  \n       z         \n Min.   : 0.000  \n 1st Qu.: 2.910  \n Median : 3.530  \n Mean   : 3.539  \n 3rd Qu.: 4.040  \n Max.   :31.800"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#scatterplot",
+    "href": "Taller/ggplot2/ggplot2.html#scatterplot",
+    "title": "ggplot2",
+    "section": "Scatterplot",
+    "text": "Scatterplot\nVamos a representar carat (quilates) vs price\n\nggplot(df, aes(x = carat, y = price)) +\n    geom_point()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#scatterplot-1",
+    "href": "Taller/ggplot2/ggplot2.html#scatterplot-1",
+    "title": "ggplot2",
+    "section": "Scatterplot",
+    "text": "Scatterplot\nAñadimos un tema y cambiamos el color de los puntos\n\nggplot(df, aes(x = carat, y = price)) +\n    geom_point(color = 'steelblue') +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#scatterplot-2",
+    "href": "Taller/ggplot2/ggplot2.html#scatterplot-2",
+    "title": "ggplot2",
+    "section": "Scatterplot",
+    "text": "Scatterplot\nColoreamos los puntos agrupados por la variable cut. Además movemos la leyenda a la parte superior\n\nggplot(df, aes(x = carat, y = price)) +\n    geom_point(aes(color = cut)) +\n    theme_bw() +\n    theme(legend.position = 'top')"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#scatterplot-3",
+    "href": "Taller/ggplot2/ggplot2.html#scatterplot-3",
+    "title": "ggplot2",
+    "section": "Scatterplot",
+    "text": "Scatterplot\n\nggplot(df, aes(x = carat, y = price)) +\n    geom_point(aes(color = cut)) +\n    theme_bw() +\n    theme(legend.position = 'top') +\n    facet_wrap(~ cut)"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#boxplot",
+    "href": "Taller/ggplot2/ggplot2.html#boxplot",
+    "title": "ggplot2",
+    "section": "Boxplot",
+    "text": "Boxplot\n\nggplot(df, aes(y = price)) +\n    geom_boxplot()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#boxplot-1",
+    "href": "Taller/ggplot2/ggplot2.html#boxplot-1",
+    "title": "ggplot2",
+    "section": "Boxplot",
+    "text": "Boxplot\n\nggplot(df, aes(x = cut, y = price)) +\n    geom_boxplot(color = 'navy') +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#boxplot-2",
+    "href": "Taller/ggplot2/ggplot2.html#boxplot-2",
+    "title": "ggplot2",
+    "section": "Boxplot",
+    "text": "Boxplot\n\nggplot(df, aes(x = cut, y = price)) +\n    geom_boxplot(aes(fill = cut), color = 'navy') +\n    theme_bw() +\n    theme(legend.position = 'top')"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#boxplot-3",
+    "href": "Taller/ggplot2/ggplot2.html#boxplot-3",
+    "title": "ggplot2",
+    "section": "Boxplot",
+    "text": "Boxplot\nAñadimos una 3ª variable, la variable ‘color’\n\nggplot(df, aes(x = cut, y = price)) +\n    geom_boxplot(aes(fill = color), color = 'navy') +\n    theme_bw() +\n    theme(legend.position = 'top')"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#boxplot-4",
+    "href": "Taller/ggplot2/ggplot2.html#boxplot-4",
+    "title": "ggplot2",
+    "section": "Boxplot",
+    "text": "Boxplot\n\nggplot(df, aes(x = cut, y = price)) +\n    geom_boxplot(aes(fill = color), color = 'navy') +\n    theme_bw() +\n    theme(legend.position = 'top') +\n    facet_wrap(~ color)"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#histogram",
+    "href": "Taller/ggplot2/ggplot2.html#histogram",
+    "title": "ggplot2",
+    "section": "Histogram",
+    "text": "Histogram\n\nggplot(df, aes(x = price)) +\n    geom_histogram(color = 'navy', fill = 'steelblue') +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#histogram-1",
+    "href": "Taller/ggplot2/ggplot2.html#histogram-1",
+    "title": "ggplot2",
+    "section": "Histogram",
+    "text": "Histogram\n\nggplot(df, aes(x = price)) +\n    geom_histogram(aes(color = color), fill = 'white') +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart",
+    "href": "Taller/ggplot2/ggplot2.html#bar-chart",
+    "title": "ggplot2",
+    "section": "Bar Chart",
+    "text": "Bar Chart\n\nggplot(df, aes(x = clarity)) +\n    geom_bar(color = 'navy', fill = 'white') +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-1",
+    "href": "Taller/ggplot2/ggplot2.html#bar-chart-1",
+    "title": "ggplot2",
+    "section": "Bar Chart",
+    "text": "Bar Chart\n\nggplot(df, aes(x = clarity)) +\n    geom_bar(aes(color = clarity, fill = clarity)) +\n    theme_bw() +\n    theme(legend.position = 'top')"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-2",
+    "href": "Taller/ggplot2/ggplot2.html#bar-chart-2",
+    "title": "ggplot2",
+    "section": "Bar Chart",
+    "text": "Bar Chart\n\nggplot(df, aes(x = clarity)) +\n    geom_bar(aes(color = cut, fill = cut)) +\n    theme_bw() +\n    theme(legend.position = 'top')"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-3",
+    "href": "Taller/ggplot2/ggplot2.html#bar-chart-3",
+    "title": "ggplot2",
+    "section": "Bar Chart",
+    "text": "Bar Chart\n\nggplot(df, aes(x = clarity)) +\n    geom_bar(aes(color = cut, fill = cut), position = position_dodge()) +\n    theme_bw() +\n    theme(legend.position = 'top')"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-4",
+    "href": "Taller/ggplot2/ggplot2.html#bar-chart-4",
+    "title": "ggplot2",
+    "section": "Bar Chart",
+    "text": "Bar Chart\n\nggplot(df, aes(x = clarity, y = price)) +\n    geom_bar(color = 'navy', stat = 'identity') +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-5",
+    "href": "Taller/ggplot2/ggplot2.html#bar-chart-5",
+    "title": "ggplot2",
+    "section": "Bar Chart",
+    "text": "Bar Chart\n\nggplot(df, aes(x = clarity, y = price)) +\n    geom_col(color = 'navy') +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-6",
+    "href": "Taller/ggplot2/ggplot2.html#bar-chart-6",
+    "title": "ggplot2",
+    "section": "Bar Chart",
+    "text": "Bar Chart\n\nggplot(df, aes(x = clarity, y = price)) +\n    geom_bar(aes(color = cut, fill = cut), position = position_dodge(),  stat = 'identity') +\n    theme_bw() +\n    theme(legend.position = 'top')"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#pie-chart",
+    "href": "Taller/ggplot2/ggplot2.html#pie-chart",
+    "title": "ggplot2",
+    "section": "Pie Chart",
+    "text": "Pie Chart\n\nggplot(df, aes(x = '', y = price)) +\n    geom_bar(aes(fill = clarity), stat = 'identity') +\n    theme_bw() +\n    coord_polar('y')"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot",
+    "href": "Taller/ggplot2/ggplot2.html#volcano-plot",
+    "title": "ggplot2",
+    "section": "Volcano Plot",
+    "text": "Volcano Plot\nVamos a realizar el volcano plot correspondiente al análisis diferencial de los datos de Drosophila melanogaster. Eliminamos las filas con 0 o NA values\n\ndge &lt;- read.csv('data/DGE.csv')\ndge &lt;- dge[dge$padj != 0, ]\ndge &lt;- dge[complete.cases(dge), ]\n\nhead(dge)\n\n\n\n            X baseMean log2FoldChange      lfcSE       pvalue         padj\n1 FBgn0000008 562.4671    -0.05656922 0.05473453 3.005379e-01 3.499743e-01\n2 FBgn0000014 894.8910    -0.79584159 0.04535355 3.664583e-69 2.568605e-68\n3 FBgn0000015 323.3163    -0.84122112 0.07377132 2.177357e-30 8.697926e-30\n4 FBgn0000017 862.1217    -0.25306214 0.04781241 1.098852e-07 2.259261e-07\n5 FBgn0000018 111.7811     0.37605333 0.11157453 6.718636e-04 1.085105e-03\n6 FBgn0000024 789.7766    -0.91597718 0.04844234 5.862028e-80 4.626392e-79"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-1",
+    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-1",
+    "title": "ggplot2",
+    "section": "Volcano Plot",
+    "text": "Volcano Plot\nSeleccionamos los valores de FC = 2 y padj = 0.0000001 de corte.\n\npadj.cutoff &lt;- 0.0000001\nlfc.cutoff &lt;- log2(2)\n\n\n\n\n\n\ndge$class &lt;- 'none'\ndge[dge$log2FoldChange &gt;= lfc.cutoff & dge$padj &lt;= padj.cutoff, c('class')] &lt;- 'UP'\ndge[dge$log2FoldChange &lt;= -1 * lfc.cutoff & dge$padj &lt;= padj.cutoff, c('class')] &lt;- 'DOWN'\n\nhead(dge)\n\n\n\n            X baseMean log2FoldChange      lfcSE       pvalue         padj\n1 FBgn0000008 562.4671    -0.05656922 0.05473453 3.005379e-01 3.499743e-01\n2 FBgn0000014 894.8910    -0.79584159 0.04535355 3.664583e-69 2.568605e-68\n3 FBgn0000015 323.3163    -0.84122112 0.07377132 2.177357e-30 8.697926e-30\n4 FBgn0000017 862.1217    -0.25306214 0.04781241 1.098852e-07 2.259261e-07\n5 FBgn0000018 111.7811     0.37605333 0.11157453 6.718636e-04 1.085105e-03\n6 FBgn0000024 789.7766    -0.91597718 0.04844234 5.862028e-80 4.626392e-79\n  class\n1  none\n2  none\n3  none\n4  none\n5  none\n6  none"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-2",
+    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-2",
+    "title": "ggplot2",
+    "section": "Volcano Plot",
+    "text": "Volcano Plot\n\nggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +\n    geom_point() +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-3",
+    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-3",
+    "title": "ggplot2",
+    "section": "Volcano Plot",
+    "text": "Volcano Plot\n\nggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +\n    geom_point() +\n    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-4",
+    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-4",
+    "title": "ggplot2",
+    "section": "Volcano Plot",
+    "text": "Volcano Plot\n\nggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +\n    geom_point(aes(color = class)) +\n    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-5",
+    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-5",
+    "title": "ggplot2",
+    "section": "Volcano Plot",
+    "text": "Volcano Plot\n\ncolors &lt;- c(\"UP\"=\"#FC4E07\", \"none\"=\"#E7B800\", \"DOWN\"=\"#00AFBB\")\nggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +\n    geom_point(aes(color = class)) +\n    scale_color_manual(values = colors) +\n    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-6",
+    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-6",
+    "title": "ggplot2",
+    "section": "Volcano Plot",
+    "text": "Volcano Plot\n\nlibrary(ggrepel)\nggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj), label = X)) +\n    geom_point(aes(color = class)) +\n    scale_color_manual(values = colors) +\n    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    geom_label_repel(data = dge[dge$class %in% c('UP', 'DOWN'), ], \n                            size= 4, color = 'firebrick',  point.padding=unit(0.5, \"lines\"), max.overlaps = 30) +\n    theme_bw()"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-7",
+    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-7",
+    "title": "ggplot2",
+    "section": "Volcano Plot",
+    "text": "Volcano Plot"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#top-genes",
+    "href": "Taller/ggplot2/ggplot2.html#top-genes",
+    "title": "ggplot2",
+    "section": "TOP Genes",
+    "text": "TOP Genes\n\ndge &lt;- dge[order(dge$log2FoldChange, decreasing = TRUE), ]\ngenes.up &lt;- dge[1:40, c('X')]\ngenes.down &lt;- dge[(nrow(dge) - 30):nrow(dge), c('X')]\n\ngenes.up\n\n\n\n [1] \"FBgn0039443\" \"FBgn0030921\" \"FBgn0035865\" \"FBgn0030570\" \"FBgn0040743\"\n [6] \"FBgn0039448\" \"FBgn0038394\" \"FBgn0032289\" \"FBgn0051626\" \"FBgn0051560\"\n[11] \"FBgn0039027\" \"FBgn0039264\" \"FBgn0031467\" \"FBgn0036593\" \"FBgn0052855\"\n[16] \"FBgn0003065\" \"FBgn0036596\" \"FBgn0033481\" \"FBgn0050471\" \"FBgn0031957\"\n[21] \"FBgn0034131\" \"FBgn0038439\" \"FBgn0051561\" \"FBgn0051081\" \"FBgn0085359\"\n[26] \"FBgn0051876\" \"FBgn0037940\" \"FBgn0036350\" \"FBgn0085250\" \"FBgn0035875\"\n[31] \"FBgn0030841\" \"FBgn0035685\" \"FBgn0037395\" \"FBgn0032609\" \"FBgn0030107\"\n[36] \"FBgn0039387\" \"FBgn0036532\" \"FBgn0004511\" \"FBgn0038002\" \"FBgn0029647\"\n\ngenes.down\n\n [1] \"FBgn0036417\" \"FBgn0032184\" \"FBgn0030830\" \"FBgn0005664\" \"FBgn0039476\"\n [6] \"FBgn0050334\" \"FBgn0085232\" \"FBgn0034092\" \"FBgn0037288\" \"FBgn0038007\"\n[11] \"FBgn0038160\" \"FBgn0034828\" \"FBgn0031940\" \"FBgn0036470\" \"FBgn0039083\"\n[16] \"FBgn0085363\" \"FBgn0039483\" \"FBgn0039299\" \"FBgn0033404\" \"FBgn0035022\"\n[21] \"FBgn0019929\" \"FBgn0038148\" \"FBgn0038819\" \"FBgn0040553\" \"FBgn0035661\"\n[26] \"FBgn0052453\" \"FBgn0038505\" \"FBgn0053270\" \"FBgn0031276\" \"FBgn0037179\"\n[31] \"FBgn0037177\""
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#top-genes-1",
+    "href": "Taller/ggplot2/ggplot2.html#top-genes-1",
+    "title": "ggplot2",
+    "section": "TOP Genes",
+    "text": "TOP Genes\n\ndf.norm &lt;- read.csv('data/normalized_counts.csv')\nhead(df.norm)\n\n\n\n            X  SRX008026  SRX008174 SRX008201  SRX008239 SRX008008 SRX008168\n1 FBgn0000008  577.30414  589.66391  536.2258  595.58471  560.6214  581.6257\n2 FBgn0000014 1147.76523 1197.37875 1121.8777 1217.76428  671.0268  695.3146\n3 FBgn0000015  395.03031  443.75218  452.2948  431.81641  229.7358  255.3881\n4 FBgn0000017  895.81677 1007.84392  952.1506  930.81982  780.1100  792.5268\n5 FBgn0000018   93.31425   96.27166   95.1218   97.28117  122.6359  154.8805\n6 FBgn0000024 1117.90467 1063.50098 1050.0701 1048.39706  562.2742  561.8537\n  SRX008211 SRX008255 SRX008261\n1  516.9053  536.3239  567.9487\n2  682.5334  668.7586  651.6000\n3  236.6116  256.0892  209.1284\n4  789.9186  771.1942  838.7149\n5  120.1259  118.5327  107.8662\n6  607.9097  578.7615  517.3176\n\n\n\n\ndf.norm &lt;- df.norm[df.norm$X %in% c(genes.up, genes.down), ]\nrownames(df.norm) &lt;- df.norm$X\ndf.norm$X &lt;- NULL\ndim(df.norm)\n\n\n\n[1] 71  9"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#heatmap",
+    "href": "Taller/ggplot2/ggplot2.html#heatmap",
+    "title": "ggplot2",
+    "section": "Heatmap",
+    "text": "Heatmap\n\n\nlibrary(pheatmap)\n\npheatmap(df.norm)"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#heatmap-1",
+    "href": "Taller/ggplot2/ggplot2.html#heatmap-1",
+    "title": "ggplot2",
+    "section": "Heatmap",
+    "text": "Heatmap\n\n\npheatmap(df.norm,\n        scale = 'row'\n)"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#heatmap-2",
+    "href": "Taller/ggplot2/ggplot2.html#heatmap-2",
+    "title": "ggplot2",
+    "section": "Heatmap",
+    "text": "Heatmap\n\n\npheatmap(df.norm,\n        scale = 'row',\n        cutree_cols =  2,\n        cutree_rows = 2,\n        color = colorRampPalette(\n            c(\"steelblue\", \n                \"white\", \n                \"firebrick3\")\n            )(100),\n)"
+  },
+  {
+    "objectID": "Taller/ggplot2/ggplot2.html#heatmap-3",
+    "href": "Taller/ggplot2/ggplot2.html#heatmap-3",
+    "title": "ggplot2",
+    "section": "Heatmap",
+    "text": "Heatmap\n\n\npheatmap(df.norm,\n        scale = 'row',\n        cutree_cols =  2,\n        cutree_rows = 2,\n        color = colorRampPalette(\n            c(\"steelblue\", \n                \"white\", \n                \"firebrick3\")\n            )(100),\n        annotation_col = coldata\n)\n\n\n\n\n\n\n\n\n\n\n\n\n\nggplot2"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#qué-es-programar",
+    "href": "Taller/usaR/usaR.html#qué-es-programar",
+    "title": "Usa R!",
+    "section": "¿Qué es “programar”?",
+    "text": "¿Qué es “programar”?\nProgramar es el proceso de crear un conjunto de instrucciones para decirle a la computadora cómo realizar una tarea."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#cómo-programar",
+    "href": "Taller/usaR/usaR.html#cómo-programar",
+    "title": "Usa R!",
+    "section": "¿Cómo programar?",
+    "text": "¿Cómo programar?\nLa tarea de “programar” no se centra exclusivamente en escribir código, si no que conlleva una serie de pasos previos antes de “codificar” las instrucciones.\n\n\nDescomponer un problema complejo en partes más pequeñas.\nReconocimiento de patrones repetitivos.\nResolución de los problemas paso a paso.\nEscribir el código."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#qué-es-un-lenguaje-de-programación",
+    "href": "Taller/usaR/usaR.html#qué-es-un-lenguaje-de-programación",
+    "title": "Usa R!",
+    "section": "¿Qué es un “lenguaje de programación”?",
+    "text": "¿Qué es un “lenguaje de programación”?\nUn lenguaje de programación es un lenguaje formal (es decir, un lenguaje con reglas gramaticales bien definidas) que proporciona al programador la capacidad y habilidad de escribir instrucciones o secuencias de órdenes para controlar el comportamiento de un sistema informático."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#el-entorno-de-r",
+    "href": "Taller/usaR/usaR.html#el-entorno-de-r",
+    "title": "Usa R!",
+    "section": "¿El entorno de R?",
+    "text": "¿El entorno de R?\nR es un conjunto integrado de software para la manipulación, cálculo y visualización de datos. Entre otras cosas tiene:\n\nTratamiento y almacenamiento de datos eficaz.\nConjunto de operadores para el calculo sobre matrices.\nConjunto integrado de herramientas para el análisis y visualización de datos.\nUn simple y efectivo lenguaje de programación.\nAmpliamente utilizado en investigación cientifica."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#qué-es-un-programa",
+    "href": "Taller/usaR/usaR.html#qué-es-un-programa",
+    "title": "Usa R!",
+    "section": "¿Qué es un “Programa”?",
+    "text": "¿Qué es un “Programa”?\nUn programa informático es una secuencia de instrucciones basadas en un lenguaje de programación que el ordenador interpreta para resolver un problema."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#cuales-son-los-elementos-básicos-de-un-programa",
+    "href": "Taller/usaR/usaR.html#cuales-son-los-elementos-básicos-de-un-programa",
+    "title": "Usa R!",
+    "section": "¿Cuales son los elementos básicos de un programa?",
+    "text": "¿Cuales son los elementos básicos de un programa?\n\n\nInstrucciones: conjunto de ordenes que indican al ordenador como realizar una tarea específica (asignar un valor a una variable, ejecutar un bucle que itera sobre una lista de datos).\n\n\n\n\nFunciones: conjunto de instrucciones que permiten realizar una tarea específica (ANOVA, plot de datos, etc..). Se pueden imaginar como una máquina que toma ciertos datos, realiza una operación y devuelve un resultado."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#cuales-son-los-elementos-básicos-de-un-programa-1",
+    "href": "Taller/usaR/usaR.html#cuales-son-los-elementos-básicos-de-un-programa-1",
+    "title": "Usa R!",
+    "section": "¿Cuales son los elementos básicos de un programa?",
+    "text": "¿Cuales son los elementos básicos de un programa?\n\nDatos: pueden ser números, texto, imagénes, etc.. . En resumen cualquier tipo de información que el programa manipule. En general, son la razon de ser de muchas aplicaciones.\n\n\n\nOperadores: son las herramientas que permiten realizar operaciones sobre los datos (sumar, multiplicar, comparar, asignar, etc..).\n\n\n\n\nVariables: actuan como contenedores de información permitiendo que un programa conserve información y realice operaciones sobre esta información, en cierto modo se puede decir que son la “memoria” del programa."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#hola-mundo",
+    "href": "Taller/usaR/usaR.html#hola-mundo",
+    "title": "Usa R!",
+    "section": "“¡Hola Mundo!”",
+    "text": "“¡Hola Mundo!”\nEl programa “¡Hola Mundo!” suele ser el primer ejercicio típico en la introducción del estudio de un lenguaje de programación.\n\n\nsaludo &lt;- \"¡Hola Mundo!\"\n\nsaludo\n\n\n[1] \"¡Hola Mundo!\""
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#usando-funciones",
+    "href": "Taller/usaR/usaR.html#usando-funciones",
+    "title": "Usa R!",
+    "section": "Usando funciones",
+    "text": "Usando funciones\n- head()\nPara ilustrar el uso de la función head() utilizaremos el dataset iris que viene con la instalación de R-Base.\n\ndf &lt;- iris\n\nhead(df)\n\n\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width Species\n1          5.1         3.5          1.4         0.2  setosa\n2          4.9         3.0          1.4         0.2  setosa\n3          4.7         3.2          1.3         0.2  setosa\n4          4.6         3.1          1.5         0.2  setosa\n5          5.0         3.6          1.4         0.2  setosa\n6          5.4         3.9          1.7         0.4  setosa"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#usando-funciones-1",
+    "href": "Taller/usaR/usaR.html#usando-funciones-1",
+    "title": "Usa R!",
+    "section": "Usando funciones",
+    "text": "Usando funciones\n- pairs()\nPara ilustrar el uso de la función pairs() utilizaremos el dataset iris que viene con la instalación de R-Base.\n\n\ndf &lt;- iris\n\npairs(df, col = df$Species)"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#estructuras-de-control-de-flujo",
+    "href": "Taller/usaR/usaR.html#estructuras-de-control-de-flujo",
+    "title": "Usa R!",
+    "section": "Estructuras de control de flujo",
+    "text": "Estructuras de control de flujo\nSe llaman estructuras de control de flujo a las instrucciones que permiten controlar las acciones de un algoritmo o programa. Estas son de gran utilidad para determinar la lógica y el orden en que ocurren las operaciones.\n\nif, else: if(“si”) es usado cuando deseamos que una operación se ejecute únicamente cuando una condición se cumple. else(“de otro modo”) es usado para indicar que hacer en cado de que la condición de un if no se cumpla.\nfor: nos permite ejecutar un bucle, realizando una misma operación para cada elemento de un conjunto de datos."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#if-else",
+    "href": "Taller/usaR/usaR.html#if-else",
+    "title": "Usa R!",
+    "section": "if, else",
+    "text": "if, else\n\nvariable_1 &lt;- 5\n\nif (variable_1 &gt;10) {\n    print('la variable_1 es mayor que 10')\n} else {\n    print('la variable_1 NO es mayor que 10 ')\n}\n\n\n\n[1] \"la variable_1 NO es mayor que 10 \""
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#for",
+    "href": "Taller/usaR/usaR.html#for",
+    "title": "Usa R!",
+    "section": "for",
+    "text": "for\n\nestaciones &lt;- c('primavera', 'verano', 'otoño', 'invierno')\n\nfor(estacion in estaciones){\n    print(toupper(estacion))\n}\n\n\n\n[1] \"PRIMAVERA\"\n[1] \"VERANO\"\n[1] \"OTOÑO\"\n[1] \"INVIERNO\""
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#variables",
+    "href": "Taller/usaR/usaR.html#variables",
+    "title": "Usa R!",
+    "section": "Variables",
+    "text": "Variables\nLas variables actuan como contenedores de información (“memoria”) del programa. La estructura de esa información es muy heterogenea, podemos tener información simple(el número 5, el texto “¡Hola Mundo!”, etc..) o mucho más compleja (matriz de RNA-seq, con miles de filas y columnas).\nEn base al tipo de información que contienen las variables las podemos clasificar en simples o complejas."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#variables-simples",
+    "href": "Taller/usaR/usaR.html#variables-simples",
+    "title": "Usa R!",
+    "section": "Variables simples",
+    "text": "Variables simples\n\n\n\n\n\n\n\n\nTipo de dato\nDescripción\nDefinición\n\n\n\n\nNumeric\nNúmeros decimales\nnumero &lt;- 1.0\n\n\nInteger\nNúmeros enteros\nentero &lt;- 1\n\n\nCharacter\nCadenas de texto\ntexto &lt;- “un texto”\n\n\nComplex\nNúmeros complejos\ncomplejo &lt;- 3 + 2i\n\n\nLogical\nTRUE o FALSE\n5 &lt; 6; 5 == 5\n\n\nFactor\nEs una variable de tipo categórica"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#variables-complejas",
+    "href": "Taller/usaR/usaR.html#variables-complejas",
+    "title": "Usa R!",
+    "section": "Variables complejas",
+    "text": "Variables complejas\nLa estructura de la información contenida en estas variables es más compleja. Además estas variables tienen métodos y atributos que facilitan acceder a la información que contienen.\n\nVectores: Los vectores almacena una secuencia de valores simples todos del mismo tipo.\nListas: A diferencia de los vectores las listas es una colección de elementos que pueden ser de diferente tipo.\nMatrices:Una matriz es una estructura bidimensional que almacena números.\nData Frames: Un Data Frame es una estructura bidimensional que puede almacenar tipos de datos mixtos."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#vectores",
+    "href": "Taller/usaR/usaR.html#vectores",
+    "title": "Usa R!",
+    "section": "Vectores",
+    "text": "Vectores\nLa forma más habitual de crear un vector es usando la función c()\n\nvector_numeros &lt;- c(2, 4, 6, 8)\nprint(vector_numeros)\n\n\n\n[1] 2 4 6 8\n\n\n\nseq_numeros &lt;- 10:20\nprint(seq_numeros)\n\n\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\n\n\ncomb_vect &lt;- c(vector_numeros, seq_numeros)\nprint(comb_vect)\n\n\n\n [1]  2  4  6  8 10 11 12 13 14 15 16 17 18 19 20"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#aritmetica-de-vectores",
+    "href": "Taller/usaR/usaR.html#aritmetica-de-vectores",
+    "title": "Usa R!",
+    "section": "Aritmetica de Vectores",
+    "text": "Aritmetica de Vectores\nLas operaciones aritmeticas con vectores se realizan posicion a posicion.\n\nvector_numeros &lt;- seq(10, 50, by = 5)\nprint(vector_numeros)\n\n\n\n[1] 10 15 20 25 30 35 40 45 50\n\nprint(vector_numeros + 1)\n\n[1] 11 16 21 26 31 36 41 46 51\n\nprint(vector_numeros / 2)\n\n[1]  5.0  7.5 10.0 12.5 15.0 17.5 20.0 22.5 25.0"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#aritmetica-de-vectores-1",
+    "href": "Taller/usaR/usaR.html#aritmetica-de-vectores-1",
+    "title": "Usa R!",
+    "section": "Aritmetica de Vectores",
+    "text": "Aritmetica de Vectores\nDos vectores\n\nvector_numeros_1 &lt;- c(1, 2, 3, 4)\nvector_numeros_2 &lt;- c(1, 1, 0, 0)\nprint(vector_numeros_1 - vector_numeros_2)\n\n\n\n[1] 0 1 3 4\n\nprint(vector_numeros_1 * vector_numeros_2)\n\n[1] 1 2 0 0"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#aritmetica-de-vectores-2",
+    "href": "Taller/usaR/usaR.html#aritmetica-de-vectores-2",
+    "title": "Usa R!",
+    "section": "Aritmetica de Vectores",
+    "text": "Aritmetica de Vectores\nVectores texto y números\n\nletras &lt;- c('A', 'B', 'C', 'D')\nnumeros &lt;- c(1, 2, 3, 4)\nprint(paste0(letras, numeros))\n\n\n\n[1] \"A1\" \"B2\" \"C3\" \"D4\"\n\nprint(paste0(numeros, letras))\n\n[1] \"1A\" \"2B\" \"3C\" \"4D\""
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#elementos-vector",
+    "href": "Taller/usaR/usaR.html#elementos-vector",
+    "title": "Usa R!",
+    "section": "Elementos vector",
+    "text": "Elementos vector\n\nnumeros &lt;- 10:20\nnumeros\n\n\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\nnumeros[4]\n\n[1] 13\n\nnumeros[-4]\n\n [1] 10 11 12 14 15 16 17 18 19 20\n\nnumeros[c(4:8)]\n\n[1] 13 14 15 16 17\n\nnumeros[-c(4:8)]\n\n[1] 10 11 12 18 19 20\n\nnumeros[c(2, 10)]\n\n[1] 11 19"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#elementos-vector-1",
+    "href": "Taller/usaR/usaR.html#elementos-vector-1",
+    "title": "Usa R!",
+    "section": "Elementos vector",
+    "text": "Elementos vector\n\nnumeros &lt;- 10:20\nnumeros\n\n\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\nnumeros[-c(4:8)]\n\n[1] 10 11 12 18 19 20\n\n\n\n\nnumeros &lt;- numeros[-c(4:8)]\nnumeros\n\n\n\n[1] 10 11 12 18 19 20\n\n\n\n\n\nnumeros &lt;- c(numeros, c(1, 2, 3))\nnumeros\n\n\n\n[1] 10 11 12 18 19 20  1  2  3\n\n\n\n\n\nnumeros &lt;- numeros[order(numeros, decreasing = TRUE)]\nnumeros\n\n\n\n[1] 20 19 18 12 11 10  3  2  1"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#mascara-lógica",
+    "href": "Taller/usaR/usaR.html#mascara-lógica",
+    "title": "Usa R!",
+    "section": "Mascara lógica",
+    "text": "Mascara lógica\n\nnumeros &lt;- 10:20\nnumeros\n\n\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\nnumeros &lt; 15\n\n [1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE\n\nnumeros[numeros &lt; 15]\n\n[1] 10 11 12 13 14\n\n\n\n\nmascara_logica &lt;- numeros == 10\nmascara_logica\n\n\n\n [1]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE\n\n!mascara_logica\n\n [1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE\n\nnumeros[!mascara_logica]\n\n [1] 11 12 13 14 15 16 17 18 19 20"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#conclusion",
+    "href": "Taller/usaR/usaR.html#conclusion",
+    "title": "Usa R!",
+    "section": "Conclusion",
+    "text": "Conclusion\nPara seleccionar subconjuntos de datos lo podemos realizar de dos formas:\n\nVector de indices\n\n\nnumeros &lt;- runif(10, min = 1, max = 1000)\nnumeros\n\n\n\n [1] 393.1240  16.8962 122.8894 622.6050 808.4410 614.2943 666.3880 335.2747\n [9] 266.6400 984.1235\n\nnumeros[c(1, 5, 10)]\n\n[1] 393.1240 808.4410 984.1235\n\n\n\nMascara lógica\n\n\nnumeros[numeros &lt; 500]\n\n\n\n[1] 393.1240  16.8962 122.8894 335.2747 266.6400"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#data-frame",
+    "href": "Taller/usaR/usaR.html#data-frame",
+    "title": "Usa R!",
+    "section": "Data Frame",
+    "text": "Data Frame\nUn data frame es una estructura de datos bidimensional pudiendo almacenar datos mixtos(texto, números, etc ..). Un data frame es una lista de vectores (columnas) de la misma longitd.\n\ndf &lt;- iris\n\ndim(df)\n\n\n\n[1] 150   5\n\nhead(df)\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width Species\n1          5.1         3.5          1.4         0.2  setosa\n2          4.9         3.0          1.4         0.2  setosa\n3          4.7         3.2          1.3         0.2  setosa\n4          4.6         3.1          1.5         0.2  setosa\n5          5.0         3.6          1.4         0.2  setosa\n6          5.4         3.9          1.7         0.4  setosa\n\nsummary(df)\n\n  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   \n Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  \n 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  \n Median :5.800   Median :3.000   Median :4.350   Median :1.300  \n Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  \n 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  \n Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  \n       Species  \n setosa    :50  \n versicolor:50  \n virginica :50"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#structure-of-an-arbitrary-r-object",
+    "href": "Taller/usaR/usaR.html#structure-of-an-arbitrary-r-object",
+    "title": "Usa R!",
+    "section": "Structure of an Arbitrary R Object",
+    "text": "Structure of an Arbitrary R Object\nLa función str() muestra la estructura interna de un Objeto(variable compleja) de R.\n\ndf &lt;- iris\n\nstr(df)\n\n\n\n'data.frame':   150 obs. of  5 variables:\n $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...\n $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...\n $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...\n $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...\n $ Species     : Factor w/ 3 levels \"setosa\",\"versicolor\",..: 1 1 1 1 1 1 1 1 1 1 ...\n\n\n\n\ndf$Sepal.Length\n\n\n\n  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1\n [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0\n [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5\n [55] 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1\n [73] 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5\n [91] 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3\n[109] 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2\n[127] 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8\n[145] 6.7 6.7 6.3 6.5 6.2 5.9"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#seleccionar-una-columna",
+    "href": "Taller/usaR/usaR.html#seleccionar-una-columna",
+    "title": "Usa R!",
+    "section": "Seleccionar una columna",
+    "text": "Seleccionar una columna\n\ndf$Sepal.Length\n\n\n\n  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1\n [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0\n [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5\n [55] 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1\n [73] 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5\n [91] 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3\n[109] 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2\n[127] 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8\n[145] 6.7 6.7 6.3 6.5 6.2 5.9\n\ndf[, c('Sepal.Length')]\n\n  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1\n [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0\n [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5\n [55] 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1\n [73] 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5\n [91] 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3\n[109] 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2\n[127] 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8\n[145] 6.7 6.7 6.3 6.5 6.2 5.9\n\ndf[, c(1)]\n\n  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1\n [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0\n [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5\n [55] 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1\n [73] 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5\n [91] 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3\n[109] 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2\n[127] 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8\n[145] 6.7 6.7 6.3 6.5 6.2 5.9"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#seleccionar-varias-filas-y-columnas",
+    "href": "Taller/usaR/usaR.html#seleccionar-varias-filas-y-columnas",
+    "title": "Usa R!",
+    "section": "Seleccionar varias filas y columnas",
+    "text": "Seleccionar varias filas y columnas\n\ndf[1:10, c('Sepal.Length', 'Species')]\n\n\n\n   Sepal.Length Species\n1           5.1  setosa\n2           4.9  setosa\n3           4.7  setosa\n4           4.6  setosa\n5           5.0  setosa\n6           5.4  setosa\n7           4.6  setosa\n8           5.0  setosa\n9           4.4  setosa\n10          4.9  setosa\n\ndf[c(30, 40, 100), c(5, 2, 4)]\n\n       Species Sepal.Width Petal.Width\n30      setosa         3.2         0.2\n40      setosa         3.4         0.2\n100 versicolor         2.8         1.3"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#subset",
+    "href": "Taller/usaR/usaR.html#subset",
+    "title": "Usa R!",
+    "section": "Subset",
+    "text": "Subset\n\ndf[df$Species == 'versicolor' & df$Sepal.Length &gt; 6, ]\n\n\n\n   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species\n51          7.0         3.2          4.7         1.4 versicolor\n52          6.4         3.2          4.5         1.5 versicolor\n53          6.9         3.1          4.9         1.5 versicolor\n55          6.5         2.8          4.6         1.5 versicolor\n57          6.3         3.3          4.7         1.6 versicolor\n59          6.6         2.9          4.6         1.3 versicolor\n64          6.1         2.9          4.7         1.4 versicolor\n66          6.7         3.1          4.4         1.4 versicolor\n69          6.2         2.2          4.5         1.5 versicolor\n72          6.1         2.8          4.0         1.3 versicolor\n73          6.3         2.5          4.9         1.5 versicolor\n74          6.1         2.8          4.7         1.2 versicolor\n75          6.4         2.9          4.3         1.3 versicolor\n76          6.6         3.0          4.4         1.4 versicolor\n77          6.8         2.8          4.8         1.4 versicolor\n78          6.7         3.0          5.0         1.7 versicolor\n87          6.7         3.1          4.7         1.5 versicolor\n88          6.3         2.3          4.4         1.3 versicolor\n92          6.1         3.0          4.6         1.4 versicolor\n98          6.2         2.9          4.3         1.3 versicolor"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#columnas",
+    "href": "Taller/usaR/usaR.html#columnas",
+    "title": "Usa R!",
+    "section": "Columnas",
+    "text": "Columnas\n\ndf$Sepal.Ratio &lt;- df$Sepal.Length / df$Sepal.Width\ndf$Petal.Ratio &lt;- df$Petal.Length / df$Petal.Width\nhead(df, 3)\n\n\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width Species Sepal.Ratio\n1          5.1         3.5          1.4         0.2  setosa    1.457143\n2          4.9         3.0          1.4         0.2  setosa    1.633333\n3          4.7         3.2          1.3         0.2  setosa    1.468750\n  Petal.Ratio\n1         7.0\n2         7.0\n3         6.5\n\n\n\n\ndf.ratio &lt;- df[, c('Species', 'Sepal.Ratio', 'Petal.Ratio')]\nhead(df.ratio, 3)\n\n\n\n  Species Sepal.Ratio Petal.Ratio\n1  setosa    1.457143         7.0\n2  setosa    1.633333         7.0\n3  setosa    1.468750         6.5\n\n\n\n\n\ndf$Sepal.Ratio &lt;- NULL\ndf$Petal.Ratio &lt;- NULL\nhead(df, 3)\n\n\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width Species\n1          5.1         3.5          1.4         0.2  setosa\n2          4.9         3.0          1.4         0.2  setosa\n3          4.7         3.2          1.3         0.2  setosa"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#crear-dataframe",
+    "href": "Taller/usaR/usaR.html#crear-dataframe",
+    "title": "Usa R!",
+    "section": "Crear dataframe",
+    "text": "Crear dataframe\n\ndf.ratio &lt;- data.frame(\n                Species = df$Species,\n                Sepal.Ratio = df$Sepal.Length / df$Sepal.Width,\n                Petal.Ratio = df$Petal.Length / df$Petal.Width\n            )\nhead(df.ratio)\n\n\n\n  Species Sepal.Ratio Petal.Ratio\n1  setosa    1.457143        7.00\n2  setosa    1.633333        7.00\n3  setosa    1.468750        6.50\n4  setosa    1.483871        7.50\n5  setosa    1.388889        7.00\n6  setosa    1.384615        4.25"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#función-aggregate",
+    "href": "Taller/usaR/usaR.html#función-aggregate",
+    "title": "Usa R!",
+    "section": "Función aggregate",
+    "text": "Función aggregate\nLa función aggregate() es muy util para calcular estadisticos por subconjuntos del data frame.\n\naggregate(df[, c(1:4)], by = list(Species = df$Species), FUN = mean)\n\n\n\n     Species Sepal.Length Sepal.Width Petal.Length Petal.Width\n1     setosa        5.006       3.428        1.462       0.246\n2 versicolor        5.936       2.770        4.260       1.326\n3  virginica        6.588       2.974        5.552       2.026\n\n\n\n\naggregate(df[, c(1:4)], by = list(Species = df$Species), FUN = sd)\n\n\n\n     Species Sepal.Length Sepal.Width Petal.Length Petal.Width\n1     setosa    0.3524897   0.3790644    0.1736640   0.1053856\n2 versicolor    0.5161711   0.3137983    0.4699110   0.1977527\n3  virginica    0.6358796   0.3224966    0.5518947   0.2746501"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#drosophila-melanogaster",
+    "href": "Taller/usaR/usaR.html#drosophila-melanogaster",
+    "title": "Usa R!",
+    "section": "Drosophila melanogaster",
+    "text": "Drosophila melanogaster\nPara el análisis de expresión diferencial vamos a utilizar el paquete DESeq2.\nDebemos familiarizarnos con la función a usar:\n\nManual de referencia\nVignettes\n\nLa función DESeq() recibe como paramatro un objeto de la clase DESeqDataSet. Este tipo de variable almacena los valores de entrada, calculos intermedios y resultados del análisis.\ndds &lt;- DeSeqDataSetFromMatrix(countData, colData, design)\n\ncountData: Es una matriz númerica (muestras en columnas).\ncolData: DataFrame con al menos una columna, las filas corresponden a las columnas del countData.\ndesign: Expresa como las cuentas para cada gen dependen de las variables en colData."
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#drosophila-melanogaster-1",
+    "href": "Taller/usaR/usaR.html#drosophila-melanogaster-1",
+    "title": "Usa R!",
+    "section": "Drosophila Melanogaster",
+    "text": "Drosophila Melanogaster"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#raw-counts",
+    "href": "Taller/usaR/usaR.html#raw-counts",
+    "title": "Usa R!",
+    "section": "Raw counts",
+    "text": "Raw counts\n\ndf &lt;- read.csv('data/modencodefly_count_table.csv')\n\ndim(df)\n\n\n\n[1] 14869   148\n\nhead(df)\n\n         gene SRX007811 SRX008180 SRX008227 SRX008238 SRX008258 SRX008015\n1 FBgn0000003         0         0         0         0         0         0\n2 FBgn0000008      3903      1601       681       648       718       921\n3 FBgn0000014        75        29        10         9        12       563\n4 FBgn0000015        33        11         8         4         8       235\n5 FBgn0000017      9763      4107      1814      1652      1788      6358\n6 FBgn0000018       832       368       146       126       170        97\n  SRX008179 SRX008190 SRX008193 SRX008271 SRX008027 SRX008181 SRX008217\n1         0         0         0         0         0         0         0\n2       295       364       268       267      1764       411       284\n3       186       239       152       191      4890       957       806\n4        95       101        58       101      3000       590       492\n5      2214      2763      1906      2053      6006      1252       904\n6        33        55        25        22       339        57        60\n  SRX008250 SRX008265 SRX008025 SRX008175 SRX008210 SRX008212 SRX008257\n1         0         0         0         0         0         0         0\n2       396       706      1074       563       156       160       440\n3      1036      1956      6147      3166       956      1053      2876\n4       715      1185      2492      1228       340       458      1174\n5      1244      2456      5030      2584       746       847      2105\n6        71       116       178        95        34        35        75\n  SRX008010 SRX008249 SRX008252 SRX008273 SRX008274 SRX008005 SRX008198\n1         0         0         0         0         0         0         0\n2      1557       874       904       632       234      4488      1222\n3      5160      3270      2836      2048       815      4792      1390\n4      1986      1454      1138       788       324      1709       541\n5      5350      3101      3046      2343       969      8695      2448\n6       130        99        75        56        25       141        43\n  SRX008208 SRX008243 SRX008247 SRX008018 SRX008177 SRX008225 SRX008235\n1         0         0         0         0         0         0         0\n2       825      3030      1224      8755      2431      1718      5478\n3       883      3102      1192      9943      2536      1890      5782\n4       370      1076       431      3421       886       744      1942\n5      1518      5540      2345     12295      3296      2440      7652\n6        25        97        34       229        59        50       113\n  SRX008277 SRX008007 SRX008196 SRX008233 SRX008237 SRX008262 SRX008006\n1         0         0         0         0         0         0         0\n2      2212      5617      1039      2769      1716      1664      1749\n3      2559      5134       935      2339      1404      1426      2908\n4       985      1313       240       645       392       419      1024\n5      3125      9374      1816      4564      2640      2853      4548\n6        48       122        19        67        27        44        93\n  SRX008178 SRX008205 SRX008242 SRX008278 SRX008020 SRX008213 SRX008215\n1         0         0         0         0         0         0         0\n2      1532       549       715       390      1685       384      1397\n3      2602       965      1116       638      2333       543      1832\n4       845       321       398       216       914       199       667\n5      4156      1537      1816      1085      2577       572      2010\n6        57        20        23        10        42        18        31\n  SRX008222 SRX008259 SRX008011 SRX008214 SRX008221 SRX008241 SRX008256\n1         0         0         0         0         0         0         0\n2       407      2141      1036       417       353       560       394\n3       512      3101      1068       448       338       589       475\n4       217      1153       419       165       139       219       179\n5       526      3328      3327      1425      1046      1719      1342\n6        12        72        35        16        11        15        15\n  SRX008019 SRX008167 SRX008234 SRX008251 SRX008266 SRX008026 SRX008174\n1         0         0         0         0         0         0         0\n2      2548       730       687       786       587       928       392\n3      3090       979       819      1008       810      1845       796\n4      1306       404       334       450       310       635       295\n5      6979      1985      1843      2297      1539      1440       670\n6       113        33        26        39        23       150        64\n  SRX008201 SRX008239 SRX008008 SRX008168 SRX008211 SRX008255 SRX008261\n1         0         0         0         0         0         0         0\n2       575       851      1696       353       284       733       258\n3      1203      1740      2030       422       375       914       296\n4       485       617       695       155       130       350        95\n5      1021      1330      2360       481       434      1054       381\n6       102       139       371        94        66       162        49\n  SRX008009 SRX008194 SRX008207 SRX008224 SRX008244 SRX008029 SRX008184\n1         0         0         0         0         0         0         0\n2       311        94       108       110       148       228        74\n3       536       182       211       196       296       535       181\n4       190        71        70        81       111       127        56\n5       481       154       197       197       292       667       226\n6        83        29        27        35        48       131        63\n  SRX008206 SRX008220 SRX008267 SRX008014 SRX008182 SRX008187 SRX008189\n1         0         0         0         0         0         0         0\n2       115        77        74       393       541       168       161\n3       278       212       173       822      1342       360       434\n4        62        56        44       166       324        82        95\n5       357       242       216      1036      1416       490       452\n6        82        48        57       107       167        44        57\n  SRX008200 SRX008156 SRX008199 SRX008245 SRX008253 SRX008023 SRX008218\n1         0         0         0         0         0         0         0\n2       163      1205      2939       945      1022      3602       926\n3       398      1598      3795      1136      1349      3227       836\n4       103       389      1029       322       338       470       134\n5       423      1791      4400      1395      1484      5073      1312\n6        39       154       334        94       124       307        78\n  SRX008246 SRX008248 SRX008275 SRX008016 SRX008192 SRX008219 SRX008236\n1         0         0         0         0         0         0         0\n2      2209      1494      1076      4011      1233      1758      2123\n3      1903      1231       878      2698       885      1115      1577\n4       287       201       130       529       192       229       325\n5      3019      1972      1521      5793      1860      2517      3176\n6       178       105        80       274        95       128       156\n  SRX008264 SRX008013 SRX008188 SRX008197 SRX008228 SRX008022 SRX008183\n1         0         0         0         0         0         0         0\n2      2023      1117      1004      1447      1452       665       396\n3      1488       282       286       355       379        61        44\n4       316        99        87       153       101        17        19\n5      2960      2356      2159      3069      3182      2170      1317\n6       148       264       247       320       333       218       149\n  SRX008185 SRX008216 SRX012269 SRX008024 SRX008173 SRX008195 SRX008202\n1         0         0         0         0         0         0         0\n2       686       409      1011       603       336       380       431\n3        64        36        72        39        35        40        36\n4        17        15        20        15        17        20         8\n5      2252      1426      3357      1906      1123      1239      1551\n6       220       137       343       194       138       164       143\n  SRX008254 SRX012270 SRX008012 SRX008170 SRX008263 SRX008268 SRX016332\n1         0         0         0         0         0         0         0\n2       437       738       717       630       389       303       373\n3        29        54       340       307       195       148       222\n4        10        12       256       270       165       116       142\n5      1410      2504      1388      1279       790       579       849\n6       136       224       170       186       107        76       108\n  SRX008028 SRX008191 SRX008223 SRX008260 SRX008021 SRX008203 SRX008226\n1         0         0         0         0         0         0         0\n2      1234      1112       989      1026       430       200       158\n3       309       298       243       281       137        75        47\n4       347       292       305       328       167       118        70\n5      2007      1837      1596      1644       898       461       341\n6       319       280       251       308       154        98        54\n  SRX008229 SRX008232 SRX012271 SRX008171 SRX008186 SRX008240 SRX010758\n1         0         0         0         0         0         0         0\n2       430       250      1074      3386      6313      3210      4811\n3       132        74       339       647      1310       632       939\n4       177        98       322       202       375       203       259\n5       777       504      2100      2759      5211      2524      3931\n6       137        71       332       128       263        96       165\n  SRX016331 SRX008155 SRX008169 SRX008172 SRX008231 SRX008542 SRX008017\n1         0         0         0         0         0         0         0\n2      3803      2393      1834      1890       744       952       971\n3       751       572       404       440       156       212       307\n4       219       252       183       210        76        81       146\n5      3212      2584      2013      2156       809       963      1168\n6       117       216       142       143        47        65       134\n  SRX008209 SRX008230 SRX008270 SRX008157 SRX008204 SRX008269 SRX008272\n1         0         0         0         0         0         0         0\n2       844      1204       620      1519      1267      1448      1185\n3       253       371       159      1841      1650      1875      1370\n4       146       168        93       340       332       368       261\n5      1085      1513       782      1973      1592      1833      1465\n6       124       146        82       101       112       116       102\n  SRX008276\n1         0\n2      3225\n3      4048\n4       711\n5      4066\n6       294"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#metadatos",
+    "href": "Taller/usaR/usaR.html#metadatos",
+    "title": "Usa R!",
+    "section": "Metadatos",
+    "text": "Metadatos\n\nphenodata &lt;- read.csv('data/modencodefly_phenodata.csv')\ndim(phenodata)\n\n\n\n[1] 147   3\n\nhead(phenodata, 20)\n\n   sample.id num.tech.reps       stage\n1  SRX007811             5 Embryos0002\n2  SRX008180             2 Embryos0002\n3  SRX008227             1 Embryos0002\n4  SRX008238             1 Embryos0002\n5  SRX008258             1 Embryos0002\n6  SRX008015             2 Embryos0204\n7  SRX008179             1 Embryos0204\n8  SRX008190             1 Embryos0204\n9  SRX008193             1 Embryos0204\n10 SRX008271             1 Embryos0204\n11 SRX008027             4 Embryos0406\n12 SRX008181             1 Embryos0406\n13 SRX008217             1 Embryos0406\n14 SRX008250             1 Embryos0406\n15 SRX008265             2 Embryos0406\n16 SRX008025             5 Embryos0608\n17 SRX008175             2 Embryos0608\n18 SRX008210             1 Embryos0608\n19 SRX008212             1 Embryos0608\n20 SRX008257             2 Embryos0608"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#fenotipos-seleccionados",
+    "href": "Taller/usaR/usaR.html#fenotipos-seleccionados",
+    "title": "Usa R!",
+    "section": "Fenotipos seleccionados",
+    "text": "Fenotipos seleccionados\nQueremos seleccionar las muestras que corresponden con el stage ‘L1Larvae’ y ‘L2Larvae’.\n\nfenotipos &lt;- c('L1Larvae', 'L2Larvae')\n\ndf.fenotipos &lt;- phenodata[phenodata$stage %in% fenotipos, c('sample.id', 'stage')]\n\ndf.fenotipos$stage &lt;- as.factor(df.fenotipos$stage)\n\ndf.fenotipos\n\n\n\n   sample.id    stage\n61 SRX008026 L1Larvae\n62 SRX008174 L1Larvae\n63 SRX008201 L1Larvae\n64 SRX008239 L1Larvae\n65 SRX008008 L2Larvae\n66 SRX008168 L2Larvae\n67 SRX008211 L2Larvae\n68 SRX008255 L2Larvae\n69 SRX008261 L2Larvae"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#filtrar-el-dataset-por-las-muestras-seleccionadas",
+    "href": "Taller/usaR/usaR.html#filtrar-el-dataset-por-las-muestras-seleccionadas",
+    "title": "Usa R!",
+    "section": "Filtrar el dataset por las muestras seleccionadas",
+    "text": "Filtrar el dataset por las muestras seleccionadas\n\nhead(names(df), 15)\n\n\n\n [1] \"gene\"      \"SRX007811\" \"SRX008180\" \"SRX008227\" \"SRX008238\" \"SRX008258\"\n [7] \"SRX008015\" \"SRX008179\" \"SRX008190\" \"SRX008193\" \"SRX008271\" \"SRX008027\"\n[13] \"SRX008181\" \"SRX008217\" \"SRX008250\"\n\n\n\n\ndf.sub &lt;- df[, df.fenotipos$sample.id]\n\nhead(df.sub)\n\n\n\n  SRX008026 SRX008174 SRX008201 SRX008239 SRX008008 SRX008168 SRX008211\n1         0         0         0         0         0         0         0\n2       928       392       575       851      1696       353       284\n3      1845       796      1203      1740      2030       422       375\n4       635       295       485       617       695       155       130\n5      1440       670      1021      1330      2360       481       434\n6       150        64       102       139       371        94        66\n  SRX008255 SRX008261\n1         0         0\n2       733       258\n3       914       296\n4       350        95\n5      1054       381\n6       162        49"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#añadir-genes",
+    "href": "Taller/usaR/usaR.html#añadir-genes",
+    "title": "Usa R!",
+    "section": "Añadir genes",
+    "text": "Añadir genes\n\nrownames(df.sub) &lt;- df$gene\n\nhead(df.sub)\n\n\n\n            SRX008026 SRX008174 SRX008201 SRX008239 SRX008008 SRX008168\nFBgn0000003         0         0         0         0         0         0\nFBgn0000008       928       392       575       851      1696       353\nFBgn0000014      1845       796      1203      1740      2030       422\nFBgn0000015       635       295       485       617       695       155\nFBgn0000017      1440       670      1021      1330      2360       481\nFBgn0000018       150        64       102       139       371        94\n            SRX008211 SRX008255 SRX008261\nFBgn0000003         0         0         0\nFBgn0000008       284       733       258\nFBgn0000014       375       914       296\nFBgn0000015       130       350        95\nFBgn0000017       434      1054       381\nFBgn0000018        66       162        49"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#tip",
+    "href": "Taller/usaR/usaR.html#tip",
+    "title": "Usa R!",
+    "section": "TIP",
+    "text": "TIP\nfenotipos &lt;- c('L1Larvae', 'L2Larvae')\ndf.fenotipos &lt;- phenodata[phenodata$stage %in% fenotipos, c('sample.id', 'stage')]\n\ndf.sub &lt;- df[, df.fenotipos$sample.id]\nrownames(df.sub) &lt;- df$gene\n\n¿No es más sencillo?\ndf.sub &lt;- df[, c('SRX008026', 'SRX008174 ', 'SRX008201', 'SRX008239', 'SRX008008 ', \n                 ' SRX008168', 'SRX008211', 'SRX008255', 'SRX008261')]\nrownames(df.sub) &lt;- df$gene"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#eliminar-genes-con-pocas-counts",
+    "href": "Taller/usaR/usaR.html#eliminar-genes-con-pocas-counts",
+    "title": "Usa R!",
+    "section": "Eliminar genes con pocas counts",
+    "text": "Eliminar genes con pocas counts\n\nhead(rowSums(df.sub))\n\n\n\nFBgn0000003 FBgn0000008 FBgn0000014 FBgn0000015 FBgn0000017 FBgn0000018 \n          0        6070        9621        3457        9171        1197 \n\n\n\n\nkeep &lt;- rowSums(df.sub) &gt;= 10\nhead(keep)\n\n\n\nFBgn0000003 FBgn0000008 FBgn0000014 FBgn0000015 FBgn0000017 FBgn0000018 \n      FALSE        TRUE        TRUE        TRUE        TRUE        TRUE \n\n\n\n\n\ndf.sub  &lt;- df.sub [keep, ]\nhead(df.sub)\n\n\n\n            SRX008026 SRX008174 SRX008201 SRX008239 SRX008008 SRX008168\nFBgn0000008       928       392       575       851      1696       353\nFBgn0000014      1845       796      1203      1740      2030       422\nFBgn0000015       635       295       485       617       695       155\nFBgn0000017      1440       670      1021      1330      2360       481\nFBgn0000018       150        64       102       139       371        94\nFBgn0000024      1797       707      1126      1498      1701       341\n            SRX008211 SRX008255 SRX008261\nFBgn0000008       284       733       258\nFBgn0000014       375       914       296\nFBgn0000015       130       350        95\nFBgn0000017       434      1054       381\nFBgn0000018        66       162        49\nFBgn0000024       334       791       235\n\ndim(df.sub)\n\n[1] 11342     9"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#deseq2",
+    "href": "Taller/usaR/usaR.html#deseq2",
+    "title": "Usa R!",
+    "section": "DESeq2",
+    "text": "DESeq2\nPara el análisis de expresión diferencial vamos a utilizar el paquete DESeq2.\nVignettes: Analyzing RNA-seq data with DESeq2\ninstall.packages(\"BiocManager\")\n\nBiocManager::install(\"DESeq2\")"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#deseq2-1",
+    "href": "Taller/usaR/usaR.html#deseq2-1",
+    "title": "Usa R!",
+    "section": "DESeq2",
+    "text": "DESeq2\n\nlibrary(DESeq2)\ncoldata &lt;- data.frame(stage = df.fenotipos$stage)\nrownames(coldata) &lt;- df.fenotipos$sample.id\nhead(coldata)\n\n\n\n             stage\nSRX008026 L1Larvae\nSRX008174 L1Larvae\nSRX008201 L1Larvae\nSRX008239 L1Larvae\nSRX008008 L2Larvae\nSRX008168 L2Larvae\n\n\n\n\ndds &lt;- DESeqDataSetFromMatrix(\n                    countData = df.sub,\n                    colData = coldata,\n                    design = ~stage\n            )\n\ndds\n\n\n\nclass: DESeqDataSet \ndim: 11342 9 \nmetadata(1): version\nassays(1): counts\nrownames(11342): FBgn0000008 FBgn0000014 ... FBgn0261574 FBgn0261575\nrowData names(0):\ncolnames(9): SRX008026 SRX008174 ... SRX008255 SRX008261\ncolData names(1): stage"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#deseq2-2",
+    "href": "Taller/usaR/usaR.html#deseq2-2",
+    "title": "Usa R!",
+    "section": "DESeq2",
+    "text": "DESeq2\n\ndds &lt;- DESeq(dds)\ndds\n\n\n\nclass: DESeqDataSet \ndim: 11342 9 \nmetadata(1): version\nassays(4): counts mu H cooks\nrownames(11342): FBgn0000008 FBgn0000014 ... FBgn0261574 FBgn0261575\nrowData names(22): baseMean baseVar ... deviance maxCooks\ncolnames(9): SRX008026 SRX008174 ... SRX008255 SRX008261\ncolData names(2): stage sizeFactor\n\n\n\n\nres &lt;- results(dds, contrast = c('stage', 'L1Larvae', 'L2Larvae'))\nres\n\n\n\nlog2 fold change (MLE): stage L1Larvae vs L2Larvae \nWald test p-value: stage L1Larvae vs L2Larvae \nDataFrame with 11342 rows and 6 columns\n             baseMean log2FoldChange     lfcSE      stat      pvalue\n            &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt;\nFBgn0000008   562.467      0.0567848 0.0548496   1.03528 3.00538e-01\nFBgn0000014   894.891      0.7973618 0.0453627  17.57749 3.66458e-69\nFBgn0000015   323.316      0.8453126 0.0737835  11.45667 2.17736e-30\nFBgn0000017   862.122      0.2538049 0.0478014   5.30957 1.09885e-07\nFBgn0000018   111.781     -0.3815511 0.1121941  -3.40081 6.71864e-04\n...               ...            ...       ...       ...         ...\nFBgn0261570 1415.4046       0.215624 0.0667684   3.22943 1.24035e-03\nFBgn0261572   71.9698       2.201588 0.1526435  14.42307 3.70470e-47\nFBgn0261573  311.1002       0.311384 0.0678952   4.58624 4.51301e-06\nFBgn0261574 1477.7729       0.557713 0.0445722  12.51256 6.37404e-36\nFBgn0261575 1214.1409      -0.346767 0.0481108  -7.20769 5.69101e-13\n                   padj\n              &lt;numeric&gt;\nFBgn0000008 3.49974e-01\nFBgn0000014 2.56861e-68\nFBgn0000015 8.69793e-30\nFBgn0000017 2.25926e-07\nFBgn0000018 1.08510e-03\n...                 ...\nFBgn0261570 1.95917e-03\nFBgn0261572 1.96240e-46\nFBgn0261573 8.46405e-06\nFBgn0261574 2.79644e-35\nFBgn0261575 1.45364e-12"
+  },
+  {
+    "objectID": "Taller/usaR/usaR.html#guardar-resultados",
+    "href": "Taller/usaR/usaR.html#guardar-resultados",
+    "title": "Usa R!",
+    "section": "Guardar resultados",
+    "text": "Guardar resultados\nGuardamos los resultados del análisis diferencial y los datos normalizados\n\nwrite.csv(res, 'data/DGE.csv')\n\nwrite.csv(counts(dds, normalized=TRUE), 'data/normalized_counts.csv')"
+  },
+  {
+    "objectID": "R/introduccion.html",
+    "href": "R/introduccion.html",
+    "title": "Introducción a R",
+    "section": "",
+    "text": "Programar es el proceso de crear un conjunto de instrucciones para decirle a la computadora cómo realizar una tarea. La tarea de “programar” no se centra exclusivamente en escribir código, si no que conlleva una serie de pasos previos antes de “codificar” las instrucciones.\n\nDescomponer un problema complejo en partes más pequeñas.\nReconocimiento de patrones repetitivos.\nResolución de los problemas paso a paso.\nEscribir el código."
+  },
+  {
+    "objectID": "R/introduccion.html#qué-es-programar",
+    "href": "R/introduccion.html#qué-es-programar",
+    "title": "Introducción a R",
+    "section": "",
+    "text": "Programar es el proceso de crear un conjunto de instrucciones para decirle a la computadora cómo realizar una tarea. La tarea de “programar” no se centra exclusivamente en escribir código, si no que conlleva una serie de pasos previos antes de “codificar” las instrucciones.\n\nDescomponer un problema complejo en partes más pequeñas.\nReconocimiento de patrones repetitivos.\nResolución de los problemas paso a paso.\nEscribir el código."
+  },
+  {
+    "objectID": "R/introduccion.html#qué-es-un-lenguaje-de-programación",
+    "href": "R/introduccion.html#qué-es-un-lenguaje-de-programación",
+    "title": "Introducción a R",
+    "section": "¿Qué es un lenguaje de programación?",
+    "text": "¿Qué es un lenguaje de programación?\nUn lenguaje de programación es un lenguaje formal (es decir, un lenguaje con reglas gramaticales bien definidas) que proporciona al programador la capacidad y habilidad de escribir instrucciones o secuencias de órdenes para controlar el comportamiento de un sistema informático."
+  },
+  {
+    "objectID": "R/introduccion.html#el-entorno-de-r",
+    "href": "R/introduccion.html#el-entorno-de-r",
+    "title": "Introducción a R",
+    "section": "El entorno de R",
+    "text": "El entorno de R\nR es un conjunto integrado de software para la manipulación, cálculo y visualización de datos. Entre otras cosas tiene:\n\nTratamiento y almacenamiento de datos eficaz.\nConjunto de operadores para el calculo sobre matrices.\nConjunto integrado de herramientas para el análisis y visualización de datos.\nUn simple y efectivo lenguaje de programación.\nAmpliamente utilizado en investigación cientifica."
+  },
+  {
+    "objectID": "R/introduccion.html#qué-es-un-programa",
+    "href": "R/introduccion.html#qué-es-un-programa",
+    "title": "Introducción a R",
+    "section": "¿Qué es un “Programa”?",
+    "text": "¿Qué es un “Programa”?\nUn programa informático es una secuencia de instrucciones basadas en un lenguaje de programación que el ordenador interpreta para resolver un problema. Los elementos básicos de un programa son:\n\nInstrucciones: conjunto de ordenes que indican al ordenador como realizar una tarea específica (asignar un valor a una variable, ejecutar un bucle que itera sobre una lista de datos).\nDatos: pueden ser números, texto, imagénes, etc.. . En resumen cualquier tipo de información que el programa manipule. En general, son la razon de ser de muchas aplicaciones.\nOperadores: son las herramientas que permiten realizar operaciones sobre los datos (sumar, multiplicar, comparar, asignar, etc..).\nVariables: actuan como contenedores de información permitiendo que un programa conserve información y realice operaciones sobre esta información, en cierto modo se puede decir que son la “memoria” del programa."
+  },
+  {
+    "objectID": "R/introduccion.html#qué-es-un-ide",
+    "href": "R/introduccion.html#qué-es-un-ide",
+    "title": "Introducción a R",
+    "section": "¿Qué es un IDE?",
+    "text": "¿Qué es un IDE?\nUn entorno de desarrollo integrado (IDE) es una aplicación de software que ayuda a los programadores a desarrollar código de software de manera eficiente y aumentando la productividad.\nEl IDE más popular para R es RStudio, aunque hay otros que tambien se pueden utilizar:\n\nRStudio Desktop\nProject Jupyter\nVisual Stuido Code\nPositron"
+  },
+  {
+    "objectID": "R/introduccion.html#hola-mundo",
+    "href": "R/introduccion.html#hola-mundo",
+    "title": "Introducción a R",
+    "section": "¡Hola Mundo!",
+    "text": "¡Hola Mundo!\nEl programa “¡Hola Mundo!” suele ser el primer ejercicio típico en la introducción del estudio de un lenguaje de programación.\n\nsaludo &lt;- '¡Hola Mundo!'\n\nsaludo\n\n[1] \"¡Hola Mundo!\"\n\n\nEn la primera linea el texto ‘¡Hola Mundo!’ se asigna a la variable saludo usando el operador de asignación &lt;- (es posible usar =, que es el operador usado en otros lenguajes de programación). En la segunda linea llamamos a la variable saludo y se muestra su contenido."
+  },
+  {
+    "objectID": "R/introduccion.html#variables",
+    "href": "R/introduccion.html#variables",
+    "title": "Introducción a R",
+    "section": "Variables",
+    "text": "Variables\nLas variables sirven para almacenar un valor (datos, información) que luego vamos a utilizar en algun procedimiento. En general partiremos de unos datos experimentales con los que haremos calculos o otros procedimientos teniendo como resultados datos intermedios. Para poder hacer referencia en R a esos datos, usaremos variables. En R existen varios tipos de objetos que permiten que el usuario pueda almacenar la información para realizar los procedimientos estadísticos y gráficos. En general podemos clasificar las variables en función del tipo de dato que van a almacenar. Así, tendremos variables simples (una variable que almacene el valor 10) o variables más complejas (una variable que almacene la tabla de resultados de un HPLC-MS).\n\nVariables simples\n\n\n\n\n\n\n\n\nTipo de dato\nDescripción\nDefinición\n\n\n\n\nNumeric\nNúmeros decimales\nnumero &lt;- 1.0\n\n\nInteger\nNúmeros enteros\nentero &lt;- 1\n\n\nCharacter\nCadenas de texto\ntexto &lt;- “un texto”\n\n\nComplex\nNúmeros complejos\ncomplejo &lt;- 3 + 2i\n\n\nLogical\nTRUE o FALSE\n5 &lt; 6; 5 == 5\n\n\nFactor\nEs una variable de tipo categórica"
   }
 ]
