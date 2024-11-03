@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Caso practico – Tumbleweed</title>
+<title>Caso práctico – Tumbleweed</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -122,6 +122,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-r" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">R</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-r">    
+        <li>
+    <a class="dropdown-item" href="../../R/introduccion.html">
+ <span class="dropdown-text">Introducción a R</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-rna-seq" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">RNA-seq</span>
     </a>
@@ -132,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="../../rnaseq/deseq/ejemplo.html">
- <span class="dropdown-text">Caso practico</span></a>
+ <span class="dropdown-text">Caso práctico</span></a>
   </li>  
     </ul>
   </li>
@@ -147,10 +158,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-presentaciones" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Presentaciones</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-presentaciones">    
+        <li>
+    <a class="dropdown-item" href="../../Taller/usaR/usaR.html">
+ <span class="dropdown-text">Usa R!</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../Taller/ggplot2/ggplot2.html">
+ <span class="dropdown-text">ggplot2</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -167,24 +189,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#análisis-exploratorio-de-los-datos." id="toc-análisis-exploratorio-de-los-datos." class="nav-link active" data-scroll-target="#análisis-exploratorio-de-los-datos."><span class="header-section-number">1</span> Análisis exploratorio de los datos.</a>
+  <li><a href="#análisis-exploratorio-de-los-datos." id="toc-análisis-exploratorio-de-los-datos." class="nav-link active" data-scroll-target="#análisis-exploratorio-de-los-datos.">Análisis exploratorio de los datos.</a>
   <ul class="collapse">
-  <li><a href="#cargar-datos" id="toc-cargar-datos" class="nav-link" data-scroll-target="#cargar-datos"><span class="header-section-number">1.1</span> Cargar datos</a></li>
-  <li><a href="#deseq2dataset" id="toc-deseq2dataset" class="nav-link" data-scroll-target="#deseq2dataset"><span class="header-section-number">1.2</span> DESeq2DataSet</a></li>
-  <li><a href="#prefiltrado-de-los-datos" id="toc-prefiltrado-de-los-datos" class="nav-link" data-scroll-target="#prefiltrado-de-los-datos"><span class="header-section-number">1.3</span> Prefiltrado de los datos</a></li>
-  <li><a href="#normalización-de-las-cuentas" id="toc-normalización-de-las-cuentas" class="nav-link" data-scroll-target="#normalización-de-las-cuentas"><span class="header-section-number">1.4</span> Normalización de las cuentas</a></li>
-  <li><a href="#transformacion-cuentas" id="toc-transformacion-cuentas" class="nav-link" data-scroll-target="#transformacion-cuentas"><span class="header-section-number">1.5</span> Transformacion cuentas</a></li>
-  <li><a href="#evaluación-de-calidad" id="toc-evaluación-de-calidad" class="nav-link" data-scroll-target="#evaluación-de-calidad"><span class="header-section-number">1.6</span> Evaluación de calidad</a></li>
+  <li><a href="#cargar-datos" id="toc-cargar-datos" class="nav-link" data-scroll-target="#cargar-datos">Cargar datos</a></li>
+  <li><a href="#deseq2dataset" id="toc-deseq2dataset" class="nav-link" data-scroll-target="#deseq2dataset">DESeq2DataSet</a></li>
+  <li><a href="#prefiltrado-de-los-datos" id="toc-prefiltrado-de-los-datos" class="nav-link" data-scroll-target="#prefiltrado-de-los-datos">Prefiltrado de los datos</a></li>
+  <li><a href="#normalización-de-las-cuentas" id="toc-normalización-de-las-cuentas" class="nav-link" data-scroll-target="#normalización-de-las-cuentas">Normalización de las cuentas</a></li>
+  <li><a href="#transformacion-cuentas" id="toc-transformacion-cuentas" class="nav-link" data-scroll-target="#transformacion-cuentas">Transformacion cuentas</a></li>
+  <li><a href="#evaluación-de-calidad" id="toc-evaluación-de-calidad" class="nav-link" data-scroll-target="#evaluación-de-calidad">Evaluación de calidad</a></li>
   </ul></li>
-  <li><a href="#deseq2" id="toc-deseq2" class="nav-link" data-scroll-target="#deseq2"><span class="header-section-number">2</span> DESeq2</a></li>
-  <li><a href="#wald-test" id="toc-wald-test" class="nav-link" data-scroll-target="#wald-test"><span class="header-section-number">3</span> Wald test</a></li>
-  <li><a href="#contracción-de-los-fc-para-visualización-y-clasificación." id="toc-contracción-de-los-fc-para-visualización-y-clasificación." class="nav-link" data-scroll-target="#contracción-de-los-fc-para-visualización-y-clasificación."><span class="header-section-number">4</span> Contracción de los FC para visualización y clasificación.</a></li>
-  <li><a href="#genes-diferencialmente-expresados" id="toc-genes-diferencialmente-expresados" class="nav-link" data-scroll-target="#genes-diferencialmente-expresados"><span class="header-section-number">5</span> Genes diferencialmente expresados</a>
+  <li><a href="#deseq2" id="toc-deseq2" class="nav-link" data-scroll-target="#deseq2">DESeq2</a></li>
+  <li><a href="#wald-test" id="toc-wald-test" class="nav-link" data-scroll-target="#wald-test">Wald test</a></li>
+  <li><a href="#contracción-de-los-fc-para-visualización-y-clasificación." id="toc-contracción-de-los-fc-para-visualización-y-clasificación." class="nav-link" data-scroll-target="#contracción-de-los-fc-para-visualización-y-clasificación.">Contracción de los FC para visualización y clasificación.</a></li>
+  <li><a href="#genes-diferencialmente-expresados" id="toc-genes-diferencialmente-expresados" class="nav-link" data-scroll-target="#genes-diferencialmente-expresados">Genes diferencialmente expresados</a>
   <ul class="collapse">
-  <li><a href="#volcano-plot" id="toc-volcano-plot" class="nav-link" data-scroll-target="#volcano-plot"><span class="header-section-number">5.1</span> Volcano plot</a></li>
-  <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap"><span class="header-section-number">5.2</span> Heatmap</a></li>
+  <li><a href="#volcano-plot" id="toc-volcano-plot" class="nav-link" data-scroll-target="#volcano-plot">Volcano plot</a></li>
+  <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap">Heatmap</a></li>
   </ul></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">6</span> Referencias</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
   </ul>
 </nav>
     </div>
@@ -193,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Caso practico</h1>
+<h1 class="title">Caso práctico</h1>
 </div>
 
 
@@ -275,11 +297,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="análisis-exploratorio-de-los-datos." class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="análisis-exploratorio-de-los-datos."><span class="header-section-number">1</span> Análisis exploratorio de los datos.</h2>
-<section id="cargar-datos" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="cargar-datos"><span class="header-section-number">1.1</span> Cargar datos</h3>
-<p>Cargamos los datos de la matriz de cuentas sin normalizar:</p>
+<section id="análisis-exploratorio-de-los-datos." class="level2">
+<h2 class="anchored" data-anchor-id="análisis-exploratorio-de-los-datos.">Análisis exploratorio de los datos.</h2>
+<section id="cargar-datos" class="level3">
+<h3 class="anchored" data-anchor-id="cargar-datos">Cargar datos</h3>
+<p>Para ilustrar el uso de DESeq usaremos el dataset MOV10. Cargamos los datos de la matriz de cuentas sin normalizar:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.cts <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/Mov10_full_counts.txt"</span>, <span class="at">header=</span>T, <span class="at">row.names=</span><span class="dv">1</span>) </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -457,8 +479,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="deseq2dataset" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="deseq2dataset"><span class="header-section-number">1.2</span> DESeq2DataSet</h3>
+<section id="deseq2dataset" class="level3">
+<h3 class="anchored" data-anchor-id="deseq2dataset">DESeq2DataSet</h3>
 <p>Lo primero que necesitamos es crear un objeto DESeqDataSet. DESeqDataSet es una clase personalizada del paquete DESeq2 de Bioconductor. Esta clase se utiliza para almacenar los datos y calculos necesarios. Para crear este objeto necesitamos la matriz de cuentas, los metadatos y una “formula” para el diseño. La formula especifica la columna(o columnas) en la tabla de metadatos que se quiere utilizar para el análisis. - <em>Nota:</em> Es esencial que el nombre de las muestras coincidan en los dos ficheros y esten en el mismo orden.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(</span>
@@ -480,8 +502,8 @@ colData names(2): sampletype MOVexpr</code></pre>
 </div>
 </div>
 </section>
-<section id="prefiltrado-de-los-datos" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="prefiltrado-de-los-datos"><span class="header-section-number">1.3</span> Prefiltrado de los datos</h3>
+<section id="prefiltrado-de-los-datos" class="level3">
+<h3 class="anchored" data-anchor-id="prefiltrado-de-los-datos">Prefiltrado de los datos</h3>
 <p>Tipicamente las matrices de RNA-seq contienen muchas filas con ceros, y adicionalmente otras con valores muy bajos de cuentas. Es recomendable eliminar los genes que no aportan (o casi no aportan ) informacion. Aquí realizaremos un filtrado para mantener los genes con un recuento de al menos 10 para una cantidad mínima de muestras. El valor de 10 es razonamble para datos de secuenciación Bulk-RNA. Una recomendación para el número mínimo de muestras es especificar el tamaño de grupo más pequeño.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -497,8 +519,8 @@ colData names(2): sampletype MOVexpr</code></pre>
 </div>
 </div>
 </section>
-<section id="normalización-de-las-cuentas" class="level3" data-number="1.4">
-<h3 data-number="1.4" class="anchored" data-anchor-id="normalización-de-las-cuentas"><span class="header-section-number">1.4</span> Normalización de las cuentas</h3>
+<section id="normalización-de-las-cuentas" class="level3">
+<h3 class="anchored" data-anchor-id="normalización-de-las-cuentas">Normalización de las cuentas</h3>
 <p>En DESeq2 la normalización se calcula usando el metodo de la mediana de las relaciones.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">estimateSizeFactors</span>(dds)</span>
@@ -516,8 +538,8 @@ colData names(3): sampletype MOVexpr sizeFactor</code></pre>
 </div>
 </div>
 </section>
-<section id="transformacion-cuentas" class="level3" data-number="1.5">
-<h3 data-number="1.5" class="anchored" data-anchor-id="transformacion-cuentas"><span class="header-section-number">1.5</span> Transformacion cuentas</h3>
+<section id="transformacion-cuentas" class="level3">
+<h3 class="anchored" data-anchor-id="transformacion-cuentas">Transformacion cuentas</h3>
 <p>Los métodos estadísticos para análisis exploratorio funcionan mejor con datos que tienen similares rangos de varianza a diferentes rangos de medias. En el caso de las cuentas de RNA-seq la varianza crece con la media, con lo cual el PCA estará influenciado por los genes con numeros de cuentas altos. La estrategía para evitarlo es tomar el logaritmo de las cuentas normalizadas sumandole una pseudocuenta (para los casos de 0 cuentas, el log de 0 es indefinido). Sin embargo, ahora los genes con pocas cuentas pueden dominar los resuldatos. DESeq2 usa una <strong>transformación logaritmica regularizada</strong> como solucion. Para los genes con valores altos el resultado es similar a la transfomación logaritmica log2. Para los genes con valores pequeños los valores se reducen hacia la media de los genes a lo largo de todas las muestras.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>rld <span class="ot">&lt;-</span> <span class="fu">rlog</span>(dds, <span class="at">blind =</span> <span class="cn">TRUE</span>)</span>
@@ -535,10 +557,10 @@ colData names(3): sampletype MOVexpr sizeFactor</code></pre>
 </div>
 </div>
 </section>
-<section id="evaluación-de-calidad" class="level3" data-number="1.6">
-<h3 data-number="1.6" class="anchored" data-anchor-id="evaluación-de-calidad"><span class="header-section-number">1.6</span> Evaluación de calidad</h3>
-<section id="análisis-de-componentes-principales-pca" class="level4" data-number="1.6.1">
-<h4 data-number="1.6.1" class="anchored" data-anchor-id="análisis-de-componentes-principales-pca"><span class="header-section-number">1.6.1</span> Análisis de componentes principales (PCA)</h4>
+<section id="evaluación-de-calidad" class="level3">
+<h3 class="anchored" data-anchor-id="evaluación-de-calidad">Evaluación de calidad</h3>
+<section id="análisis-de-componentes-principales-pca" class="level4">
+<h4 class="anchored" data-anchor-id="análisis-de-componentes-principales-pca">Análisis de componentes principales (PCA)</h4>
 <p>Una manera de visualizar las distancias muestra a muestra es el PCA.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPCA</span>(rld, <span class="at">intgroup=</span><span class="fu">c</span>(<span class="st">'sampletype'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -556,8 +578,8 @@ Figure&nbsp;1: Análisis de componentes principales
 </div>
 </div>
 </section>
-<section id="clustering-jerarquico" class="level4" data-number="1.6.2">
-<h4 data-number="1.6.2" class="anchored" data-anchor-id="clustering-jerarquico"><span class="header-section-number">1.6.2</span> Clustering jerarquico</h4>
+<section id="clustering-jerarquico" class="level4">
+<h4 class="anchored" data-anchor-id="clustering-jerarquico">Clustering jerarquico</h4>
 <p>Otra metodo es agrupar las muestras basadas en su similitud. En este caso se puede usar la correlación de Pearson para medir la silitud entre muestras. Generealmente se espera una correlación bastante alta (&gt;0.95) entre todas las muestras, además se esperan ver las muestras agrupadas de manera similar a lo observado en el PCA.</p>
 <p>Las muestras que muestran valores bajos de correlación con las demas muestras (&lt;0.80) representan outliers.</p>
 <div class="cell">
@@ -581,8 +603,8 @@ Figure&nbsp;1: Análisis de componentes principales
 </section>
 </section>
 </section>
-<section id="deseq2" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="deseq2"><span class="header-section-number">2</span> DESeq2</h2>
+<section id="deseq2" class="level2">
+<h2 class="anchored" data-anchor-id="deseq2">DESeq2</h2>
 <p>Para realizar el calculo ejecutamos la funcion <strong>DESeq()</strong>, que requiere como input un objeto del tipo <strong>DESeqDataSet</strong> (la variable <em>dds</em>). Reasignando el resultado a la misma variable continuamos llenando los <em>slots</em> del objeto DESeqDataSet.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -617,8 +639,8 @@ colData names(3): sampletype MOVexpr sizeFactor</code></pre>
 </div>
 </div>
 </section>
-<section id="wald-test" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="wald-test"><span class="header-section-number">3</span> Wald test</h2>
+<section id="wald-test" class="level2">
+<h2 class="anchored" data-anchor-id="wald-test">Wald test</h2>
 <p>La función <strong>results()</strong> devuelve los valores de log2 fold changes y los p-values para el Wald test de la comparación.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds, <span class="at">contrast =</span> <span class="fu">c</span>(<span class="st">'sampletype'</span>, <span class="st">'MOV10_overexpression'</span>, <span class="st">'control'</span>))</span>
@@ -766,8 +788,8 @@ colData names(3): sampletype MOVexpr sizeFactor</code></pre>
 <li><strong>Nota:</strong> Algunos valores de p pueden aparecer como <strong>NA</strong> en la tabla de resultados, esto puede ser debido a que baseMean pueda ser cero, que una fila contenga un valor considerado outlier, o que esa fila sea filtrada por el filtro independiente.</li>
 </ul>
 </section>
-<section id="contracción-de-los-fc-para-visualización-y-clasificación." class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="contracción-de-los-fc-para-visualización-y-clasificación."><span class="header-section-number">4</span> Contracción de los FC para visualización y clasificación.</h2>
+<section id="contracción-de-los-fc-para-visualización-y-clasificación." class="level2">
+<h2 class="anchored" data-anchor-id="contracción-de-los-fc-para-visualización-y-clasificación.">Contracción de los FC para visualización y clasificación.</h2>
 <p>La reducción del tamaño del efecto (estimaciones de LFC) es útil para la visualización y clasificación de genes</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resultsNames</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -858,8 +880,8 @@ colData names(3): sampletype MOVexpr sizeFactor</code></pre>
 </div>
 </div>
 </section>
-<section id="genes-diferencialmente-expresados" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="genes-diferencialmente-expresados"><span class="header-section-number">5</span> Genes diferencialmente expresados</h2>
+<section id="genes-diferencialmente-expresados" class="level2">
+<h2 class="anchored" data-anchor-id="genes-diferencialmente-expresados">Genes diferencialmente expresados</h2>
 <p>Para selecionar los genes diferecialmente expresados debemos fijar el umbral. En este caso elegimos un FC = 1.5 y un valor de p ajustado de 0.05</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|label: DGE</span></span>
@@ -881,8 +903,8 @@ colData names(3): sampletype MOVexpr sizeFactor</code></pre>
 <pre><code>[1] "ABCA9"    "ACTBL2"   "ACTL8"    "ACTR3B"   "ADAMTS16" "ADH1C"   </code></pre>
 </div>
 </div>
-<section id="volcano-plot" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="volcano-plot"><span class="header-section-number">5.1</span> Volcano plot</h3>
+<section id="volcano-plot" class="level3">
+<h3 class="anchored" data-anchor-id="volcano-plot">Volcano plot</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">createVolcanoPlot</span>(df.ashr, lfc.cutoff, padj.cutoff, <span class="at">max.overlaps =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -895,8 +917,8 @@ colData names(3): sampletype MOVexpr sizeFactor</code></pre>
 </div>
 </div>
 </section>
-<section id="heatmap" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="heatmap"><span class="header-section-number">5.2</span> Heatmap</h3>
+<section id="heatmap" class="level3">
+<h3 class="anchored" data-anchor-id="heatmap">Heatmap</h3>
 <p>Heatmap de los genes diferecialmente expresados.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df.norm <span class="ot">&lt;-</span> <span class="fu">counts</span>(dds, <span class="at">normalized =</span> <span class="cn">TRUE</span>)</span>
@@ -915,8 +937,12 @@ colData names(3): sampletype MOVexpr sizeFactor</code></pre>
 </div>
 </section>
 </section>
-<section id="referencias" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="referencias"><span class="header-section-number">6</span> Referencias</h2>
+<section id="referencias" class="level2">
+<h2 class="anchored" data-anchor-id="referencias">Referencias</h2>
+<blockquote class="blockquote">
+<p>“MOV10 and FMRP regulate AGO2 association with microRNA recognition elements”<br>
+(Kenny, P.J. et al, Cell Reports, 11 December 2014).</p>
+</blockquote>
 <blockquote class="blockquote">
 <p>https://bookdown.org/ggiaever/2024_RNA-seq-analysis/</p>
 </blockquote>

@@ -16,14 +16,17 @@ website:
       - text: Enriquecimiento funcional
         menu:
           - enrfun/introduccion.qmd
-      - about.qmd
+      - text: Presentaciones
+        menu:
+          - Taller/usaR/usaR.qmd
+          - Taller/ggplot2/ggplot2.qmd
 
 format:
   html:
     theme: journal
     css: styles.css
     toc: true
-    number-sections: true
+    number-sections: false
     highlight-style: dracula
     df-print: kable 
 

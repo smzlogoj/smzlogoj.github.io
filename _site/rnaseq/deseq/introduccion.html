@@ -117,6 +117,17 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-r" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">R</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-r">    
+        <li>
+    <a class="dropdown-item" href="../../R/introduccion.html">
+ <span class="dropdown-text">Introducción a R</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-rna-seq" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">RNA-seq</span>
     </a>
@@ -127,7 +138,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="../../rnaseq/deseq/ejemplo.html">
- <span class="dropdown-text">Caso practico</span></a>
+ <span class="dropdown-text">Caso práctico</span></a>
   </li>  
     </ul>
   </li>
@@ -142,10 +153,21 @@ window.Quarto = {
   </li>  
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-presentaciones" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Presentaciones</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-presentaciones">    
+        <li>
+    <a class="dropdown-item" href="../../Taller/usaR/usaR.html">
+ <span class="dropdown-text">Usa R!</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../Taller/ggplot2/ggplot2.html">
+ <span class="dropdown-text">ggplot2</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -162,16 +184,16 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#deseq2" id="toc-deseq2" class="nav-link active" data-scroll-target="#deseq2"><span class="header-section-number">1</span> DESeq2</a>
+  <li><a href="#deseq2" id="toc-deseq2" class="nav-link active" data-scroll-target="#deseq2">DESeq2</a>
   <ul class="collapse">
-  <li><a href="#estimación-del-factor-de-tamaño." id="toc-estimación-del-factor-de-tamaño." class="nav-link" data-scroll-target="#estimación-del-factor-de-tamaño."><span class="header-section-number">1.1</span> Estimación del factor de tamaño.</a></li>
-  <li><a href="#modelo" id="toc-modelo" class="nav-link" data-scroll-target="#modelo"><span class="header-section-number">1.2</span> Modelo</a></li>
-  <li><a href="#estimación-de-la-dispersión." id="toc-estimación-de-la-dispersión." class="nav-link" data-scroll-target="#estimación-de-la-dispersión."><span class="header-section-number">1.3</span> Estimación de la dispersión.</a></li>
-  <li><a href="#modelo-linear-generalizado." id="toc-modelo-linear-generalizado." class="nav-link" data-scroll-target="#modelo-linear-generalizado."><span class="header-section-number">1.4</span> Modelo linear generalizado.</a></li>
-  <li><a href="#hipótesis" id="toc-hipótesis" class="nav-link" data-scroll-target="#hipótesis"><span class="header-section-number">1.5</span> Hipótesis</a></li>
-  <li><a href="#corrección-de-pruebas-multiples" id="toc-corrección-de-pruebas-multiples" class="nav-link" data-scroll-target="#corrección-de-pruebas-multiples"><span class="header-section-number">1.6</span> Corrección de pruebas multiples</a></li>
-  <li><a href="#filtrado-independiente" id="toc-filtrado-independiente" class="nav-link" data-scroll-target="#filtrado-independiente"><span class="header-section-number">1.7</span> Filtrado independiente</a></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">1.8</span> Referencias</a></li>
+  <li><a href="#estimación-del-factor-de-tamaño." id="toc-estimación-del-factor-de-tamaño." class="nav-link" data-scroll-target="#estimación-del-factor-de-tamaño.">Estimación del factor de tamaño.</a></li>
+  <li><a href="#modelo" id="toc-modelo" class="nav-link" data-scroll-target="#modelo">Modelo</a></li>
+  <li><a href="#estimación-de-la-dispersión." id="toc-estimación-de-la-dispersión." class="nav-link" data-scroll-target="#estimación-de-la-dispersión.">Estimación de la dispersión.</a></li>
+  <li><a href="#modelo-linear-generalizado." id="toc-modelo-linear-generalizado." class="nav-link" data-scroll-target="#modelo-linear-generalizado.">Modelo linear generalizado.</a></li>
+  <li><a href="#hipótesis" id="toc-hipótesis" class="nav-link" data-scroll-target="#hipótesis">Hipótesis</a></li>
+  <li><a href="#corrección-de-pruebas-multiples" id="toc-corrección-de-pruebas-multiples" class="nav-link" data-scroll-target="#corrección-de-pruebas-multiples">Corrección de pruebas multiples</a></li>
+  <li><a href="#filtrado-independiente" id="toc-filtrado-independiente" class="nav-link" data-scroll-target="#filtrado-independiente">Filtrado independiente</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -200,8 +222,8 @@ window.Quarto = {
 
 <p>Podría decirse que el uso más comun de los datos de transcriptoma es la busqueda de genes expresados diferencialmente. Encontrar que genes se expresan diferencialmente entre diferentes condiciones es una parte integral en la comprensión de las bases moleculares de la variación fenotípica.</p>
 <p>Un gran número de métodos computacionales se han desarrollado para el análisis de expresión diferencial que difieren ligeramente en su métodología.</p>
-<section id="deseq2" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="deseq2"><span class="header-section-number">1</span> DESeq2</h2>
+<section id="deseq2" class="level2">
+<h2 class="anchored" data-anchor-id="deseq2">DESeq2</h2>
 <p><strong>DESeq2</strong> (Differential gene expression analysis based on the negative binomial distribution) es un paquete de bioconductor ampliamente utilizado en este tipos de análisis.</p>
 <p>El punto de partida en el análisis en las matriz de cuentas, siendo el objetivo identificar los genes que estan diferencialmente expresados entre las muestras.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -210,28 +232,28 @@ window.Quarto = {
 </figure>
 </div>
 <p>DESeq2 comienza estimando los factores de escala, a continuación estima la dispersión de los genes. Por ultimo, DESeq2 ajusta un modelo linear generalizado y genera la lista de genes diferencialmente expresados.</p>
-<section id="estimación-del-factor-de-tamaño." class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="estimación-del-factor-de-tamaño."><span class="header-section-number">1.1</span> Estimación del factor de tamaño.</h3>
+<section id="estimación-del-factor-de-tamaño." class="level3">
+<h3 class="anchored" data-anchor-id="estimación-del-factor-de-tamaño.">Estimación del factor de tamaño.</h3>
 <p>DESeq2 actua sobre una matriz de cuentas (cuentas no normalizadas). Se supone que las cuentas reflejan la abundacia de genes, pero estas tambien dependen de otros factores como la longitud del gen, los sesgos de secuenciación o la composición de la biblioteca.</p>
-<section id="longitud-del-gen" class="level4" data-number="1.1.1">
-<h4 data-number="1.1.1" class="anchored" data-anchor-id="longitud-del-gen"><span class="header-section-number">1.1.1</span> Longitud del gen</h4>
+<section id="longitud-del-gen" class="level4">
+<h4 class="anchored" data-anchor-id="longitud-del-gen">Longitud del gen</h4>
 <p><img src="https://uclouvain-cbio.github.io/WSBIM2122/figs/read_length.png" class="img-fluid"></p>
 <p>Como se observa en la figura el gen 1 y el 2 tienen similares niveles de expresión, pero muchas más lecturas se asignan al gen 2, esto podría no tener relación con la biología y podría reflejar unicamente el hecho de que el gen 2 es mas largo que el gen 1. Para el análisis de expresión diferencial, como los niveles de expresión se comparan entre muestras (y no los niveles de expresión entre los genes de una misma muestra), no es recomendable su uso para estimar el factor de tamaño.</p>
 </section>
-<section id="profundidad-de-secuenciación." class="level4" data-number="1.1.2">
-<h4 data-number="1.1.2" class="anchored" data-anchor-id="profundidad-de-secuenciación."><span class="header-section-number">1.1.2</span> Profundidad de secuenciación.</h4>
+<section id="profundidad-de-secuenciación." class="level4">
+<h4 class="anchored" data-anchor-id="profundidad-de-secuenciación.">Profundidad de secuenciación.</h4>
 <p>Los experimentos de secuenciación producen decenas de millones de lecturas. Una parte de las lecturas de secuenciación se descartaran durante los procesos de control de calidad, alineación y conteo, lo que implica que el número total de lecturas para cada muestra será diferente.</p>
 <p><img src="https://uclouvain-cbio.github.io/WSBIM2122/figs/Sequencing_depth.png" class="img-fluid"></p>
 <p>Como se muestra en la figura, todos los genes parecen ser expresados a un nivel mayor en la muestra 1 que en la muestra 2. Probablemente es debido a que la muestra 1 tiene muchas más lecturas que la muestra 2.</p>
 </section>
-<section id="composición-de-la-librería" class="level4" data-number="1.1.3">
-<h4 data-number="1.1.3" class="anchored" data-anchor-id="composición-de-la-librería"><span class="header-section-number">1.1.3</span> Composición de la librería</h4>
+<section id="composición-de-la-librería" class="level4">
+<h4 class="anchored" data-anchor-id="composición-de-la-librería">Composición de la librería</h4>
 <p><img src="https://uclouvain-cbio.github.io/WSBIM2122/figs/library_composition.png" class="img-fluid"></p>
 <p>Imaginemos que una celula expresa unicamente 2 genes (gen 1 y gen 2) y asumamos que un tratamiento con un fármaco induce una fuerte expresión del gen 3. Si la normalización se realiza usando unicamente el número total de cuentas, entonces las cuentas del gen 1 se dividirían por 15 en las celulas control, mientras que serían divididas por 165 en las celulas tratadas, lo que nos llevaría a la conclusión erronea de que el tratamiento ha reducido 11 veces la expresión del gen 1. La composición de la libreria ha cambiado pero no el nivel de expresión del gen 1.</p>
 <p>En un caso real, unos pocos genes expresados de forma muy diferencial, diferencias en el número de genes expresados entre muestras o la presencia de contaminantes pueden sesgar la composición de la librería.</p>
 </section>
-<section id="el-método-de-normalización-de-deseq2" class="level4" data-number="1.1.4">
-<h4 data-number="1.1.4" class="anchored" data-anchor-id="el-método-de-normalización-de-deseq2"><span class="header-section-number">1.1.4</span> El método de normalización de DESeq2</h4>
+<section id="el-método-de-normalización-de-deseq2" class="level4">
+<h4 class="anchored" data-anchor-id="el-método-de-normalización-de-deseq2">El método de normalización de DESeq2</h4>
 <p>DESeq2 estima los factores de tamaño teniendo en cuentra el tamaño de la librería y su composicion, usando el método de la mediana de los ratios</p>
 <ul>
 <li><strong>Paso 1:</strong> DESeq2 crea una muestra de pseudo-referencia calculando la <a href="https://es.wikipedia.org/wiki/Media_geom%C3%A9trica">média geométrica</a> por cada gen.</li>
@@ -241,14 +263,14 @@ window.Quarto = {
 </ul>
 </section>
 </section>
-<section id="modelo" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="modelo"><span class="header-section-number">1.2</span> Modelo</h3>
+<section id="modelo" class="level3">
+<h3 class="anchored" data-anchor-id="modelo">Modelo</h3>
 <p>Si observamos la distribucíon de cuentas de una muestra típica en RNA-seq: <img src="https://uclouvain-cbio.github.io/WSBIM2122/figs/distribution_of_counts.png" class="img-fluid"></p>
 <p>Es obvio que los datos no estan normalmente distribuidos, Los valores son valores enteros y siempre positivos (variable discreta). Podemos observar que hay una gran cantidad de genes con valores muy bajos o cero, y solo unos pocos genes con valores muy altos.</p>
 <p>Los datos de cuentas de RNA-seq se ajustan mejor a una <a href="https://es.wikipedia.org/wiki/Distribuci%C3%B3n_binomial_negativa">distribución binomial negativa</a>. <span class="math display">\[K_{ij} \sim NB(mean = µ_{ij},  dispersion = \alpha_i)\]</span></p>
 </section>
-<section id="estimación-de-la-dispersión." class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="estimación-de-la-dispersión."><span class="header-section-number">1.3</span> Estimación de la dispersión.</h3>
+<section id="estimación-de-la-dispersión." class="level3">
+<h3 class="anchored" data-anchor-id="estimación-de-la-dispersión.">Estimación de la dispersión.</h3>
 <p>Estimar la dispersión para cada gen sería sencillo de tener muchas replicas para cada condicion, pero en este caso los experimentos suelen tener a menudo solo 3 replicas. DESeq2 asume que los genes con niveles similares de expresión tendran similar dispersión.</p>
 <ul>
 <li><strong>Paso 1:</strong> La dispersión de cada gen es estimada por separado. Dado los valores de recuento de las replicas se calcula la dispersión más probable. Los genes con bajos recuentos tienen dispersiones mucho mayores que los genes con mayor nivel de expresión.</li>
@@ -256,29 +278,29 @@ window.Quarto = {
 <li><strong>Paso 3:</strong> Reducción de las estimaciones de la dispersión de los genes hacia los valores predichos por la curva usando el <a href="https://en.wikipedia.org/wiki/Empirical_Bayes_method">método empírico de Bayes</a>. La reducción de la dispersión es particularmente importante para reducir los falsos positivos en el análisis de expresión diferencial. <img src="https://uclouvain-cbio.github.io/WSBIM2122/figs/disp_shrinkage.png" class="img-fluid">.</li>
 </ul>
 </section>
-<section id="modelo-linear-generalizado." class="level3" data-number="1.4">
-<h3 data-number="1.4" class="anchored" data-anchor-id="modelo-linear-generalizado."><span class="header-section-number">1.4</span> Modelo linear generalizado.</h3>
+<section id="modelo-linear-generalizado." class="level3">
+<h3 class="anchored" data-anchor-id="modelo-linear-generalizado.">Modelo linear generalizado.</h3>
 <p>DESeq2 ajusta un modelo linear generalizado de la forma: <span class="math display">\[log2(q_{ij}) = \Sigma x_j.β_i\]</span></p>
 <p>En el caso de un diseño simple con una condicion (un tratamiento por ejemplo), el modelo se puede escribir como: <span class="math display">\[log2(q_{ij}) = \beta_0 + \beta_1.x_j + \epsilon\]</span> _0$ es el log2 del nivel de expresion in las muestras control</p>
 <p><span class="math inline">\(\beta_1\)</span> es el log2FC entre celulas tratadas y control</p>
 <p><span class="math inline">\(x_j\)</span> = 0 si la muestra j es de tipo control</p>
 <p><span class="math inline">\(x_j\)</span> = 1 si la muestra j es de tipo muestra tratada.</p>
 </section>
-<section id="hipótesis" class="level3" data-number="1.5">
-<h3 data-number="1.5" class="anchored" data-anchor-id="hipótesis"><span class="header-section-number">1.5</span> Hipótesis</h3>
+<section id="hipótesis" class="level3">
+<h3 class="anchored" data-anchor-id="hipótesis">Hipótesis</h3>
 <p>La hipótesis nula <span class="math inline">\(H_0\)</span> es que no hay expresión diferencial entre los grupos, lo que equivale a decir que log2FC = 0. La <a href="https://es.wikipedia.org/wiki/Prueba_de_Wald">prueba de Wald</a> determinará si los datos proporcionan suficiente evidencia para concluir que este valor es realmente diferente de cero.</p>
 </section>
-<section id="corrección-de-pruebas-multiples" class="level3" data-number="1.6">
-<h3 data-number="1.6" class="anchored" data-anchor-id="corrección-de-pruebas-multiples"><span class="header-section-number">1.6</span> Corrección de pruebas multiples</h3>
+<section id="corrección-de-pruebas-multiples" class="level3">
+<h3 class="anchored" data-anchor-id="corrección-de-pruebas-multiples">Corrección de pruebas multiples</h3>
 <p>Un valor de p de 0.05 significa que sólo hay un 5% de posibilidades de obtener estos datos si no existe una diferencia real, es decir, hay un 5% de posibilidades de que se tome una decision equivocada (un falso positivo).</p>
 <p>En un análisis de RNA-seq podríamos tener 20000 genes y solo una fracción de ellos se expresan de manera diferencial. Supongamos un tratamiento que modifica la expresión de 1000 genes. <img src="https://uclouvain-cbio.github.io/WSBIM2122/figs/pval_histograms.png" class="img-fluid"> El primer histograma de la figura muestra los valores de p para los genes verdaderamente modificados, el segundo histograma muestra la distribución de los valoras de p para los genes no modificados. Los valores se distribuyen uniformemente entre 0 y 1. Podemos ver que el 5% de estos genes parecen significativos, aunque es sólo por casualidad. De 19000 genes 950 falsos positivos. Por lo tanto los valores de la prueba de Wald deben de corregirse para evitar un exceso de falsos positivos. Por defecto DESeq2 usa el método de <a href="https://en.wikipedia.org/wiki/False_discovery_rate">Benjamini-Hochberg</a> para ajustar los valores de p.</p>
 </section>
-<section id="filtrado-independiente" class="level3" data-number="1.7">
-<h3 data-number="1.7" class="anchored" data-anchor-id="filtrado-independiente"><span class="header-section-number">1.7</span> Filtrado independiente</h3>
+<section id="filtrado-independiente" class="level3">
+<h3 class="anchored" data-anchor-id="filtrado-independiente">Filtrado independiente</h3>
 <p>Los genes con muy pocas cuentas tipicamente son no significantes debido a su alta dispersión. Sin embargo estos genes influyen en la correción de pruebas multiples, mejorando la resolución si estos genes son eliminados. DESeq2 usa como criterio de filtrado la media de las cuentas normalizadas. Los genes con un valor de expresion media inferior a cierto umbral son eliminados. El umbral usado es definido automaticamente por el softeare. Se elige maximizando el número de genes que tendrían un valor de p ajustado significativo.</p>
 </section>
-<section id="referencias" class="level3" data-number="1.8">
-<h3 data-number="1.8" class="anchored" data-anchor-id="referencias"><span class="header-section-number">1.8</span> Referencias</h3>
+<section id="referencias" class="level3">
+<h3 class="anchored" data-anchor-id="referencias">Referencias</h3>
 <blockquote class="blockquote">
 <p>Laurent Gatto and Axelle Loriot. <em>UCLouvain-CBIO/WSBIM2122: Omics data analysis.</em> https://github.com/UCLouvain-CBIO/WSBIM2122.</p>
 </blockquote>

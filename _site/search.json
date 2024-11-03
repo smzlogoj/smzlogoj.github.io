@@ -1,719 +1,5 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "Hoy en día, debido al avance de la técnología podemos disponer de una gran cantidad de datos, pero los métodos tradicionales de analizar esta información han quedado obsoletos. No queda más remedio que recurrir a herramientas informaticas.\nEl campo de la biológia no es una excepción, donde existen multitud de bases de datos procedentes de experimentos, y los nuevas técnologías en el laboratorio pueden devolver cantidades masivas de información.\nEn mi experiencia al usuario novel puede llegar a costarle mucho el comenzar con un lenguaje de programacíon. No se sienten capaces o despues de intentarlo durante un tiempo abandonan por sentirse incapaces de obtener resultados.\nCon el proyecto web Tumbleweed se pretende acercar, mediante turoriales y guías, estas herramientas bioinformáticas a usarios sin experiencia previa en programación."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Tumbleweed",
-    "section": "",
-    "text": "Hoy en día, debido al avance de la técnología podemos disponer de una gran cantidad de datos, pero los métodos tradicionales de analizar esta información han quedado obsoletos. No queda más remedio que recurrir a herramientas informaticas. El campo de la biológia no es una excepción, donde existen multitud de bases de datos procedentes de experimentos, y los nuevas técnologías en el laboratorio pueden devolver cantidades masivas de información.\nEn mi experiencia al usuario novel puede llegar a costarle mucho el comenzar con un lenguaje de programacíon. No se sienten capaces o despues de intentarlo durante un tiempo abandonan por sentirse incapaces de obtener resultados.\nCon el proyecto web Tumbleweed se pretende acercar, mediante turoriales y guías, estas herramientas bioinformáticas a usarios sin experiencia previa en programación.\n\nJosé Antonio López\nTécnico especilista de laboratorio"
-  },
-  {
-    "objectID": "rnaseq/deseq/introduccion.html",
-    "href": "rnaseq/deseq/introduccion.html",
-    "title": "Análisis de expresión diferencial",
-    "section": "",
-    "text": "Podría decirse que el uso más comun de los datos de transcriptoma es la busqueda de genes expresados diferencialmente. Encontrar que genes se expresan diferencialmente entre diferentes condiciones es una parte integral en la comprensión de las bases moleculares de la variación fenotípica.\nUn gran número de métodos computacionales se han desarrollado para el análisis de expresión diferencial que difieren ligeramente en su métodología."
-  },
-  {
-    "objectID": "rnaseq/deseq/introduccion.html#deseq2",
-    "href": "rnaseq/deseq/introduccion.html#deseq2",
-    "title": "Análisis de expresión diferencial",
-    "section": "1 DESeq2",
-    "text": "1 DESeq2\nDESeq2 (Differential gene expression analysis based on the negative binomial distribution) es un paquete de bioconductor ampliamente utilizado en este tipos de análisis.\nEl punto de partida en el análisis en las matriz de cuentas, siendo el objetivo identificar los genes que estan diferencialmente expresados entre las muestras.\n\n\n\n\n\nDESeq2 comienza estimando los factores de escala, a continuación estima la dispersión de los genes. Por ultimo, DESeq2 ajusta un modelo linear generalizado y genera la lista de genes diferencialmente expresados.\n\n1.1 Estimación del factor de tamaño.\nDESeq2 actua sobre una matriz de cuentas (cuentas no normalizadas). Se supone que las cuentas reflejan la abundacia de genes, pero estas tambien dependen de otros factores como la longitud del gen, los sesgos de secuenciación o la composición de la biblioteca.\n\n1.1.1 Longitud del gen\n\nComo se observa en la figura el gen 1 y el 2 tienen similares niveles de expresión, pero muchas más lecturas se asignan al gen 2, esto podría no tener relación con la biología y podría reflejar unicamente el hecho de que el gen 2 es mas largo que el gen 1. Para el análisis de expresión diferencial, como los niveles de expresión se comparan entre muestras (y no los niveles de expresión entre los genes de una misma muestra), no es recomendable su uso para estimar el factor de tamaño.\n\n\n1.1.2 Profundidad de secuenciación.\nLos experimentos de secuenciación producen decenas de millones de lecturas. Una parte de las lecturas de secuenciación se descartaran durante los procesos de control de calidad, alineación y conteo, lo que implica que el número total de lecturas para cada muestra será diferente.\n\nComo se muestra en la figura, todos los genes parecen ser expresados a un nivel mayor en la muestra 1 que en la muestra 2. Probablemente es debido a que la muestra 1 tiene muchas más lecturas que la muestra 2.\n\n\n1.1.3 Composición de la librería\n\nImaginemos que una celula expresa unicamente 2 genes (gen 1 y gen 2) y asumamos que un tratamiento con un fármaco induce una fuerte expresión del gen 3. Si la normalización se realiza usando unicamente el número total de cuentas, entonces las cuentas del gen 1 se dividirían por 15 en las celulas control, mientras que serían divididas por 165 en las celulas tratadas, lo que nos llevaría a la conclusión erronea de que el tratamiento ha reducido 11 veces la expresión del gen 1. La composición de la libreria ha cambiado pero no el nivel de expresión del gen 1.\nEn un caso real, unos pocos genes expresados de forma muy diferencial, diferencias en el número de genes expresados entre muestras o la presencia de contaminantes pueden sesgar la composición de la librería.\n\n\n1.1.4 El método de normalización de DESeq2\nDESeq2 estima los factores de tamaño teniendo en cuentra el tamaño de la librería y su composicion, usando el método de la mediana de los ratios\n\nPaso 1: DESeq2 crea una muestra de pseudo-referencia calculando la média geométrica por cada gen.\nPaso 2: Por cada gen en cada muestra, se calcula la relación cuentas/pseudo-referencia.\nPaso 3: El valor de la mediana de todas los ratios calculados para una muestra es tomado como el factor de tamaño para esa muestra.\nPaso 4: Los valores normalizados se obtienen dividiendo los valores de las cuentas por el factor de tamaño correspondiente a cada muestra.\n\n\n\n\n1.2 Modelo\nSi observamos la distribucíon de cuentas de una muestra típica en RNA-seq: \nEs obvio que los datos no estan normalmente distribuidos, Los valores son valores enteros y siempre positivos (variable discreta). Podemos observar que hay una gran cantidad de genes con valores muy bajos o cero, y solo unos pocos genes con valores muy altos.\nLos datos de cuentas de RNA-seq se ajustan mejor a una distribución binomial negativa. \\[K_{ij} \\sim NB(mean = µ_{ij},  dispersion = \\alpha_i)\\]\n\n\n1.3 Estimación de la dispersión.\nEstimar la dispersión para cada gen sería sencillo de tener muchas replicas para cada condicion, pero en este caso los experimentos suelen tener a menudo solo 3 replicas. DESeq2 asume que los genes con niveles similares de expresión tendran similar dispersión.\n\nPaso 1: La dispersión de cada gen es estimada por separado. Dado los valores de recuento de las replicas se calcula la dispersión más probable. Los genes con bajos recuentos tienen dispersiones mucho mayores que los genes con mayor nivel de expresión.\nPaso 2: Se ajusta una curva a la dispersión de genes. Los genes tendrán diferente variabilidad biológica, pero en todos los genes habrá una distribución de dispersión razonable.\nPaso 3: Reducción de las estimaciones de la dispersión de los genes hacia los valores predichos por la curva usando el método empírico de Bayes. La reducción de la dispersión es particularmente importante para reducir los falsos positivos en el análisis de expresión diferencial. .\n\n\n\n1.4 Modelo linear generalizado.\nDESeq2 ajusta un modelo linear generalizado de la forma: \\[log2(q_{ij}) = \\Sigma x_j.β_i\\]\nEn el caso de un diseño simple con una condicion (un tratamiento por ejemplo), el modelo se puede escribir como: \\[log2(q_{ij}) = \\beta_0 + \\beta_1.x_j + \\epsilon\\] _0$ es el log2 del nivel de expresion in las muestras control\n\\(\\beta_1\\) es el log2FC entre celulas tratadas y control\n\\(x_j\\) = 0 si la muestra j es de tipo control\n\\(x_j\\) = 1 si la muestra j es de tipo muestra tratada.\n\n\n1.5 Hipótesis\nLa hipótesis nula \\(H_0\\) es que no hay expresión diferencial entre los grupos, lo que equivale a decir que log2FC = 0. La prueba de Wald determinará si los datos proporcionan suficiente evidencia para concluir que este valor es realmente diferente de cero.\n\n\n1.6 Corrección de pruebas multiples\nUn valor de p de 0.05 significa que sólo hay un 5% de posibilidades de obtener estos datos si no existe una diferencia real, es decir, hay un 5% de posibilidades de que se tome una decision equivocada (un falso positivo).\nEn un análisis de RNA-seq podríamos tener 20000 genes y solo una fracción de ellos se expresan de manera diferencial. Supongamos un tratamiento que modifica la expresión de 1000 genes.  El primer histograma de la figura muestra los valores de p para los genes verdaderamente modificados, el segundo histograma muestra la distribución de los valoras de p para los genes no modificados. Los valores se distribuyen uniformemente entre 0 y 1. Podemos ver que el 5% de estos genes parecen significativos, aunque es sólo por casualidad. De 19000 genes 950 falsos positivos. Por lo tanto los valores de la prueba de Wald deben de corregirse para evitar un exceso de falsos positivos. Por defecto DESeq2 usa el método de Benjamini-Hochberg para ajustar los valores de p.\n\n\n1.7 Filtrado independiente\nLos genes con muy pocas cuentas tipicamente son no significantes debido a su alta dispersión. Sin embargo estos genes influyen en la correción de pruebas multiples, mejorando la resolución si estos genes son eliminados. DESeq2 usa como criterio de filtrado la media de las cuentas normalizadas. Los genes con un valor de expresion media inferior a cierto umbral son eliminados. El umbral usado es definido automaticamente por el softeare. Se elige maximizando el número de genes que tendrían un valor de p ajustado significativo.\n\n\n1.8 Referencias\n\nLaurent Gatto and Axelle Loriot. UCLouvain-CBIO/WSBIM2122: Omics data analysis. https://github.com/UCLouvain-CBIO/WSBIM2122.\n\n\nHarvard Chan Bioinformatics Core (HBC). https://hbctraining.github.io/DGE_workshop/"
-  },
-  {
-    "objectID": "rnaseq/deseq/ejemplo.html",
-    "href": "rnaseq/deseq/ejemplo.html",
-    "title": "Caso practico",
-    "section": "",
-    "text": "Para este análisis se usarán varios paquetes de R algunos de los cuales han sido instalados desde los repositorios CRAN y otro de los de Bioconductor.\nlibrary(DESeq2)\nlibrary(ggplot2)\nlibrary(ggrepel)\nlibrary(pheatmap)\nlibrary(RColorBrewer)\nCódigo funciones\ncreateVolcanoPlot &lt;- function(d, log2fc, fdr, max.overlaps = 15) {\n\n    colors &lt;- c(\"UP\"=\"#FC4E07\", \"none\"=\"#E7B800\", \"DOWN\"=\"#00AFBB\")\n    d$class &lt;- 'none'\n    d$class[d$log2FoldChange &gt;= log2fc & d$padj &lt;= fdr] &lt;- 'UP'\n    d$class[d$log2FoldChange &lt;= -1 * log2fc & d$padj &lt;= fdr] &lt;- 'DOWN'\n    d$gene &lt;- rownames(d)\n    \n    up_num=nrow(d[d$class == \"UP\",])\n    down_num=nrow(d[d$class == \"DOWN\",])\n    p &lt;- ggplot(d, aes(x = log2FoldChange, y = -1 * log10(padj), \n                       shape = class, fill = class, color = class, label = gene)) +\n                geom_point(size = 3) +\n                scale_fill_manual(values = colors) +\n                scale_color_manual(values = c('navy', \"#E7B800\", 'navy')) +\n                scale_shape_manual(values = c(21, 20, 21)) +\n                geom_hline(yintercept = -1 * log10(fdr), linetype=\"dashed\", \n                              color = \"black\", size=0.5) +\n                geom_vline(xintercept=c(-1 * log2fc,log2fc), linetype=\"dashed\", \n                              color = \"black\", size=0.5) +\n                 geom_label_repel(data = d[d$class %in% c('UP', 'DOWN'),],\n                                  size= 4,\n                                  fontface=\"bold\",\n                                  color=\"firebrick\",\n                                  fill = 'white',\n                                  box.padding=unit(1, \"lines\"),\n                                  point.padding=unit(0.5, \"lines\"),\n                                  segment.colour = \"firebrick\", \n                                  segment.size = 0.5, \n                                  segment.alpha = 0.5, \n                                  max.overlaps = max.overlaps) +\n                theme_bw() +\n                theme(legend.position=\"top\") +\n                annotate(geom = 'text', label = paste0('UP: ', up_num), \n                         x = Inf, y = Inf, hjust = 1.1, vjust = 1.5) +\n                annotate(geom = 'text', label = paste0('DOWN: ', down_num), \n                         x = -Inf, y = Inf, hjust = -0.1, vjust = 1.5) + \n                labs(color = \"class\")\n    p\n}\n\ncrearHeatMap &lt;-function(datos, metadatos) {\n    pheatmap(as.matrix(datos),\n             scale = 'row',\n             clustering_method = 'ward.D2',\n             cutree_cols =  3,\n             cutree_rows = 2,\n             annotation_col = metadatos,\n             fontsize = 8,\n             color = colorRampPalette(c(\"steelblue\", \"white\", \"firebrick3\"))(100)\n            )\n}"
-  },
-  {
-    "objectID": "rnaseq/deseq/ejemplo.html#análisis-exploratorio-de-los-datos.",
-    "href": "rnaseq/deseq/ejemplo.html#análisis-exploratorio-de-los-datos.",
-    "title": "Caso practico",
-    "section": "1 Análisis exploratorio de los datos.",
-    "text": "1 Análisis exploratorio de los datos.\n\n1.1 Cargar datos\nCargamos los datos de la matriz de cuentas sin normalizar:\n\ndf.cts &lt;- read.table(\"data/Mov10_full_counts.txt\", header=T, row.names=1) \n\nhead(df.cts)\n\n\n\nMatriz de cuentas\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMov10_kd_2\nMov10_kd_3\nMov10_oe_1\nMov10_oe_2\nMov10_oe_3\nIrrel_kd_1\nIrrel_kd_2\nIrrel_kd_3\n\n\n\n\n1/2-SBSRNA4\n57\n41\n64\n55\n38\n45\n31\n39\n\n\nA1BG\n71\n40\n100\n81\n41\n77\n58\n40\n\n\nA1BG-AS1\n256\n177\n220\n189\n107\n213\n172\n126\n\n\nA1CF\n0\n1\n1\n0\n0\n0\n0\n0\n\n\nA2LD1\n146\n81\n138\n125\n52\n91\n80\n50\n\n\nA2M\n10\n9\n2\n5\n2\n9\n8\n4\n\n\n\n\n\n\n\nmetadata &lt;- read.table(\"data/Mov10_full_meta.txt\", header=T, row.names=1) \n\nmetadata\n\n\n\nMetadatos\n\n\n\nsampletype\nMOVexpr\n\n\n\n\nMov10_kd_2\nMOV10_knockdown\nlow\n\n\nMov10_kd_3\nMOV10_knockdown\nlow\n\n\nMov10_oe_1\nMOV10_overexpression\nhigh\n\n\nMov10_oe_2\nMOV10_overexpression\nhigh\n\n\nMov10_oe_3\nMOV10_overexpression\nhigh\n\n\nIrrel_kd_1\ncontrol\nnormal\n\n\nIrrel_kd_2\ncontrol\nnormal\n\n\nIrrel_kd_3\ncontrol\nnormal\n\n\n\n\n\n\nEs importante comprobar que los nombres de las muestras coinciden en los dos ficheros y estan en el orden correcto.\n\nall(names(df.cts) %in% rownames(metadata))\n\n[1] TRUE\n\nall(names(df.cts) == rownames(metadata))\n\n[1] TRUE\n\n\n\n\n1.2 DESeq2DataSet\nLo primero que necesitamos es crear un objeto DESeqDataSet. DESeqDataSet es una clase personalizada del paquete DESeq2 de Bioconductor. Esta clase se utiliza para almacenar los datos y calculos necesarios. Para crear este objeto necesitamos la matriz de cuentas, los metadatos y una “formula” para el diseño. La formula especifica la columna(o columnas) en la tabla de metadatos que se quiere utilizar para el análisis. - Nota: Es esencial que el nombre de las muestras coincidan en los dos ficheros y esten en el mismo orden.\n\ndds &lt;- DESeqDataSetFromMatrix(\n                countData = df.cts, \n                colData = metadata, \n                design = ~sampletype\n                )\n\ndds\n\nclass: DESeqDataSet \ndim: 23368 8 \nmetadata(1): version\nassays(1): counts\nrownames(23368): 1/2-SBSRNA4 A1BG ... ZZZ3 tAKR\nrowData names(0):\ncolnames(8): Mov10_kd_2 Mov10_kd_3 ... Irrel_kd_2 Irrel_kd_3\ncolData names(2): sampletype MOVexpr\n\n\n\n\n1.3 Prefiltrado de los datos\nTipicamente las matrices de RNA-seq contienen muchas filas con ceros, y adicionalmente otras con valores muy bajos de cuentas. Es recomendable eliminar los genes que no aportan (o casi no aportan ) informacion. Aquí realizaremos un filtrado para mantener los genes con un recuento de al menos 10 para una cantidad mínima de muestras. El valor de 10 es razonamble para datos de secuenciación Bulk-RNA. Una recomendación para el número mínimo de muestras es especificar el tamaño de grupo más pequeño.\n\nnrow(dds)\n\n[1] 23368\n\nsmallestGroupSize &lt;- 2\nkeep &lt;- rowSums(counts(dds) &gt;= 10) &gt;= smallestGroupSize\ndds &lt;- dds[keep,]\nnrow(dds)\n\n[1] 15365\n\n\n\n\n1.4 Normalización de las cuentas\nEn DESeq2 la normalización se calcula usando el metodo de la mediana de las relaciones.\n\ndds &lt;- estimateSizeFactors(dds)\n\ndds\n\nclass: DESeqDataSet \ndim: 15365 8 \nmetadata(1): version\nassays(1): counts\nrownames(15365): 1/2-SBSRNA4 A1BG ... ZZEF1 ZZZ3\nrowData names(0):\ncolnames(8): Mov10_kd_2 Mov10_kd_3 ... Irrel_kd_2 Irrel_kd_3\ncolData names(3): sampletype MOVexpr sizeFactor\n\n\n\n\n1.5 Transformacion cuentas\nLos métodos estadísticos para análisis exploratorio funcionan mejor con datos que tienen similares rangos de varianza a diferentes rangos de medias. En el caso de las cuentas de RNA-seq la varianza crece con la media, con lo cual el PCA estará influenciado por los genes con numeros de cuentas altos. La estrategía para evitarlo es tomar el logaritmo de las cuentas normalizadas sumandole una pseudocuenta (para los casos de 0 cuentas, el log de 0 es indefinido). Sin embargo, ahora los genes con pocas cuentas pueden dominar los resuldatos. DESeq2 usa una transformación logaritmica regularizada como solucion. Para los genes con valores altos el resultado es similar a la transfomación logaritmica log2. Para los genes con valores pequeños los valores se reducen hacia la media de los genes a lo largo de todas las muestras.\n\nrld &lt;- rlog(dds, blind = TRUE)\n\nrld\n\nclass: DESeqTransform \ndim: 15365 8 \nmetadata(1): version\nassays(1): ''\nrownames(15365): 1/2-SBSRNA4 A1BG ... ZZEF1 ZZZ3\nrowData names(7): baseMean baseVar ... dispFit rlogIntercept\ncolnames(8): Mov10_kd_2 Mov10_kd_3 ... Irrel_kd_2 Irrel_kd_3\ncolData names(3): sampletype MOVexpr sizeFactor\n\n\n\n\n1.6 Evaluación de calidad\n\n1.6.1 Análisis de componentes principales (PCA)\nUna manera de visualizar las distancias muestra a muestra es el PCA.\n\nplotPCA(rld, intgroup=c('sampletype'))\n\n\n\n\n\n\n\nFigure 1: Análisis de componentes principales\n\n\n\n\n\n\n\n1.6.2 Clustering jerarquico\nOtra metodo es agrupar las muestras basadas en su similitud. En este caso se puede usar la correlación de Pearson para medir la silitud entre muestras. Generealmente se espera una correlación bastante alta (&gt;0.95) entre todas las muestras, además se esperan ver las muestras agrupadas de manera similar a lo observado en el PCA.\nLas muestras que muestran valores bajos de correlación con las demas muestras (&lt;0.80) representan outliers.\n\n# Estraemos la matix rlog del objeto\nrld_mat &lt;- assay(rld) \n\n# Calculamos las correlaciones\nrld_cor &lt;- cor(rld_mat)\n\n#heatmap\npheatmap(rld_cor, color =  brewer.pal(6, \"Blues\"))\n\n\n\n\nMatriz de correlaciones entre las muestras."
-  },
-  {
-    "objectID": "rnaseq/deseq/ejemplo.html#deseq2",
-    "href": "rnaseq/deseq/ejemplo.html#deseq2",
-    "title": "Caso practico",
-    "section": "2 DESeq2",
-    "text": "2 DESeq2\nPara realizar el calculo ejecutamos la funcion DESeq(), que requiere como input un objeto del tipo DESeqDataSet (la variable dds). Reasignando el resultado a la misma variable continuamos llenando los slots del objeto DESeqDataSet.\n\ndds &lt;- DESeq(dds)\n\nusing pre-existing size factors\n\n\nestimating dispersions\n\n\ngene-wise dispersion estimates\n\n\nmean-dispersion relationship\n\n\nfinal dispersion estimates\n\n\nfitting model and testing\n\ndds\n\nclass: DESeqDataSet \ndim: 15365 8 \nmetadata(1): version\nassays(4): counts mu H cooks\nrownames(15365): 1/2-SBSRNA4 A1BG ... ZZEF1 ZZZ3\nrowData names(26): baseMean baseVar ... deviance maxCooks\ncolnames(8): Mov10_kd_2 Mov10_kd_3 ... Irrel_kd_2 Irrel_kd_3\ncolData names(3): sampletype MOVexpr sizeFactor"
-  },
-  {
-    "objectID": "rnaseq/deseq/ejemplo.html#wald-test",
-    "href": "rnaseq/deseq/ejemplo.html#wald-test",
-    "title": "Caso practico",
-    "section": "3 Wald test",
-    "text": "3 Wald test\nLa función results() devuelve los valores de log2 fold changes y los p-values para el Wald test de la comparación.\n\nres &lt;- results(dds, contrast = c('sampletype', 'MOV10_overexpression', 'control'))\n\nhead(as.data.frame(res))\n\n\n\nFC y valores p\n\n\n\n\n\n\n\n\n\n\n\n\nbaseMean\nlog2FoldChange\nlfcSE\nstat\npvalue\npadj\n\n\n\n\n1/2-SBSRNA4\n45.67985\n0.3753332\n0.2597951\n1.4447276\n0.1485344\n0.2442718\n\n\nA1BG\n61.13287\n0.2664358\n0.2195424\n1.2135962\n0.2249020\n0.3369021\n\n\nA1BG-AS1\n175.74157\n-0.0562199\n0.1362360\n-0.4126656\n0.6798516\n0.7715430\n\n\nA2LD1\n89.65925\n0.4218562\n0.1922733\n2.1940443\n0.0282322\n0.0630414\n\n\nA4GALT\n64.59690\n1.0013568\n0.2160868\n4.6340497\n0.0000036\n0.0000241\n\n\nAAAS\n1454.28689\n-0.0430074\n0.0680939\n-0.6315892\n0.5276553\n0.6432932\n\n\n\n\n\n\n\nas.data.frame(mcols(res, use.names = TRUE))\n\n\n\nDescripción de los resultados\n\n\n\n\n\n\n\n\ntype\ndescription\n\n\n\n\nbaseMean\nintermediate\nmean of normalized counts for all samples\n\n\nlog2FoldChange\nresults\nlog2 fold change (MLE): sampletype MOV10_overexpression vs control\n\n\nlfcSE\nresults\nstandard error: sampletype MOV10 overexpression vs control\n\n\nstat\nresults\nWald statistic: sampletype MOV10 overexpression vs control\n\n\npvalue\nresults\nWald test p-value: sampletype MOV10 overexpression vs control\n\n\npadj\nresults\nBH adjusted p-values\n\n\n\n\n\n\n\nNota: Algunos valores de p pueden aparecer como NA en la tabla de resultados, esto puede ser debido a que baseMean pueda ser cero, que una fila contenga un valor considerado outlier, o que esa fila sea filtrada por el filtro independiente."
-  },
-  {
-    "objectID": "rnaseq/deseq/ejemplo.html#genes-diferencialmente-expresados",
-    "href": "rnaseq/deseq/ejemplo.html#genes-diferencialmente-expresados",
-    "title": "Caso practico",
-    "section": "5 Genes diferencialmente expresados",
-    "text": "5 Genes diferencialmente expresados\nPara selecionar los genes diferecialmente expresados debemos fijar el umbral. En este caso elegimos un FC = 1.5 y un valor de p ajustado de 0.05\n\n#|label: DGE\n\npadj.cutoff &lt;- 0.05\nlfc.cutoff &lt;- log2(1.5)\n\ndf.ashr &lt;- as.data.frame(resLFC)\n\ngenes.ashr.up &lt;- rownames(df.ashr[df.ashr$log2FoldChange &gt;= lfc.cutoff & df.ashr$padj &lt;= padj.cutoff, ])\ngenes.ashr.down &lt;- rownames(df.ashr[df.ashr$log2FoldChange &lt;= -1 * lfc.cutoff & df.ashr$padj &lt;= padj.cutoff, ])\n\nhead(genes.ashr.up)\n\n[1] \"A4GALT\"  \"ABCA1\"   \"ABHD14B\" \"ABL2\"    \"ACADVL\"  \"ACAN\"   \n\nhead(genes.ashr.down)\n\n[1] \"ABCA9\"    \"ACTBL2\"   \"ACTL8\"    \"ACTR3B\"   \"ADAMTS16\" \"ADH1C\"   \n\n\n\n5.1 Volcano plot\n\ncreateVolcanoPlot(df.ashr, lfc.cutoff, padj.cutoff, max.overlaps = 30)\n\n\n\n\nVolcano plot (MOV10_overexpression vs control)\n\n\n\n\n\n\n5.2 Heatmap\nHeatmap de los genes diferecialmente expresados.\n\ndf.norm &lt;- counts(dds, normalized = TRUE)\n\ndf.dge &lt;- df.norm[rownames(df.norm) %in% c(genes.ashr.up, genes.ashr.down), ]\n\ncrearHeatMap(df.dge, metadata)\n\n\n\n\nHeatmap"
-  },
-  {
-    "objectID": "rnaseq/deseq/ejemplo.html#contracción-de-los-fc-para-visualización-y-clasificación.",
-    "href": "rnaseq/deseq/ejemplo.html#contracción-de-los-fc-para-visualización-y-clasificación.",
-    "title": "Caso practico",
-    "section": "4 Contracción de los FC para visualización y clasificación.",
-    "text": "4 Contracción de los FC para visualización y clasificación.\nLa reducción del tamaño del efecto (estimaciones de LFC) es útil para la visualización y clasificación de genes\n\nresultsNames(dds)\n\n[1] \"Intercept\"                                 \n[2] \"sampletype_MOV10_knockdown_vs_control\"     \n[3] \"sampletype_MOV10_overexpression_vs_control\"\n\n\n\nresLFC &lt;- lfcShrink(dds, coef=\"sampletype_MOV10_overexpression_vs_control\", type=\"ashr\")\n\nhead(as.data.frame(resLFC))\n\n\n\nFC y valores p\n\n\n\n\n\n\n\n\n\n\n\nbaseMean\nlog2FoldChange\nlfcSE\npvalue\npadj\n\n\n\n\n1/2-SBSRNA4\n45.67985\n0.1868058\n0.1902838\n0.1485344\n0.2442718\n\n\nA1BG\n61.13287\n0.1510142\n0.1684756\n0.2249020\n0.3369021\n\n\nA1BG-AS1\n175.74157\n-0.0423753\n0.1183626\n0.6798516\n0.7715430\n\n\nA2LD1\n89.65925\n0.2728795\n0.1627217\n0.0282322\n0.0630414\n\n\nA4GALT\n64.59690\n0.7830021\n0.2372903\n0.0000036\n0.0000241\n\n\nAAAS\n1454.28689\n-0.0396237\n0.0653723\n0.5276553\n0.6432932"
-  },
-  {
-    "objectID": "rnaseq/deseq/ejemplo.html#referencias",
-    "href": "rnaseq/deseq/ejemplo.html#referencias",
-    "title": "Caso practico",
-    "section": "6 Referencias",
-    "text": "6 Referencias\n\nhttps://bookdown.org/ggiaever/2024_RNA-seq-analysis/\n\n\nhttps://bioconductor.org/packages/release/bioc/html/DESeq2.html"
-  },
-  {
-    "objectID": "enrfun/introduccion.html",
-    "href": "enrfun/introduccion.html",
-    "title": "Enriquecimiento Funcional",
-    "section": "",
-    "text": "La interpretación de una lista de genes diferencialmente expresados suele ser más util en terminos de vías biológicas.\nDado que los genes actuan colectivamente, un modelo más cercano a la biológia subyacente es aquel en el que las vías biológicas son las que se expresan diferencialmente.\nUna aproximación sería intentar hacer el análisis de expresión diferencial directamente a nivel de vía biológica, o indirectamente buscando la sobrerepresentación de los genes diferencialmente expresados en cada vía de interes.\nBases de datos como Reactome o KEGG anotan información de la literatura sobre los genes y las reacciones que forman las vías biológicas. Otras bases de datos como The Gene Ontology (GO) y Molecular Signatures Database (MSigDB) definen las vías biológicas en terminos de conjuntos de genes."
-  },
-  {
-    "objectID": "enrfun/introduccion.html#vías-biológicas-diferencialmente-expresadas",
-    "href": "enrfun/introduccion.html#vías-biológicas-diferencialmente-expresadas",
-    "title": "Enriquecimiento Funcional",
-    "section": "1 Vías biológicas diferencialmente expresadas",
-    "text": "1 Vías biológicas diferencialmente expresadas\nPara encontras estas vía diferencialmente expresadas en terminos de conjunto de genes diferencialmente expresados, es detectanto un enriquecimiento funcional:\n\nBuscar genes diferencialmente expresados (DE).\nPara cada conjunto de genes, verificar si estos genes DE pertenecen a ese conjunto en una proporcion que excede la expectativa de encontrarlo solo por azar.\n\nEn el caso de que un conjunto de genes contiene más genes DE que los que se podrían esperar por puro azar, decimos que este conjunto de genes esta enriquecido en genes DE"
-  },
-  {
-    "objectID": "enrfun/introduccion.html#la-prueba-exacta-de-fisher",
-    "href": "enrfun/introduccion.html#la-prueba-exacta-de-fisher",
-    "title": "Enriquecimiento Funcional",
-    "section": "2 La prueba exacta de Fisher",
-    "text": "2 La prueba exacta de Fisher\nLa forma de valorar si un conjunto de genes esta enriquecido o no es a traves de la prueba exacta de Fisher (prueba hipergeométrica)"
-  },
-  {
-    "objectID": "enrfun/introduccion.html#análisis-de-sobrerepresentación-ora",
-    "href": "enrfun/introduccion.html#análisis-de-sobrerepresentación-ora",
-    "title": "Enriquecimiento Funcional",
-    "section": "2 Análisis de sobrerepresentación (ORA)",
-    "text": "2 Análisis de sobrerepresentación (ORA)\nLa forma de valorar si un conjunto de genes esta enriquecido o no es a traves de la prueba exacta de Fisher (prueba hipergeométrica). La prueba es útil para los datos categóricos que resultan de clasificar los objetos en dos formas diferentes. Se utiliza para examinar la significación de la asociación entre los dos tipos de clasificación. En nuestro caso si un gen es DE o no dentro de un conjunto de genes.\nEl valor de p se calcula con la función de distribución hipergeométrica. \\[ \\textrm{Pr}(X &gt;= k)=\\sum_{x=k}^{\\textrm{min}(m, n)} \\frac{ {m\\choose x} {N-m\\choose n-x} }{ {N\\choose n} }\\,. \\]\n\nN: Número total de genes (background).\nm: Número de genes en la distribución que estan anotados en el conjunto de genes de interes.\nn: Tamaño de la lista de genes de interes.\nk: Número de genes de la lista que estan anotados en el conjunto de genes.\n\nEjemplo: Supongamos que tenemos 17980 genes detectados en un estudio de RNA-seq, y 57 genes estan diferencialmente expresados. Entre estos 28 estan anotados en un conjunto de genes.\n\n\n\n\n\n\n\ngene.not.interest\ngene.in.interest\n\n\n\n\nIn_category\n2613\n28\n\n\nnot_in_category\n15310\n29\n\n\n\n\n\n\n\n\n\n    Fisher's Exact Test for Count Data\n\ndata:  df\np-value = 1\nalternative hypothesis: true odds ratio is greater than 1\n95 percent confidence interval:\n 0.110242      Inf\nsample estimates:\nodds ratio \n 0.1767937"
-  },
-  {
-    "objectID": "enrfun/introduccion.html#análisis-de-gene-ontology",
-    "href": "enrfun/introduccion.html#análisis-de-gene-ontology",
-    "title": "Enriquecimiento Funcional",
-    "section": "3 Análisis de Gene Ontology",
-    "text": "3 Análisis de Gene Ontology\nEs un análisis de enriquecimiento funcional aplicado a cada uno de los conjuntos de genes de la base da datos de GO Gene Ontology (GO) es una representación estructurada y estandarizada del conocimiento biológico. GO describe conceptos, tambien conocidos como términos, que estan interconectados a traves de relaciones definidas formalmente. GO esta diseñado para ser independiente de la especie.\n\n3.1 Ontologías\nUn término GO pertenece a una de las siguientes tres ontologías: Biological Process (BP), Molecular Function (MF) y Cellular Component (CC).\nEl producto de un gen puede asociarse con o localizarse en una o más componentes celulares y estar activo en uno o más procesos biológicos durante los cuales realiza una o más funciones moleculares.\nDentro de una ontología los términos GO estan relacionados unos con otros a través de relaciones jerarquicas que describen cuando un término GO es más general o nó."
-  },
-  {
-    "objectID": "enrfun/introduccion.html#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea",
-    "href": "enrfun/introduccion.html#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea",
-    "title": "Enriquecimiento Funcional",
-    "section": "4 Análisis de enriquecimiento de conjuntos de genes (GSEA)",
-    "text": "4 Análisis de enriquecimiento de conjuntos de genes (GSEA)\nEl análisis de enriquecimiento ORA se basa en los genes identificados como diferencialmente expresados. Pero tiene la limitación de que necesita una lista minimamente grande de genes. Existen contextos donde los cambios de expresión diferencial puede ser pequeña. Los cambios moleculares más relevantes, si bien pequeños, ocurren de forma coordinada en una misma vía biológica. En estos contextos el método ORA suele fallar.\nGSEA aborda directamente esta limitación. Todos los genes se pueden utilizar en GSEA (y no solamente los genes DE), esto hace posible detectar situaciones donde todos los genes en el conjunto predefinido cambian un poco pero de manera coordinada.\nEn GSEA los genes se clasifican segun su fenotipo, Dado un conjunto de genes S definido a priori, el objetivo de GSEA es determinar si los miembros de S se distribuyen aleatoriamente en toda la lista de genes clasificados (L) o se encuentran principalmente en la parte superior o inferior.\n\n\n\n\n\nHay tres elementos claves en GSEA:\n\nEnrichment Score (ES): representa el grado al cual el conjunto S esta sobrerepresentado an la parte superior o inferior de la lista de genes clasificados L.\nNivel de significancia de ES: el valor de p es calculado mediante permutaciones.\nAjuste para pruebas multiples."
-  },
-  {
-    "objectID": "index.html#education",
-    "href": "index.html#education",
-    "title": "Tumbleweed",
-    "section": "Education",
-    "text": "Education\nUniversity of California, San Diego | San Diego, CA PhD in Mathematics | Sept 2011 - June 2015\nMacalester College | St. Paul MA B.A in Economics | Sept 2007 - June 2011"
-  },
-  {
-    "objectID": "index.html#experience",
-    "href": "index.html#experience",
-    "title": "Tumbleweed",
-    "section": "Experience",
-    "text": "Experience\nWengo Analytics | Head Data Scientist | April 2018 - present\nGeoScynce | Chief Analyst | Spet 2012 - April 2018"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#qué-es-ggplot2",
-    "href": "Taller/ggplot2/ggplot2.html#qué-es-ggplot2",
-    "title": "ggplot2",
-    "section": "¿Qué es ggplot2?",
-    "text": "¿Qué es ggplot2?\nggplot2 es un paquete de R para producir visualizaciones de datos. A diferencia de otros paquetes graficos, ggplot2 usa un framework conceptual basado en la gramática de los gráficos. Esto permite crear gráficos de diferentes elementos, en lugar de estar limitados a un conjunto de gráficos predeterminados. A día de hoy es el lider indiscutible en representaciones gráficas en R."
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#estructura",
-    "href": "Taller/ggplot2/ggplot2.html#estructura",
-    "title": "ggplot2",
-    "section": "Estructura",
-    "text": "Estructura\nExisten 7 elementos que se unen como un conjunto de instrucciones para dibujar un gráfico. Un gráfico presenta al menos tres elementos: Data, mapping, layer."
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#estructura-1",
-    "href": "Taller/ggplot2/ggplot2.html#estructura-1",
-    "title": "ggplot2",
-    "section": "Estructura",
-    "text": "Estructura\n\nData: Los datos que se van a representar, generalmente será un data frame.\nMappings:Características estéticas (aes) que describiran cómo queremos que los datos se vean en el gráfico (posición, color, relleno, forma, tamaño, etc..).\nLayers: Es la capa que muestra como aparecen los datos. Cada una de ellas tiene 3 partes importantes:\n\nGeometría: (geom) Determina como se muestra cada punto, linea, etc..\nTransformación estadisticas: (stat) Que puede computar nuevas variables de los datos.\nAjuste de posición: Determina donde se muestra cada parte de datos."
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#instalación",
-    "href": "Taller/ggplot2/ggplot2.html#instalación",
-    "title": "ggplot2",
-    "section": "Instalación",
-    "text": "Instalación\nEl paquete ggplot2 no se encuentra en R-base, para su uso es necesario descargarlo e instalarlo desde los repositorios de CRAN.\ninstall.packages('ggplot2')\nPara poder usarlo hay que cargarlo en el sistema usando la función library()\n\nlibrary('ggplot2')"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#diamonds",
-    "href": "Taller/ggplot2/ggplot2.html#diamonds",
-    "title": "ggplot2",
-    "section": "Diamonds",
-    "text": "Diamonds\nEn el paquete ggplot2 esta incluido el dataset Diamonds que contiene el precio y otros atributos de 54.000 diamantes.\n\nlibrary('ggplot2')\ndf &lt;- diamonds\nsummary(df)\n\n\n\n     carat               cut        color        clarity          depth      \n Min.   :0.2000   Fair     : 1610   D: 6775   SI1    :13065   Min.   :43.00  \n 1st Qu.:0.4000   Good     : 4906   E: 9797   VS2    :12258   1st Qu.:61.00  \n Median :0.7000   Very Good:12082   F: 9542   SI2    : 9194   Median :61.80  \n Mean   :0.7979   Premium  :13791   G:11292   VS1    : 8171   Mean   :61.75  \n 3rd Qu.:1.0400   Ideal    :21551   H: 8304   VVS2   : 5066   3rd Qu.:62.50  \n Max.   :5.0100                     I: 5422   VVS1   : 3655   Max.   :79.00  \n                                    J: 2808   (Other): 2531                  \n     table           price             x                y         \n Min.   :43.00   Min.   :  326   Min.   : 0.000   Min.   : 0.000  \n 1st Qu.:56.00   1st Qu.:  950   1st Qu.: 4.710   1st Qu.: 4.720  \n Median :57.00   Median : 2401   Median : 5.700   Median : 5.710  \n Mean   :57.46   Mean   : 3933   Mean   : 5.731   Mean   : 5.735  \n 3rd Qu.:59.00   3rd Qu.: 5324   3rd Qu.: 6.540   3rd Qu.: 6.540  \n Max.   :95.00   Max.   :18823   Max.   :10.740   Max.   :58.900  \n                                                                  \n       z         \n Min.   : 0.000  \n 1st Qu.: 2.910  \n Median : 3.530  \n Mean   : 3.539  \n 3rd Qu.: 4.040  \n Max.   :31.800"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#scatterplot",
-    "href": "Taller/ggplot2/ggplot2.html#scatterplot",
-    "title": "ggplot2",
-    "section": "Scatterplot",
-    "text": "Scatterplot\nVamos a representar carat (quilates) vs price\n\nggplot(df, aes(x = carat, y = price)) +\n    geom_point()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#scatterplot-1",
-    "href": "Taller/ggplot2/ggplot2.html#scatterplot-1",
-    "title": "ggplot2",
-    "section": "Scatterplot",
-    "text": "Scatterplot\nAñadimos un tema y cambiamos el color de los puntos\n\nggplot(df, aes(x = carat, y = price)) +\n    geom_point(color = 'steelblue') +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#scatterplot-2",
-    "href": "Taller/ggplot2/ggplot2.html#scatterplot-2",
-    "title": "ggplot2",
-    "section": "Scatterplot",
-    "text": "Scatterplot\nColoreamos los puntos agrupados por la variable cut. Además movemos la leyenda a la parte superior\n\nggplot(df, aes(x = carat, y = price)) +\n    geom_point(aes(color = cut)) +\n    theme_bw() +\n    theme(legend.position = 'top')"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#scatterplot-3",
-    "href": "Taller/ggplot2/ggplot2.html#scatterplot-3",
-    "title": "ggplot2",
-    "section": "Scatterplot",
-    "text": "Scatterplot\n\nggplot(df, aes(x = carat, y = price)) +\n    geom_point(aes(color = cut)) +\n    theme_bw() +\n    theme(legend.position = 'top') +\n    facet_wrap(~ cut)"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#boxplot",
-    "href": "Taller/ggplot2/ggplot2.html#boxplot",
-    "title": "ggplot2",
-    "section": "Boxplot",
-    "text": "Boxplot\n\nggplot(df, aes(y = price)) +\n    geom_boxplot()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#boxplot-1",
-    "href": "Taller/ggplot2/ggplot2.html#boxplot-1",
-    "title": "ggplot2",
-    "section": "Boxplot",
-    "text": "Boxplot\n\nggplot(df, aes(x = cut, y = price)) +\n    geom_boxplot(color = 'navy') +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#boxplot-2",
-    "href": "Taller/ggplot2/ggplot2.html#boxplot-2",
-    "title": "ggplot2",
-    "section": "Boxplot",
-    "text": "Boxplot\n\nggplot(df, aes(x = cut, y = price)) +\n    geom_boxplot(aes(fill = cut), color = 'navy') +\n    theme_bw() +\n    theme(legend.position = 'top')"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#boxplot-3",
-    "href": "Taller/ggplot2/ggplot2.html#boxplot-3",
-    "title": "ggplot2",
-    "section": "Boxplot",
-    "text": "Boxplot\nAñadimos una 3ª variable, la variable ‘color’\n\nggplot(df, aes(x = cut, y = price)) +\n    geom_boxplot(aes(fill = color), color = 'navy') +\n    theme_bw() +\n    theme(legend.position = 'top')"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#boxplot-4",
-    "href": "Taller/ggplot2/ggplot2.html#boxplot-4",
-    "title": "ggplot2",
-    "section": "Boxplot",
-    "text": "Boxplot\n\nggplot(df, aes(x = cut, y = price)) +\n    geom_boxplot(aes(fill = color), color = 'navy') +\n    theme_bw() +\n    theme(legend.position = 'top') +\n    facet_wrap(~ color)"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#histogram",
-    "href": "Taller/ggplot2/ggplot2.html#histogram",
-    "title": "ggplot2",
-    "section": "Histogram",
-    "text": "Histogram\n\nggplot(df, aes(x = price)) +\n    geom_histogram(color = 'navy', fill = 'steelblue') +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#histogram-1",
-    "href": "Taller/ggplot2/ggplot2.html#histogram-1",
-    "title": "ggplot2",
-    "section": "Histogram",
-    "text": "Histogram\n\nggplot(df, aes(x = price)) +\n    geom_histogram(aes(color = color), fill = 'white') +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart",
-    "href": "Taller/ggplot2/ggplot2.html#bar-chart",
-    "title": "ggplot2",
-    "section": "Bar Chart",
-    "text": "Bar Chart\n\nggplot(df, aes(x = clarity)) +\n    geom_bar(color = 'navy', fill = 'white') +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-1",
-    "href": "Taller/ggplot2/ggplot2.html#bar-chart-1",
-    "title": "ggplot2",
-    "section": "Bar Chart",
-    "text": "Bar Chart\n\nggplot(df, aes(x = clarity)) +\n    geom_bar(aes(color = clarity, fill = clarity)) +\n    theme_bw() +\n    theme(legend.position = 'top')"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-2",
-    "href": "Taller/ggplot2/ggplot2.html#bar-chart-2",
-    "title": "ggplot2",
-    "section": "Bar Chart",
-    "text": "Bar Chart\n\nggplot(df, aes(x = clarity)) +\n    geom_bar(aes(color = cut, fill = cut)) +\n    theme_bw() +\n    theme(legend.position = 'top')"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-3",
-    "href": "Taller/ggplot2/ggplot2.html#bar-chart-3",
-    "title": "ggplot2",
-    "section": "Bar Chart",
-    "text": "Bar Chart\n\nggplot(df, aes(x = clarity)) +\n    geom_bar(aes(color = cut, fill = cut), position = position_dodge()) +\n    theme_bw() +\n    theme(legend.position = 'top')"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-4",
-    "href": "Taller/ggplot2/ggplot2.html#bar-chart-4",
-    "title": "ggplot2",
-    "section": "Bar Chart",
-    "text": "Bar Chart\n\nggplot(df, aes(x = clarity, y = price)) +\n    geom_bar(color = 'navy', stat = 'identity') +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-5",
-    "href": "Taller/ggplot2/ggplot2.html#bar-chart-5",
-    "title": "ggplot2",
-    "section": "Bar Chart",
-    "text": "Bar Chart\n\nggplot(df, aes(x = clarity, y = price)) +\n    geom_col(color = 'navy') +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#bar-chart-6",
-    "href": "Taller/ggplot2/ggplot2.html#bar-chart-6",
-    "title": "ggplot2",
-    "section": "Bar Chart",
-    "text": "Bar Chart\n\nggplot(df, aes(x = clarity, y = price)) +\n    geom_bar(aes(color = cut, fill = cut), position = position_dodge(),  stat = 'identity') +\n    theme_bw() +\n    theme(legend.position = 'top')"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#pie-chart",
-    "href": "Taller/ggplot2/ggplot2.html#pie-chart",
-    "title": "ggplot2",
-    "section": "Pie Chart",
-    "text": "Pie Chart\n\nggplot(df, aes(x = '', y = price)) +\n    geom_bar(aes(fill = clarity), stat = 'identity') +\n    theme_bw() +\n    coord_polar('y')"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot",
-    "href": "Taller/ggplot2/ggplot2.html#volcano-plot",
-    "title": "ggplot2",
-    "section": "Volcano Plot",
-    "text": "Volcano Plot\nVamos a realizar el volcano plot correspondiente al análisis diferencial de los datos de Drosophila melanogaster. Eliminamos las filas con 0 o NA values\n\ndge &lt;- read.csv('data/DGE.csv')\ndge &lt;- dge[dge$padj != 0, ]\ndge &lt;- dge[complete.cases(dge), ]\n\nhead(dge)\n\n\n\n            X baseMean log2FoldChange      lfcSE       pvalue         padj\n1 FBgn0000008 562.4671    -0.05656922 0.05473453 3.005379e-01 3.499743e-01\n2 FBgn0000014 894.8910    -0.79584159 0.04535355 3.664583e-69 2.568605e-68\n3 FBgn0000015 323.3163    -0.84122112 0.07377132 2.177357e-30 8.697926e-30\n4 FBgn0000017 862.1217    -0.25306214 0.04781241 1.098852e-07 2.259261e-07\n5 FBgn0000018 111.7811     0.37605333 0.11157453 6.718636e-04 1.085105e-03\n6 FBgn0000024 789.7766    -0.91597718 0.04844234 5.862028e-80 4.626392e-79"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-1",
-    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-1",
-    "title": "ggplot2",
-    "section": "Volcano Plot",
-    "text": "Volcano Plot\nSeleccionamos los valores de FC = 2 y padj = 0.0000001 de corte.\n\npadj.cutoff &lt;- 0.0000001\nlfc.cutoff &lt;- log2(2)\n\n\n\n\n\n\ndge$class &lt;- 'none'\ndge[dge$log2FoldChange &gt;= lfc.cutoff & dge$padj &lt;= padj.cutoff, c('class')] &lt;- 'UP'\ndge[dge$log2FoldChange &lt;= -1 * lfc.cutoff & dge$padj &lt;= padj.cutoff, c('class')] &lt;- 'DOWN'\n\nhead(dge)\n\n\n\n            X baseMean log2FoldChange      lfcSE       pvalue         padj\n1 FBgn0000008 562.4671    -0.05656922 0.05473453 3.005379e-01 3.499743e-01\n2 FBgn0000014 894.8910    -0.79584159 0.04535355 3.664583e-69 2.568605e-68\n3 FBgn0000015 323.3163    -0.84122112 0.07377132 2.177357e-30 8.697926e-30\n4 FBgn0000017 862.1217    -0.25306214 0.04781241 1.098852e-07 2.259261e-07\n5 FBgn0000018 111.7811     0.37605333 0.11157453 6.718636e-04 1.085105e-03\n6 FBgn0000024 789.7766    -0.91597718 0.04844234 5.862028e-80 4.626392e-79\n  class\n1  none\n2  none\n3  none\n4  none\n5  none\n6  none"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-2",
-    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-2",
-    "title": "ggplot2",
-    "section": "Volcano Plot",
-    "text": "Volcano Plot\n\nggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +\n    geom_point() +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-3",
-    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-3",
-    "title": "ggplot2",
-    "section": "Volcano Plot",
-    "text": "Volcano Plot\n\nggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +\n    geom_point() +\n    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-4",
-    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-4",
-    "title": "ggplot2",
-    "section": "Volcano Plot",
-    "text": "Volcano Plot\n\nggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +\n    geom_point(aes(color = class)) +\n    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-5",
-    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-5",
-    "title": "ggplot2",
-    "section": "Volcano Plot",
-    "text": "Volcano Plot\n\ncolors &lt;- c(\"UP\"=\"#FC4E07\", \"none\"=\"#E7B800\", \"DOWN\"=\"#00AFBB\")\nggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +\n    geom_point(aes(color = class)) +\n    scale_color_manual(values = colors) +\n    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-6",
-    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-6",
-    "title": "ggplot2",
-    "section": "Volcano Plot",
-    "text": "Volcano Plot\n\nlibrary(ggrepel)\nggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj), label = X)) +\n    geom_point(aes(color = class)) +\n    scale_color_manual(values = colors) +\n    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype=\"dashed\", \n                              color = \"black\", linewidth = 0.2) +\n    geom_label_repel(data = dge[dge$class %in% c('UP', 'DOWN'), ], \n                            size= 4, color = 'firebrick',  point.padding=unit(0.5, \"lines\"), max.overlaps = 30) +\n    theme_bw()"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#volcano-plot-7",
-    "href": "Taller/ggplot2/ggplot2.html#volcano-plot-7",
-    "title": "ggplot2",
-    "section": "Volcano Plot",
-    "text": "Volcano Plot"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#top-genes",
-    "href": "Taller/ggplot2/ggplot2.html#top-genes",
-    "title": "ggplot2",
-    "section": "TOP Genes",
-    "text": "TOP Genes\n\ndge &lt;- dge[order(dge$log2FoldChange, decreasing = TRUE), ]\ngenes.up &lt;- dge[1:40, c('X')]\ngenes.down &lt;- dge[(nrow(dge) - 30):nrow(dge), c('X')]\n\ngenes.up\n\n\n\n [1] \"FBgn0039443\" \"FBgn0030921\" \"FBgn0035865\" \"FBgn0030570\" \"FBgn0040743\"\n [6] \"FBgn0039448\" \"FBgn0038394\" \"FBgn0032289\" \"FBgn0051626\" \"FBgn0051560\"\n[11] \"FBgn0039027\" \"FBgn0039264\" \"FBgn0031467\" \"FBgn0036593\" \"FBgn0052855\"\n[16] \"FBgn0003065\" \"FBgn0036596\" \"FBgn0033481\" \"FBgn0050471\" \"FBgn0031957\"\n[21] \"FBgn0034131\" \"FBgn0038439\" \"FBgn0051561\" \"FBgn0051081\" \"FBgn0085359\"\n[26] \"FBgn0051876\" \"FBgn0037940\" \"FBgn0036350\" \"FBgn0085250\" \"FBgn0035875\"\n[31] \"FBgn0030841\" \"FBgn0035685\" \"FBgn0037395\" \"FBgn0032609\" \"FBgn0030107\"\n[36] \"FBgn0039387\" \"FBgn0036532\" \"FBgn0004511\" \"FBgn0038002\" \"FBgn0029647\"\n\ngenes.down\n\n [1] \"FBgn0036417\" \"FBgn0032184\" \"FBgn0030830\" \"FBgn0005664\" \"FBgn0039476\"\n [6] \"FBgn0050334\" \"FBgn0085232\" \"FBgn0034092\" \"FBgn0037288\" \"FBgn0038007\"\n[11] \"FBgn0038160\" \"FBgn0034828\" \"FBgn0031940\" \"FBgn0036470\" \"FBgn0039083\"\n[16] \"FBgn0085363\" \"FBgn0039483\" \"FBgn0039299\" \"FBgn0033404\" \"FBgn0035022\"\n[21] \"FBgn0019929\" \"FBgn0038148\" \"FBgn0038819\" \"FBgn0040553\" \"FBgn0035661\"\n[26] \"FBgn0052453\" \"FBgn0038505\" \"FBgn0053270\" \"FBgn0031276\" \"FBgn0037179\"\n[31] \"FBgn0037177\""
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#top-genes-1",
-    "href": "Taller/ggplot2/ggplot2.html#top-genes-1",
-    "title": "ggplot2",
-    "section": "TOP Genes",
-    "text": "TOP Genes\n\ndf.norm &lt;- read.csv('data/normalized_counts.csv')\nhead(df.norm)\n\n\n\n            X  SRX008026  SRX008174 SRX008201  SRX008239 SRX008008 SRX008168\n1 FBgn0000008  577.30414  589.66391  536.2258  595.58471  560.6214  581.6257\n2 FBgn0000014 1147.76523 1197.37875 1121.8777 1217.76428  671.0268  695.3146\n3 FBgn0000015  395.03031  443.75218  452.2948  431.81641  229.7358  255.3881\n4 FBgn0000017  895.81677 1007.84392  952.1506  930.81982  780.1100  792.5268\n5 FBgn0000018   93.31425   96.27166   95.1218   97.28117  122.6359  154.8805\n6 FBgn0000024 1117.90467 1063.50098 1050.0701 1048.39706  562.2742  561.8537\n  SRX008211 SRX008255 SRX008261\n1  516.9053  536.3239  567.9487\n2  682.5334  668.7586  651.6000\n3  236.6116  256.0892  209.1284\n4  789.9186  771.1942  838.7149\n5  120.1259  118.5327  107.8662\n6  607.9097  578.7615  517.3176\n\n\n\n\ndf.norm &lt;- df.norm[df.norm$X %in% c(genes.up, genes.down), ]\nrownames(df.norm) &lt;- df.norm$X\ndf.norm$X &lt;- NULL\ndim(df.norm)\n\n\n\n[1] 71  9"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#heatmap",
-    "href": "Taller/ggplot2/ggplot2.html#heatmap",
-    "title": "ggplot2",
-    "section": "Heatmap",
-    "text": "Heatmap\n\n\nlibrary(pheatmap)\n\npheatmap(df.norm)"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#heatmap-1",
-    "href": "Taller/ggplot2/ggplot2.html#heatmap-1",
-    "title": "ggplot2",
-    "section": "Heatmap",
-    "text": "Heatmap\n\n\npheatmap(df.norm,\n        scale = 'row'\n)"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#heatmap-2",
-    "href": "Taller/ggplot2/ggplot2.html#heatmap-2",
-    "title": "ggplot2",
-    "section": "Heatmap",
-    "text": "Heatmap\n\n\npheatmap(df.norm,\n        scale = 'row',\n        cutree_cols =  2,\n        cutree_rows = 2,\n        color = colorRampPalette(\n            c(\"steelblue\", \n                \"white\", \n                \"firebrick3\")\n            )(100),\n)"
-  },
-  {
-    "objectID": "Taller/ggplot2/ggplot2.html#heatmap-3",
-    "href": "Taller/ggplot2/ggplot2.html#heatmap-3",
-    "title": "ggplot2",
-    "section": "Heatmap",
-    "text": "Heatmap\n\n\npheatmap(df.norm,\n        scale = 'row',\n        cutree_cols =  2,\n        cutree_rows = 2,\n        color = colorRampPalette(\n            c(\"steelblue\", \n                \"white\", \n                \"firebrick3\")\n            )(100),\n        annotation_col = coldata\n)\n\n\n\n\n\n\n\n\n\n\n\n\n\nggplot2"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#qué-es-programar",
-    "href": "Taller/usaR/usaR.html#qué-es-programar",
-    "title": "Usa R!",
-    "section": "¿Qué es “programar”?",
-    "text": "¿Qué es “programar”?\nProgramar es el proceso de crear un conjunto de instrucciones para decirle a la computadora cómo realizar una tarea."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#cómo-programar",
-    "href": "Taller/usaR/usaR.html#cómo-programar",
-    "title": "Usa R!",
-    "section": "¿Cómo programar?",
-    "text": "¿Cómo programar?\nLa tarea de “programar” no se centra exclusivamente en escribir código, si no que conlleva una serie de pasos previos antes de “codificar” las instrucciones.\n\n\nDescomponer un problema complejo en partes más pequeñas.\nReconocimiento de patrones repetitivos.\nResolución de los problemas paso a paso.\nEscribir el código."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#qué-es-un-lenguaje-de-programación",
-    "href": "Taller/usaR/usaR.html#qué-es-un-lenguaje-de-programación",
-    "title": "Usa R!",
-    "section": "¿Qué es un “lenguaje de programación”?",
-    "text": "¿Qué es un “lenguaje de programación”?\nUn lenguaje de programación es un lenguaje formal (es decir, un lenguaje con reglas gramaticales bien definidas) que proporciona al programador la capacidad y habilidad de escribir instrucciones o secuencias de órdenes para controlar el comportamiento de un sistema informático."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#el-entorno-de-r",
-    "href": "Taller/usaR/usaR.html#el-entorno-de-r",
-    "title": "Usa R!",
-    "section": "¿El entorno de R?",
-    "text": "¿El entorno de R?\nR es un conjunto integrado de software para la manipulación, cálculo y visualización de datos. Entre otras cosas tiene:\n\nTratamiento y almacenamiento de datos eficaz.\nConjunto de operadores para el calculo sobre matrices.\nConjunto integrado de herramientas para el análisis y visualización de datos.\nUn simple y efectivo lenguaje de programación.\nAmpliamente utilizado en investigación cientifica."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#qué-es-un-programa",
-    "href": "Taller/usaR/usaR.html#qué-es-un-programa",
-    "title": "Usa R!",
-    "section": "¿Qué es un “Programa”?",
-    "text": "¿Qué es un “Programa”?\nUn programa informático es una secuencia de instrucciones basadas en un lenguaje de programación que el ordenador interpreta para resolver un problema."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#cuales-son-los-elementos-básicos-de-un-programa",
-    "href": "Taller/usaR/usaR.html#cuales-son-los-elementos-básicos-de-un-programa",
-    "title": "Usa R!",
-    "section": "¿Cuales son los elementos básicos de un programa?",
-    "text": "¿Cuales son los elementos básicos de un programa?\n\n\nInstrucciones: conjunto de ordenes que indican al ordenador como realizar una tarea específica (asignar un valor a una variable, ejecutar un bucle que itera sobre una lista de datos).\n\n\n\n\nFunciones: conjunto de instrucciones que permiten realizar una tarea específica (ANOVA, plot de datos, etc..). Se pueden imaginar como una máquina que toma ciertos datos, realiza una operación y devuelve un resultado."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#cuales-son-los-elementos-básicos-de-un-programa-1",
-    "href": "Taller/usaR/usaR.html#cuales-son-los-elementos-básicos-de-un-programa-1",
-    "title": "Usa R!",
-    "section": "¿Cuales son los elementos básicos de un programa?",
-    "text": "¿Cuales son los elementos básicos de un programa?\n\nDatos: pueden ser números, texto, imagénes, etc.. . En resumen cualquier tipo de información que el programa manipule. En general, son la razon de ser de muchas aplicaciones.\n\n\n\nOperadores: son las herramientas que permiten realizar operaciones sobre los datos (sumar, multiplicar, comparar, asignar, etc..).\n\n\n\n\nVariables: actuan como contenedores de información permitiendo que un programa conserve información y realice operaciones sobre esta información, en cierto modo se puede decir que son la “memoria” del programa."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#hola-mundo",
-    "href": "Taller/usaR/usaR.html#hola-mundo",
-    "title": "Usa R!",
-    "section": "“¡Hola Mundo!”",
-    "text": "“¡Hola Mundo!”\nEl programa “¡Hola Mundo!” suele ser el primer ejercicio típico en la introducción del estudio de un lenguaje de programación.\n\n\nsaludo &lt;- \"¡Hola Mundo!\"\n\nsaludo\n\n\n[1] \"¡Hola Mundo!\""
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#usando-funciones",
-    "href": "Taller/usaR/usaR.html#usando-funciones",
-    "title": "Usa R!",
-    "section": "Usando funciones",
-    "text": "Usando funciones\n- head()\nPara ilustrar el uso de la función head() utilizaremos el dataset iris que viene con la instalación de R-Base.\n\ndf &lt;- iris\n\nhead(df)\n\n\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width Species\n1          5.1         3.5          1.4         0.2  setosa\n2          4.9         3.0          1.4         0.2  setosa\n3          4.7         3.2          1.3         0.2  setosa\n4          4.6         3.1          1.5         0.2  setosa\n5          5.0         3.6          1.4         0.2  setosa\n6          5.4         3.9          1.7         0.4  setosa"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#usando-funciones-1",
-    "href": "Taller/usaR/usaR.html#usando-funciones-1",
-    "title": "Usa R!",
-    "section": "Usando funciones",
-    "text": "Usando funciones\n- pairs()\nPara ilustrar el uso de la función pairs() utilizaremos el dataset iris que viene con la instalación de R-Base.\n\n\ndf &lt;- iris\n\npairs(df, col = df$Species)"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#estructuras-de-control-de-flujo",
-    "href": "Taller/usaR/usaR.html#estructuras-de-control-de-flujo",
-    "title": "Usa R!",
-    "section": "Estructuras de control de flujo",
-    "text": "Estructuras de control de flujo\nSe llaman estructuras de control de flujo a las instrucciones que permiten controlar las acciones de un algoritmo o programa. Estas son de gran utilidad para determinar la lógica y el orden en que ocurren las operaciones.\n\nif, else: if(“si”) es usado cuando deseamos que una operación se ejecute únicamente cuando una condición se cumple. else(“de otro modo”) es usado para indicar que hacer en cado de que la condición de un if no se cumpla.\nfor: nos permite ejecutar un bucle, realizando una misma operación para cada elemento de un conjunto de datos."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#if-else",
-    "href": "Taller/usaR/usaR.html#if-else",
-    "title": "Usa R!",
-    "section": "if, else",
-    "text": "if, else\n\nvariable_1 &lt;- 5\n\nif (variable_1 &gt;10) {\n    print('la variable_1 es mayor que 10')\n} else {\n    print('la variable_1 NO es mayor que 10 ')\n}\n\n\n\n[1] \"la variable_1 NO es mayor que 10 \""
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#for",
-    "href": "Taller/usaR/usaR.html#for",
-    "title": "Usa R!",
-    "section": "for",
-    "text": "for\n\nestaciones &lt;- c('primavera', 'verano', 'otoño', 'invierno')\n\nfor(estacion in estaciones){\n    print(toupper(estacion))\n}\n\n\n\n[1] \"PRIMAVERA\"\n[1] \"VERANO\"\n[1] \"OTOÑO\"\n[1] \"INVIERNO\""
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#variables",
-    "href": "Taller/usaR/usaR.html#variables",
-    "title": "Usa R!",
-    "section": "Variables",
-    "text": "Variables\nLas variables actuan como contenedores de información (“memoria”) del programa. La estructura de esa información es muy heterogenea, podemos tener información simple(el número 5, el texto “¡Hola Mundo!”, etc..) o mucho más compleja (matriz de RNA-seq, con miles de filas y columnas).\nEn base al tipo de información que contienen las variables las podemos clasificar en simples o complejas."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#variables-simples",
-    "href": "Taller/usaR/usaR.html#variables-simples",
-    "title": "Usa R!",
-    "section": "Variables simples",
-    "text": "Variables simples\n\n\n\n\n\n\n\n\nTipo de dato\nDescripción\nDefinición\n\n\n\n\nNumeric\nNúmeros decimales\nnumero &lt;- 1.0\n\n\nInteger\nNúmeros enteros\nentero &lt;- 1\n\n\nCharacter\nCadenas de texto\ntexto &lt;- “un texto”\n\n\nComplex\nNúmeros complejos\ncomplejo &lt;- 3 + 2i\n\n\nLogical\nTRUE o FALSE\n5 &lt; 6; 5 == 5\n\n\nFactor\nEs una variable de tipo categórica"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#variables-complejas",
-    "href": "Taller/usaR/usaR.html#variables-complejas",
-    "title": "Usa R!",
-    "section": "Variables complejas",
-    "text": "Variables complejas\nLa estructura de la información contenida en estas variables es más compleja. Además estas variables tienen métodos y atributos que facilitan acceder a la información que contienen.\n\nVectores: Los vectores almacena una secuencia de valores simples todos del mismo tipo.\nListas: A diferencia de los vectores las listas es una colección de elementos que pueden ser de diferente tipo.\nMatrices:Una matriz es una estructura bidimensional que almacena números.\nData Frames: Un Data Frame es una estructura bidimensional que puede almacenar tipos de datos mixtos."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#vectores",
-    "href": "Taller/usaR/usaR.html#vectores",
-    "title": "Usa R!",
-    "section": "Vectores",
-    "text": "Vectores\nLa forma más habitual de crear un vector es usando la función c()\n\nvector_numeros &lt;- c(2, 4, 6, 8)\nprint(vector_numeros)\n\n\n\n[1] 2 4 6 8\n\n\n\nseq_numeros &lt;- 10:20\nprint(seq_numeros)\n\n\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\n\n\ncomb_vect &lt;- c(vector_numeros, seq_numeros)\nprint(comb_vect)\n\n\n\n [1]  2  4  6  8 10 11 12 13 14 15 16 17 18 19 20"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#aritmetica-de-vectores",
-    "href": "Taller/usaR/usaR.html#aritmetica-de-vectores",
-    "title": "Usa R!",
-    "section": "Aritmetica de Vectores",
-    "text": "Aritmetica de Vectores\nLas operaciones aritmeticas con vectores se realizan posicion a posicion.\n\nvector_numeros &lt;- seq(10, 50, by = 5)\nprint(vector_numeros)\n\n\n\n[1] 10 15 20 25 30 35 40 45 50\n\nprint(vector_numeros + 1)\n\n[1] 11 16 21 26 31 36 41 46 51\n\nprint(vector_numeros / 2)\n\n[1]  5.0  7.5 10.0 12.5 15.0 17.5 20.0 22.5 25.0"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#aritmetica-de-vectores-1",
-    "href": "Taller/usaR/usaR.html#aritmetica-de-vectores-1",
-    "title": "Usa R!",
-    "section": "Aritmetica de Vectores",
-    "text": "Aritmetica de Vectores\nDos vectores\n\nvector_numeros_1 &lt;- c(1, 2, 3, 4)\nvector_numeros_2 &lt;- c(1, 1, 0, 0)\nprint(vector_numeros_1 - vector_numeros_2)\n\n\n\n[1] 0 1 3 4\n\nprint(vector_numeros_1 * vector_numeros_2)\n\n[1] 1 2 0 0"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#aritmetica-de-vectores-2",
-    "href": "Taller/usaR/usaR.html#aritmetica-de-vectores-2",
-    "title": "Usa R!",
-    "section": "Aritmetica de Vectores",
-    "text": "Aritmetica de Vectores\nVectores texto y números\n\nletras &lt;- c('A', 'B', 'C', 'D')\nnumeros &lt;- c(1, 2, 3, 4)\nprint(paste0(letras, numeros))\n\n\n\n[1] \"A1\" \"B2\" \"C3\" \"D4\"\n\nprint(paste0(numeros, letras))\n\n[1] \"1A\" \"2B\" \"3C\" \"4D\""
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#elementos-vector",
-    "href": "Taller/usaR/usaR.html#elementos-vector",
-    "title": "Usa R!",
-    "section": "Elementos vector",
-    "text": "Elementos vector\n\nnumeros &lt;- 10:20\nnumeros\n\n\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\nnumeros[4]\n\n[1] 13\n\nnumeros[-4]\n\n [1] 10 11 12 14 15 16 17 18 19 20\n\nnumeros[c(4:8)]\n\n[1] 13 14 15 16 17\n\nnumeros[-c(4:8)]\n\n[1] 10 11 12 18 19 20\n\nnumeros[c(2, 10)]\n\n[1] 11 19"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#elementos-vector-1",
-    "href": "Taller/usaR/usaR.html#elementos-vector-1",
-    "title": "Usa R!",
-    "section": "Elementos vector",
-    "text": "Elementos vector\n\nnumeros &lt;- 10:20\nnumeros\n\n\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\nnumeros[-c(4:8)]\n\n[1] 10 11 12 18 19 20\n\n\n\n\nnumeros &lt;- numeros[-c(4:8)]\nnumeros\n\n\n\n[1] 10 11 12 18 19 20\n\n\n\n\n\nnumeros &lt;- c(numeros, c(1, 2, 3))\nnumeros\n\n\n\n[1] 10 11 12 18 19 20  1  2  3\n\n\n\n\n\nnumeros &lt;- numeros[order(numeros, decreasing = TRUE)]\nnumeros\n\n\n\n[1] 20 19 18 12 11 10  3  2  1"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#mascara-lógica",
-    "href": "Taller/usaR/usaR.html#mascara-lógica",
-    "title": "Usa R!",
-    "section": "Mascara lógica",
-    "text": "Mascara lógica\n\nnumeros &lt;- 10:20\nnumeros\n\n\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\nnumeros &lt; 15\n\n [1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE\n\nnumeros[numeros &lt; 15]\n\n[1] 10 11 12 13 14\n\n\n\n\nmascara_logica &lt;- numeros == 10\nmascara_logica\n\n\n\n [1]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE\n\n!mascara_logica\n\n [1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE\n\nnumeros[!mascara_logica]\n\n [1] 11 12 13 14 15 16 17 18 19 20"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#conclusion",
-    "href": "Taller/usaR/usaR.html#conclusion",
-    "title": "Usa R!",
-    "section": "Conclusion",
-    "text": "Conclusion\nPara seleccionar subconjuntos de datos lo podemos realizar de dos formas:\n\nVector de indices\n\n\nnumeros &lt;- runif(10, min = 1, max = 1000)\nnumeros\n\n\n\n [1] 393.1240  16.8962 122.8894 622.6050 808.4410 614.2943 666.3880 335.2747\n [9] 266.6400 984.1235\n\nnumeros[c(1, 5, 10)]\n\n[1] 393.1240 808.4410 984.1235\n\n\n\nMascara lógica\n\n\nnumeros[numeros &lt; 500]\n\n\n\n[1] 393.1240  16.8962 122.8894 335.2747 266.6400"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#data-frame",
-    "href": "Taller/usaR/usaR.html#data-frame",
-    "title": "Usa R!",
-    "section": "Data Frame",
-    "text": "Data Frame\nUn data frame es una estructura de datos bidimensional pudiendo almacenar datos mixtos(texto, números, etc ..). Un data frame es una lista de vectores (columnas) de la misma longitd.\n\ndf &lt;- iris\n\ndim(df)\n\n\n\n[1] 150   5\n\nhead(df)\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width Species\n1          5.1         3.5          1.4         0.2  setosa\n2          4.9         3.0          1.4         0.2  setosa\n3          4.7         3.2          1.3         0.2  setosa\n4          4.6         3.1          1.5         0.2  setosa\n5          5.0         3.6          1.4         0.2  setosa\n6          5.4         3.9          1.7         0.4  setosa\n\nsummary(df)\n\n  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   \n Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  \n 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  \n Median :5.800   Median :3.000   Median :4.350   Median :1.300  \n Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  \n 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  \n Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  \n       Species  \n setosa    :50  \n versicolor:50  \n virginica :50"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#structure-of-an-arbitrary-r-object",
-    "href": "Taller/usaR/usaR.html#structure-of-an-arbitrary-r-object",
-    "title": "Usa R!",
-    "section": "Structure of an Arbitrary R Object",
-    "text": "Structure of an Arbitrary R Object\nLa función str() muestra la estructura interna de un Objeto(variable compleja) de R.\n\ndf &lt;- iris\n\nstr(df)\n\n\n\n'data.frame':   150 obs. of  5 variables:\n $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...\n $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...\n $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...\n $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...\n $ Species     : Factor w/ 3 levels \"setosa\",\"versicolor\",..: 1 1 1 1 1 1 1 1 1 1 ...\n\n\n\n\ndf$Sepal.Length\n\n\n\n  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1\n [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0\n [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5\n [55] 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1\n [73] 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5\n [91] 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3\n[109] 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2\n[127] 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8\n[145] 6.7 6.7 6.3 6.5 6.2 5.9"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#seleccionar-una-columna",
-    "href": "Taller/usaR/usaR.html#seleccionar-una-columna",
-    "title": "Usa R!",
-    "section": "Seleccionar una columna",
-    "text": "Seleccionar una columna\n\ndf$Sepal.Length\n\n\n\n  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1\n [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0\n [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5\n [55] 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1\n [73] 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5\n [91] 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3\n[109] 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2\n[127] 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8\n[145] 6.7 6.7 6.3 6.5 6.2 5.9\n\ndf[, c('Sepal.Length')]\n\n  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1\n [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0\n [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5\n [55] 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1\n [73] 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5\n [91] 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3\n[109] 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2\n[127] 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8\n[145] 6.7 6.7 6.3 6.5 6.2 5.9\n\ndf[, c(1)]\n\n  [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1\n [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0\n [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5\n [55] 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1\n [73] 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5\n [91] 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3\n[109] 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2\n[127] 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8\n[145] 6.7 6.7 6.3 6.5 6.2 5.9"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#seleccionar-varias-filas-y-columnas",
-    "href": "Taller/usaR/usaR.html#seleccionar-varias-filas-y-columnas",
-    "title": "Usa R!",
-    "section": "Seleccionar varias filas y columnas",
-    "text": "Seleccionar varias filas y columnas\n\ndf[1:10, c('Sepal.Length', 'Species')]\n\n\n\n   Sepal.Length Species\n1           5.1  setosa\n2           4.9  setosa\n3           4.7  setosa\n4           4.6  setosa\n5           5.0  setosa\n6           5.4  setosa\n7           4.6  setosa\n8           5.0  setosa\n9           4.4  setosa\n10          4.9  setosa\n\ndf[c(30, 40, 100), c(5, 2, 4)]\n\n       Species Sepal.Width Petal.Width\n30      setosa         3.2         0.2\n40      setosa         3.4         0.2\n100 versicolor         2.8         1.3"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#subset",
-    "href": "Taller/usaR/usaR.html#subset",
-    "title": "Usa R!",
-    "section": "Subset",
-    "text": "Subset\n\ndf[df$Species == 'versicolor' & df$Sepal.Length &gt; 6, ]\n\n\n\n   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species\n51          7.0         3.2          4.7         1.4 versicolor\n52          6.4         3.2          4.5         1.5 versicolor\n53          6.9         3.1          4.9         1.5 versicolor\n55          6.5         2.8          4.6         1.5 versicolor\n57          6.3         3.3          4.7         1.6 versicolor\n59          6.6         2.9          4.6         1.3 versicolor\n64          6.1         2.9          4.7         1.4 versicolor\n66          6.7         3.1          4.4         1.4 versicolor\n69          6.2         2.2          4.5         1.5 versicolor\n72          6.1         2.8          4.0         1.3 versicolor\n73          6.3         2.5          4.9         1.5 versicolor\n74          6.1         2.8          4.7         1.2 versicolor\n75          6.4         2.9          4.3         1.3 versicolor\n76          6.6         3.0          4.4         1.4 versicolor\n77          6.8         2.8          4.8         1.4 versicolor\n78          6.7         3.0          5.0         1.7 versicolor\n87          6.7         3.1          4.7         1.5 versicolor\n88          6.3         2.3          4.4         1.3 versicolor\n92          6.1         3.0          4.6         1.4 versicolor\n98          6.2         2.9          4.3         1.3 versicolor"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#columnas",
-    "href": "Taller/usaR/usaR.html#columnas",
-    "title": "Usa R!",
-    "section": "Columnas",
-    "text": "Columnas\n\ndf$Sepal.Ratio &lt;- df$Sepal.Length / df$Sepal.Width\ndf$Petal.Ratio &lt;- df$Petal.Length / df$Petal.Width\nhead(df, 3)\n\n\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width Species Sepal.Ratio\n1          5.1         3.5          1.4         0.2  setosa    1.457143\n2          4.9         3.0          1.4         0.2  setosa    1.633333\n3          4.7         3.2          1.3         0.2  setosa    1.468750\n  Petal.Ratio\n1         7.0\n2         7.0\n3         6.5\n\n\n\n\ndf.ratio &lt;- df[, c('Species', 'Sepal.Ratio', 'Petal.Ratio')]\nhead(df.ratio, 3)\n\n\n\n  Species Sepal.Ratio Petal.Ratio\n1  setosa    1.457143         7.0\n2  setosa    1.633333         7.0\n3  setosa    1.468750         6.5\n\n\n\n\n\ndf$Sepal.Ratio &lt;- NULL\ndf$Petal.Ratio &lt;- NULL\nhead(df, 3)\n\n\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width Species\n1          5.1         3.5          1.4         0.2  setosa\n2          4.9         3.0          1.4         0.2  setosa\n3          4.7         3.2          1.3         0.2  setosa"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#crear-dataframe",
-    "href": "Taller/usaR/usaR.html#crear-dataframe",
-    "title": "Usa R!",
-    "section": "Crear dataframe",
-    "text": "Crear dataframe\n\ndf.ratio &lt;- data.frame(\n                Species = df$Species,\n                Sepal.Ratio = df$Sepal.Length / df$Sepal.Width,\n                Petal.Ratio = df$Petal.Length / df$Petal.Width\n            )\nhead(df.ratio)\n\n\n\n  Species Sepal.Ratio Petal.Ratio\n1  setosa    1.457143        7.00\n2  setosa    1.633333        7.00\n3  setosa    1.468750        6.50\n4  setosa    1.483871        7.50\n5  setosa    1.388889        7.00\n6  setosa    1.384615        4.25"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#función-aggregate",
-    "href": "Taller/usaR/usaR.html#función-aggregate",
-    "title": "Usa R!",
-    "section": "Función aggregate",
-    "text": "Función aggregate\nLa función aggregate() es muy util para calcular estadisticos por subconjuntos del data frame.\n\naggregate(df[, c(1:4)], by = list(Species = df$Species), FUN = mean)\n\n\n\n     Species Sepal.Length Sepal.Width Petal.Length Petal.Width\n1     setosa        5.006       3.428        1.462       0.246\n2 versicolor        5.936       2.770        4.260       1.326\n3  virginica        6.588       2.974        5.552       2.026\n\n\n\n\naggregate(df[, c(1:4)], by = list(Species = df$Species), FUN = sd)\n\n\n\n     Species Sepal.Length Sepal.Width Petal.Length Petal.Width\n1     setosa    0.3524897   0.3790644    0.1736640   0.1053856\n2 versicolor    0.5161711   0.3137983    0.4699110   0.1977527\n3  virginica    0.6358796   0.3224966    0.5518947   0.2746501"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#drosophila-melanogaster",
-    "href": "Taller/usaR/usaR.html#drosophila-melanogaster",
-    "title": "Usa R!",
-    "section": "Drosophila melanogaster",
-    "text": "Drosophila melanogaster\nPara el análisis de expresión diferencial vamos a utilizar el paquete DESeq2.\nDebemos familiarizarnos con la función a usar:\n\nManual de referencia\nVignettes\n\nLa función DESeq() recibe como paramatro un objeto de la clase DESeqDataSet. Este tipo de variable almacena los valores de entrada, calculos intermedios y resultados del análisis.\ndds &lt;- DeSeqDataSetFromMatrix(countData, colData, design)\n\ncountData: Es una matriz númerica (muestras en columnas).\ncolData: DataFrame con al menos una columna, las filas corresponden a las columnas del countData.\ndesign: Expresa como las cuentas para cada gen dependen de las variables en colData."
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#drosophila-melanogaster-1",
-    "href": "Taller/usaR/usaR.html#drosophila-melanogaster-1",
-    "title": "Usa R!",
-    "section": "Drosophila Melanogaster",
-    "text": "Drosophila Melanogaster"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#raw-counts",
-    "href": "Taller/usaR/usaR.html#raw-counts",
-    "title": "Usa R!",
-    "section": "Raw counts",
-    "text": "Raw counts\n\ndf &lt;- read.csv('data/modencodefly_count_table.csv')\n\ndim(df)\n\n\n\n[1] 14869   148\n\nhead(df)\n\n         gene SRX007811 SRX008180 SRX008227 SRX008238 SRX008258 SRX008015\n1 FBgn0000003         0         0         0         0         0         0\n2 FBgn0000008      3903      1601       681       648       718       921\n3 FBgn0000014        75        29        10         9        12       563\n4 FBgn0000015        33        11         8         4         8       235\n5 FBgn0000017      9763      4107      1814      1652      1788      6358\n6 FBgn0000018       832       368       146       126       170        97\n  SRX008179 SRX008190 SRX008193 SRX008271 SRX008027 SRX008181 SRX008217\n1         0         0         0         0         0         0         0\n2       295       364       268       267      1764       411       284\n3       186       239       152       191      4890       957       806\n4        95       101        58       101      3000       590       492\n5      2214      2763      1906      2053      6006      1252       904\n6        33        55        25        22       339        57        60\n  SRX008250 SRX008265 SRX008025 SRX008175 SRX008210 SRX008212 SRX008257\n1         0         0         0         0         0         0         0\n2       396       706      1074       563       156       160       440\n3      1036      1956      6147      3166       956      1053      2876\n4       715      1185      2492      1228       340       458      1174\n5      1244      2456      5030      2584       746       847      2105\n6        71       116       178        95        34        35        75\n  SRX008010 SRX008249 SRX008252 SRX008273 SRX008274 SRX008005 SRX008198\n1         0         0         0         0         0         0         0\n2      1557       874       904       632       234      4488      1222\n3      5160      3270      2836      2048       815      4792      1390\n4      1986      1454      1138       788       324      1709       541\n5      5350      3101      3046      2343       969      8695      2448\n6       130        99        75        56        25       141        43\n  SRX008208 SRX008243 SRX008247 SRX008018 SRX008177 SRX008225 SRX008235\n1         0         0         0         0         0         0         0\n2       825      3030      1224      8755      2431      1718      5478\n3       883      3102      1192      9943      2536      1890      5782\n4       370      1076       431      3421       886       744      1942\n5      1518      5540      2345     12295      3296      2440      7652\n6        25        97        34       229        59        50       113\n  SRX008277 SRX008007 SRX008196 SRX008233 SRX008237 SRX008262 SRX008006\n1         0         0         0         0         0         0         0\n2      2212      5617      1039      2769      1716      1664      1749\n3      2559      5134       935      2339      1404      1426      2908\n4       985      1313       240       645       392       419      1024\n5      3125      9374      1816      4564      2640      2853      4548\n6        48       122        19        67        27        44        93\n  SRX008178 SRX008205 SRX008242 SRX008278 SRX008020 SRX008213 SRX008215\n1         0         0         0         0         0         0         0\n2      1532       549       715       390      1685       384      1397\n3      2602       965      1116       638      2333       543      1832\n4       845       321       398       216       914       199       667\n5      4156      1537      1816      1085      2577       572      2010\n6        57        20        23        10        42        18        31\n  SRX008222 SRX008259 SRX008011 SRX008214 SRX008221 SRX008241 SRX008256\n1         0         0         0         0         0         0         0\n2       407      2141      1036       417       353       560       394\n3       512      3101      1068       448       338       589       475\n4       217      1153       419       165       139       219       179\n5       526      3328      3327      1425      1046      1719      1342\n6        12        72        35        16        11        15        15\n  SRX008019 SRX008167 SRX008234 SRX008251 SRX008266 SRX008026 SRX008174\n1         0         0         0         0         0         0         0\n2      2548       730       687       786       587       928       392\n3      3090       979       819      1008       810      1845       796\n4      1306       404       334       450       310       635       295\n5      6979      1985      1843      2297      1539      1440       670\n6       113        33        26        39        23       150        64\n  SRX008201 SRX008239 SRX008008 SRX008168 SRX008211 SRX008255 SRX008261\n1         0         0         0         0         0         0         0\n2       575       851      1696       353       284       733       258\n3      1203      1740      2030       422       375       914       296\n4       485       617       695       155       130       350        95\n5      1021      1330      2360       481       434      1054       381\n6       102       139       371        94        66       162        49\n  SRX008009 SRX008194 SRX008207 SRX008224 SRX008244 SRX008029 SRX008184\n1         0         0         0         0         0         0         0\n2       311        94       108       110       148       228        74\n3       536       182       211       196       296       535       181\n4       190        71        70        81       111       127        56\n5       481       154       197       197       292       667       226\n6        83        29        27        35        48       131        63\n  SRX008206 SRX008220 SRX008267 SRX008014 SRX008182 SRX008187 SRX008189\n1         0         0         0         0         0         0         0\n2       115        77        74       393       541       168       161\n3       278       212       173       822      1342       360       434\n4        62        56        44       166       324        82        95\n5       357       242       216      1036      1416       490       452\n6        82        48        57       107       167        44        57\n  SRX008200 SRX008156 SRX008199 SRX008245 SRX008253 SRX008023 SRX008218\n1         0         0         0         0         0         0         0\n2       163      1205      2939       945      1022      3602       926\n3       398      1598      3795      1136      1349      3227       836\n4       103       389      1029       322       338       470       134\n5       423      1791      4400      1395      1484      5073      1312\n6        39       154       334        94       124       307        78\n  SRX008246 SRX008248 SRX008275 SRX008016 SRX008192 SRX008219 SRX008236\n1         0         0         0         0         0         0         0\n2      2209      1494      1076      4011      1233      1758      2123\n3      1903      1231       878      2698       885      1115      1577\n4       287       201       130       529       192       229       325\n5      3019      1972      1521      5793      1860      2517      3176\n6       178       105        80       274        95       128       156\n  SRX008264 SRX008013 SRX008188 SRX008197 SRX008228 SRX008022 SRX008183\n1         0         0         0         0         0         0         0\n2      2023      1117      1004      1447      1452       665       396\n3      1488       282       286       355       379        61        44\n4       316        99        87       153       101        17        19\n5      2960      2356      2159      3069      3182      2170      1317\n6       148       264       247       320       333       218       149\n  SRX008185 SRX008216 SRX012269 SRX008024 SRX008173 SRX008195 SRX008202\n1         0         0         0         0         0         0         0\n2       686       409      1011       603       336       380       431\n3        64        36        72        39        35        40        36\n4        17        15        20        15        17        20         8\n5      2252      1426      3357      1906      1123      1239      1551\n6       220       137       343       194       138       164       143\n  SRX008254 SRX012270 SRX008012 SRX008170 SRX008263 SRX008268 SRX016332\n1         0         0         0         0         0         0         0\n2       437       738       717       630       389       303       373\n3        29        54       340       307       195       148       222\n4        10        12       256       270       165       116       142\n5      1410      2504      1388      1279       790       579       849\n6       136       224       170       186       107        76       108\n  SRX008028 SRX008191 SRX008223 SRX008260 SRX008021 SRX008203 SRX008226\n1         0         0         0         0         0         0         0\n2      1234      1112       989      1026       430       200       158\n3       309       298       243       281       137        75        47\n4       347       292       305       328       167       118        70\n5      2007      1837      1596      1644       898       461       341\n6       319       280       251       308       154        98        54\n  SRX008229 SRX008232 SRX012271 SRX008171 SRX008186 SRX008240 SRX010758\n1         0         0         0         0         0         0         0\n2       430       250      1074      3386      6313      3210      4811\n3       132        74       339       647      1310       632       939\n4       177        98       322       202       375       203       259\n5       777       504      2100      2759      5211      2524      3931\n6       137        71       332       128       263        96       165\n  SRX016331 SRX008155 SRX008169 SRX008172 SRX008231 SRX008542 SRX008017\n1         0         0         0         0         0         0         0\n2      3803      2393      1834      1890       744       952       971\n3       751       572       404       440       156       212       307\n4       219       252       183       210        76        81       146\n5      3212      2584      2013      2156       809       963      1168\n6       117       216       142       143        47        65       134\n  SRX008209 SRX008230 SRX008270 SRX008157 SRX008204 SRX008269 SRX008272\n1         0         0         0         0         0         0         0\n2       844      1204       620      1519      1267      1448      1185\n3       253       371       159      1841      1650      1875      1370\n4       146       168        93       340       332       368       261\n5      1085      1513       782      1973      1592      1833      1465\n6       124       146        82       101       112       116       102\n  SRX008276\n1         0\n2      3225\n3      4048\n4       711\n5      4066\n6       294"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#metadatos",
-    "href": "Taller/usaR/usaR.html#metadatos",
-    "title": "Usa R!",
-    "section": "Metadatos",
-    "text": "Metadatos\n\nphenodata &lt;- read.csv('data/modencodefly_phenodata.csv')\ndim(phenodata)\n\n\n\n[1] 147   3\n\nhead(phenodata, 20)\n\n   sample.id num.tech.reps       stage\n1  SRX007811             5 Embryos0002\n2  SRX008180             2 Embryos0002\n3  SRX008227             1 Embryos0002\n4  SRX008238             1 Embryos0002\n5  SRX008258             1 Embryos0002\n6  SRX008015             2 Embryos0204\n7  SRX008179             1 Embryos0204\n8  SRX008190             1 Embryos0204\n9  SRX008193             1 Embryos0204\n10 SRX008271             1 Embryos0204\n11 SRX008027             4 Embryos0406\n12 SRX008181             1 Embryos0406\n13 SRX008217             1 Embryos0406\n14 SRX008250             1 Embryos0406\n15 SRX008265             2 Embryos0406\n16 SRX008025             5 Embryos0608\n17 SRX008175             2 Embryos0608\n18 SRX008210             1 Embryos0608\n19 SRX008212             1 Embryos0608\n20 SRX008257             2 Embryos0608"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#fenotipos-seleccionados",
-    "href": "Taller/usaR/usaR.html#fenotipos-seleccionados",
-    "title": "Usa R!",
-    "section": "Fenotipos seleccionados",
-    "text": "Fenotipos seleccionados\nQueremos seleccionar las muestras que corresponden con el stage ‘L1Larvae’ y ‘L2Larvae’.\n\nfenotipos &lt;- c('L1Larvae', 'L2Larvae')\n\ndf.fenotipos &lt;- phenodata[phenodata$stage %in% fenotipos, c('sample.id', 'stage')]\n\ndf.fenotipos$stage &lt;- as.factor(df.fenotipos$stage)\n\ndf.fenotipos\n\n\n\n   sample.id    stage\n61 SRX008026 L1Larvae\n62 SRX008174 L1Larvae\n63 SRX008201 L1Larvae\n64 SRX008239 L1Larvae\n65 SRX008008 L2Larvae\n66 SRX008168 L2Larvae\n67 SRX008211 L2Larvae\n68 SRX008255 L2Larvae\n69 SRX008261 L2Larvae"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#filtrar-el-dataset-por-las-muestras-seleccionadas",
-    "href": "Taller/usaR/usaR.html#filtrar-el-dataset-por-las-muestras-seleccionadas",
-    "title": "Usa R!",
-    "section": "Filtrar el dataset por las muestras seleccionadas",
-    "text": "Filtrar el dataset por las muestras seleccionadas\n\nhead(names(df), 15)\n\n\n\n [1] \"gene\"      \"SRX007811\" \"SRX008180\" \"SRX008227\" \"SRX008238\" \"SRX008258\"\n [7] \"SRX008015\" \"SRX008179\" \"SRX008190\" \"SRX008193\" \"SRX008271\" \"SRX008027\"\n[13] \"SRX008181\" \"SRX008217\" \"SRX008250\"\n\n\n\n\ndf.sub &lt;- df[, df.fenotipos$sample.id]\n\nhead(df.sub)\n\n\n\n  SRX008026 SRX008174 SRX008201 SRX008239 SRX008008 SRX008168 SRX008211\n1         0         0         0         0         0         0         0\n2       928       392       575       851      1696       353       284\n3      1845       796      1203      1740      2030       422       375\n4       635       295       485       617       695       155       130\n5      1440       670      1021      1330      2360       481       434\n6       150        64       102       139       371        94        66\n  SRX008255 SRX008261\n1         0         0\n2       733       258\n3       914       296\n4       350        95\n5      1054       381\n6       162        49"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#añadir-genes",
-    "href": "Taller/usaR/usaR.html#añadir-genes",
-    "title": "Usa R!",
-    "section": "Añadir genes",
-    "text": "Añadir genes\n\nrownames(df.sub) &lt;- df$gene\n\nhead(df.sub)\n\n\n\n            SRX008026 SRX008174 SRX008201 SRX008239 SRX008008 SRX008168\nFBgn0000003         0         0         0         0         0         0\nFBgn0000008       928       392       575       851      1696       353\nFBgn0000014      1845       796      1203      1740      2030       422\nFBgn0000015       635       295       485       617       695       155\nFBgn0000017      1440       670      1021      1330      2360       481\nFBgn0000018       150        64       102       139       371        94\n            SRX008211 SRX008255 SRX008261\nFBgn0000003         0         0         0\nFBgn0000008       284       733       258\nFBgn0000014       375       914       296\nFBgn0000015       130       350        95\nFBgn0000017       434      1054       381\nFBgn0000018        66       162        49"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#tip",
-    "href": "Taller/usaR/usaR.html#tip",
-    "title": "Usa R!",
-    "section": "TIP",
-    "text": "TIP\nfenotipos &lt;- c('L1Larvae', 'L2Larvae')\ndf.fenotipos &lt;- phenodata[phenodata$stage %in% fenotipos, c('sample.id', 'stage')]\n\ndf.sub &lt;- df[, df.fenotipos$sample.id]\nrownames(df.sub) &lt;- df$gene\n\n¿No es más sencillo?\ndf.sub &lt;- df[, c('SRX008026', 'SRX008174 ', 'SRX008201', 'SRX008239', 'SRX008008 ', \n                 ' SRX008168', 'SRX008211', 'SRX008255', 'SRX008261')]\nrownames(df.sub) &lt;- df$gene"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#eliminar-genes-con-pocas-counts",
-    "href": "Taller/usaR/usaR.html#eliminar-genes-con-pocas-counts",
-    "title": "Usa R!",
-    "section": "Eliminar genes con pocas counts",
-    "text": "Eliminar genes con pocas counts\n\nhead(rowSums(df.sub))\n\n\n\nFBgn0000003 FBgn0000008 FBgn0000014 FBgn0000015 FBgn0000017 FBgn0000018 \n          0        6070        9621        3457        9171        1197 \n\n\n\n\nkeep &lt;- rowSums(df.sub) &gt;= 10\nhead(keep)\n\n\n\nFBgn0000003 FBgn0000008 FBgn0000014 FBgn0000015 FBgn0000017 FBgn0000018 \n      FALSE        TRUE        TRUE        TRUE        TRUE        TRUE \n\n\n\n\n\ndf.sub  &lt;- df.sub [keep, ]\nhead(df.sub)\n\n\n\n            SRX008026 SRX008174 SRX008201 SRX008239 SRX008008 SRX008168\nFBgn0000008       928       392       575       851      1696       353\nFBgn0000014      1845       796      1203      1740      2030       422\nFBgn0000015       635       295       485       617       695       155\nFBgn0000017      1440       670      1021      1330      2360       481\nFBgn0000018       150        64       102       139       371        94\nFBgn0000024      1797       707      1126      1498      1701       341\n            SRX008211 SRX008255 SRX008261\nFBgn0000008       284       733       258\nFBgn0000014       375       914       296\nFBgn0000015       130       350        95\nFBgn0000017       434      1054       381\nFBgn0000018        66       162        49\nFBgn0000024       334       791       235\n\ndim(df.sub)\n\n[1] 11342     9"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#deseq2",
-    "href": "Taller/usaR/usaR.html#deseq2",
-    "title": "Usa R!",
-    "section": "DESeq2",
-    "text": "DESeq2\nPara el análisis de expresión diferencial vamos a utilizar el paquete DESeq2.\nVignettes: Analyzing RNA-seq data with DESeq2\ninstall.packages(\"BiocManager\")\n\nBiocManager::install(\"DESeq2\")"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#deseq2-1",
-    "href": "Taller/usaR/usaR.html#deseq2-1",
-    "title": "Usa R!",
-    "section": "DESeq2",
-    "text": "DESeq2\n\nlibrary(DESeq2)\ncoldata &lt;- data.frame(stage = df.fenotipos$stage)\nrownames(coldata) &lt;- df.fenotipos$sample.id\nhead(coldata)\n\n\n\n             stage\nSRX008026 L1Larvae\nSRX008174 L1Larvae\nSRX008201 L1Larvae\nSRX008239 L1Larvae\nSRX008008 L2Larvae\nSRX008168 L2Larvae\n\n\n\n\ndds &lt;- DESeqDataSetFromMatrix(\n                    countData = df.sub,\n                    colData = coldata,\n                    design = ~stage\n            )\n\ndds\n\n\n\nclass: DESeqDataSet \ndim: 11342 9 \nmetadata(1): version\nassays(1): counts\nrownames(11342): FBgn0000008 FBgn0000014 ... FBgn0261574 FBgn0261575\nrowData names(0):\ncolnames(9): SRX008026 SRX008174 ... SRX008255 SRX008261\ncolData names(1): stage"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#deseq2-2",
-    "href": "Taller/usaR/usaR.html#deseq2-2",
-    "title": "Usa R!",
-    "section": "DESeq2",
-    "text": "DESeq2\n\ndds &lt;- DESeq(dds)\ndds\n\n\n\nclass: DESeqDataSet \ndim: 11342 9 \nmetadata(1): version\nassays(4): counts mu H cooks\nrownames(11342): FBgn0000008 FBgn0000014 ... FBgn0261574 FBgn0261575\nrowData names(22): baseMean baseVar ... deviance maxCooks\ncolnames(9): SRX008026 SRX008174 ... SRX008255 SRX008261\ncolData names(2): stage sizeFactor\n\n\n\n\nres &lt;- results(dds, contrast = c('stage', 'L1Larvae', 'L2Larvae'))\nres\n\n\n\nlog2 fold change (MLE): stage L1Larvae vs L2Larvae \nWald test p-value: stage L1Larvae vs L2Larvae \nDataFrame with 11342 rows and 6 columns\n             baseMean log2FoldChange     lfcSE      stat      pvalue\n            &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt;\nFBgn0000008   562.467      0.0567848 0.0548496   1.03528 3.00538e-01\nFBgn0000014   894.891      0.7973618 0.0453627  17.57749 3.66458e-69\nFBgn0000015   323.316      0.8453126 0.0737835  11.45667 2.17736e-30\nFBgn0000017   862.122      0.2538049 0.0478014   5.30957 1.09885e-07\nFBgn0000018   111.781     -0.3815511 0.1121941  -3.40081 6.71864e-04\n...               ...            ...       ...       ...         ...\nFBgn0261570 1415.4046       0.215624 0.0667684   3.22943 1.24035e-03\nFBgn0261572   71.9698       2.201588 0.1526435  14.42307 3.70470e-47\nFBgn0261573  311.1002       0.311384 0.0678952   4.58624 4.51301e-06\nFBgn0261574 1477.7729       0.557713 0.0445722  12.51256 6.37404e-36\nFBgn0261575 1214.1409      -0.346767 0.0481108  -7.20769 5.69101e-13\n                   padj\n              &lt;numeric&gt;\nFBgn0000008 3.49974e-01\nFBgn0000014 2.56861e-68\nFBgn0000015 8.69793e-30\nFBgn0000017 2.25926e-07\nFBgn0000018 1.08510e-03\n...                 ...\nFBgn0261570 1.95917e-03\nFBgn0261572 1.96240e-46\nFBgn0261573 8.46405e-06\nFBgn0261574 2.79644e-35\nFBgn0261575 1.45364e-12"
-  },
-  {
-    "objectID": "Taller/usaR/usaR.html#guardar-resultados",
-    "href": "Taller/usaR/usaR.html#guardar-resultados",
-    "title": "Usa R!",
-    "section": "Guardar resultados",
-    "text": "Guardar resultados\nGuardamos los resultados del análisis diferencial y los datos normalizados\n\nwrite.csv(res, 'data/DGE.csv')\n\nwrite.csv(counts(dds, normalized=TRUE), 'data/normalized_counts.csv')"
-  },
-  {
     "objectID": "R/introduccion.html",
     "href": "R/introduccion.html",
     "title": "Introducción a R",
@@ -768,5 +54,110 @@
     "title": "Introducción a R",
     "section": "Variables",
     "text": "Variables\nLas variables sirven para almacenar un valor (datos, información) que luego vamos a utilizar en algun procedimiento. En general partiremos de unos datos experimentales con los que haremos calculos o otros procedimientos teniendo como resultados datos intermedios. Para poder hacer referencia en R a esos datos, usaremos variables. En R existen varios tipos de objetos que permiten que el usuario pueda almacenar la información para realizar los procedimientos estadísticos y gráficos. En general podemos clasificar las variables en función del tipo de dato que van a almacenar. Así, tendremos variables simples (una variable que almacene el valor 10) o variables más complejas (una variable que almacene la tabla de resultados de un HPLC-MS).\n\nVariables simples\n\n\n\n\n\n\n\n\nTipo de dato\nDescripción\nDefinición\n\n\n\n\nNumeric\nNúmeros decimales\nnumero &lt;- 1.0\n\n\nInteger\nNúmeros enteros\nentero &lt;- 1\n\n\nCharacter\nCadenas de texto\ntexto &lt;- “un texto”\n\n\nComplex\nNúmeros complejos\ncomplejo &lt;- 3 + 2i\n\n\nLogical\nTRUE o FALSE\n5 &lt; 6; 5 == 5\n\n\nFactor\nEs una variable de tipo categórica"
+  },
+  {
+    "objectID": "rnaseq/deseq/ejemplo.html",
+    "href": "rnaseq/deseq/ejemplo.html",
+    "title": "Caso práctico",
+    "section": "",
+    "text": "Para este análisis se usarán varios paquetes de R algunos de los cuales han sido instalados desde los repositorios CRAN y otro de los de Bioconductor.\nlibrary(DESeq2)\nlibrary(ggplot2)\nlibrary(ggrepel)\nlibrary(pheatmap)\nlibrary(RColorBrewer)\nCódigo funciones\ncreateVolcanoPlot &lt;- function(d, log2fc, fdr, max.overlaps = 15) {\n\n    colors &lt;- c(\"UP\"=\"#FC4E07\", \"none\"=\"#E7B800\", \"DOWN\"=\"#00AFBB\")\n    d$class &lt;- 'none'\n    d$class[d$log2FoldChange &gt;= log2fc & d$padj &lt;= fdr] &lt;- 'UP'\n    d$class[d$log2FoldChange &lt;= -1 * log2fc & d$padj &lt;= fdr] &lt;- 'DOWN'\n    d$gene &lt;- rownames(d)\n    \n    up_num=nrow(d[d$class == \"UP\",])\n    down_num=nrow(d[d$class == \"DOWN\",])\n    p &lt;- ggplot(d, aes(x = log2FoldChange, y = -1 * log10(padj), \n                       shape = class, fill = class, color = class, label = gene)) +\n                geom_point(size = 3) +\n                scale_fill_manual(values = colors) +\n                scale_color_manual(values = c('navy', \"#E7B800\", 'navy')) +\n                scale_shape_manual(values = c(21, 20, 21)) +\n                geom_hline(yintercept = -1 * log10(fdr), linetype=\"dashed\", \n                              color = \"black\", size=0.5) +\n                geom_vline(xintercept=c(-1 * log2fc,log2fc), linetype=\"dashed\", \n                              color = \"black\", size=0.5) +\n                 geom_label_repel(data = d[d$class %in% c('UP', 'DOWN'),],\n                                  size= 4,\n                                  fontface=\"bold\",\n                                  color=\"firebrick\",\n                                  fill = 'white',\n                                  box.padding=unit(1, \"lines\"),\n                                  point.padding=unit(0.5, \"lines\"),\n                                  segment.colour = \"firebrick\", \n                                  segment.size = 0.5, \n                                  segment.alpha = 0.5, \n                                  max.overlaps = max.overlaps) +\n                theme_bw() +\n                theme(legend.position=\"top\") +\n                annotate(geom = 'text', label = paste0('UP: ', up_num), \n                         x = Inf, y = Inf, hjust = 1.1, vjust = 1.5) +\n                annotate(geom = 'text', label = paste0('DOWN: ', down_num), \n                         x = -Inf, y = Inf, hjust = -0.1, vjust = 1.5) + \n                labs(color = \"class\")\n    p\n}\n\ncrearHeatMap &lt;-function(datos, metadatos) {\n    pheatmap(as.matrix(datos),\n             scale = 'row',\n             clustering_method = 'ward.D2',\n             cutree_cols =  3,\n             cutree_rows = 2,\n             annotation_col = metadatos,\n             fontsize = 8,\n             color = colorRampPalette(c(\"steelblue\", \"white\", \"firebrick3\"))(100)\n            )\n}"
+  },
+  {
+    "objectID": "rnaseq/deseq/ejemplo.html#análisis-exploratorio-de-los-datos.",
+    "href": "rnaseq/deseq/ejemplo.html#análisis-exploratorio-de-los-datos.",
+    "title": "Caso práctico",
+    "section": "Análisis exploratorio de los datos.",
+    "text": "Análisis exploratorio de los datos.\n\nCargar datos\nPara ilustrar el uso de DESeq usaremos el dataset MOV10. Cargamos los datos de la matriz de cuentas sin normalizar:\n\ndf.cts &lt;- read.table(\"data/Mov10_full_counts.txt\", header=T, row.names=1) \n\nhead(df.cts)\n\n\n\nMatriz de cuentas\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMov10_kd_2\nMov10_kd_3\nMov10_oe_1\nMov10_oe_2\nMov10_oe_3\nIrrel_kd_1\nIrrel_kd_2\nIrrel_kd_3\n\n\n\n\n1/2-SBSRNA4\n57\n41\n64\n55\n38\n45\n31\n39\n\n\nA1BG\n71\n40\n100\n81\n41\n77\n58\n40\n\n\nA1BG-AS1\n256\n177\n220\n189\n107\n213\n172\n126\n\n\nA1CF\n0\n1\n1\n0\n0\n0\n0\n0\n\n\nA2LD1\n146\n81\n138\n125\n52\n91\n80\n50\n\n\nA2M\n10\n9\n2\n5\n2\n9\n8\n4\n\n\n\n\n\n\n\nmetadata &lt;- read.table(\"data/Mov10_full_meta.txt\", header=T, row.names=1) \n\nmetadata\n\n\n\nMetadatos\n\n\n\nsampletype\nMOVexpr\n\n\n\n\nMov10_kd_2\nMOV10_knockdown\nlow\n\n\nMov10_kd_3\nMOV10_knockdown\nlow\n\n\nMov10_oe_1\nMOV10_overexpression\nhigh\n\n\nMov10_oe_2\nMOV10_overexpression\nhigh\n\n\nMov10_oe_3\nMOV10_overexpression\nhigh\n\n\nIrrel_kd_1\ncontrol\nnormal\n\n\nIrrel_kd_2\ncontrol\nnormal\n\n\nIrrel_kd_3\ncontrol\nnormal\n\n\n\n\n\n\nEs importante comprobar que los nombres de las muestras coinciden en los dos ficheros y estan en el orden correcto.\n\nall(names(df.cts) %in% rownames(metadata))\n\n[1] TRUE\n\nall(names(df.cts) == rownames(metadata))\n\n[1] TRUE\n\n\n\n\nDESeq2DataSet\nLo primero que necesitamos es crear un objeto DESeqDataSet. DESeqDataSet es una clase personalizada del paquete DESeq2 de Bioconductor. Esta clase se utiliza para almacenar los datos y calculos necesarios. Para crear este objeto necesitamos la matriz de cuentas, los metadatos y una “formula” para el diseño. La formula especifica la columna(o columnas) en la tabla de metadatos que se quiere utilizar para el análisis. - Nota: Es esencial que el nombre de las muestras coincidan en los dos ficheros y esten en el mismo orden.\n\ndds &lt;- DESeqDataSetFromMatrix(\n                countData = df.cts, \n                colData = metadata, \n                design = ~sampletype\n                )\n\ndds\n\nclass: DESeqDataSet \ndim: 23368 8 \nmetadata(1): version\nassays(1): counts\nrownames(23368): 1/2-SBSRNA4 A1BG ... ZZZ3 tAKR\nrowData names(0):\ncolnames(8): Mov10_kd_2 Mov10_kd_3 ... Irrel_kd_2 Irrel_kd_3\ncolData names(2): sampletype MOVexpr\n\n\n\n\nPrefiltrado de los datos\nTipicamente las matrices de RNA-seq contienen muchas filas con ceros, y adicionalmente otras con valores muy bajos de cuentas. Es recomendable eliminar los genes que no aportan (o casi no aportan ) informacion. Aquí realizaremos un filtrado para mantener los genes con un recuento de al menos 10 para una cantidad mínima de muestras. El valor de 10 es razonamble para datos de secuenciación Bulk-RNA. Una recomendación para el número mínimo de muestras es especificar el tamaño de grupo más pequeño.\n\nnrow(dds)\n\n[1] 23368\n\nsmallestGroupSize &lt;- 2\nkeep &lt;- rowSums(counts(dds) &gt;= 10) &gt;= smallestGroupSize\ndds &lt;- dds[keep,]\nnrow(dds)\n\n[1] 15365\n\n\n\n\nNormalización de las cuentas\nEn DESeq2 la normalización se calcula usando el metodo de la mediana de las relaciones.\n\ndds &lt;- estimateSizeFactors(dds)\n\ndds\n\nclass: DESeqDataSet \ndim: 15365 8 \nmetadata(1): version\nassays(1): counts\nrownames(15365): 1/2-SBSRNA4 A1BG ... ZZEF1 ZZZ3\nrowData names(0):\ncolnames(8): Mov10_kd_2 Mov10_kd_3 ... Irrel_kd_2 Irrel_kd_3\ncolData names(3): sampletype MOVexpr sizeFactor\n\n\n\n\nTransformacion cuentas\nLos métodos estadísticos para análisis exploratorio funcionan mejor con datos que tienen similares rangos de varianza a diferentes rangos de medias. En el caso de las cuentas de RNA-seq la varianza crece con la media, con lo cual el PCA estará influenciado por los genes con numeros de cuentas altos. La estrategía para evitarlo es tomar el logaritmo de las cuentas normalizadas sumandole una pseudocuenta (para los casos de 0 cuentas, el log de 0 es indefinido). Sin embargo, ahora los genes con pocas cuentas pueden dominar los resuldatos. DESeq2 usa una transformación logaritmica regularizada como solucion. Para los genes con valores altos el resultado es similar a la transfomación logaritmica log2. Para los genes con valores pequeños los valores se reducen hacia la media de los genes a lo largo de todas las muestras.\n\nrld &lt;- rlog(dds, blind = TRUE)\n\nrld\n\nclass: DESeqTransform \ndim: 15365 8 \nmetadata(1): version\nassays(1): ''\nrownames(15365): 1/2-SBSRNA4 A1BG ... ZZEF1 ZZZ3\nrowData names(7): baseMean baseVar ... dispFit rlogIntercept\ncolnames(8): Mov10_kd_2 Mov10_kd_3 ... Irrel_kd_2 Irrel_kd_3\ncolData names(3): sampletype MOVexpr sizeFactor\n\n\n\n\nEvaluación de calidad\n\nAnálisis de componentes principales (PCA)\nUna manera de visualizar las distancias muestra a muestra es el PCA.\n\nplotPCA(rld, intgroup=c('sampletype'))\n\n\n\n\n\n\n\nFigure 1: Análisis de componentes principales\n\n\n\n\n\n\n\nClustering jerarquico\nOtra metodo es agrupar las muestras basadas en su similitud. En este caso se puede usar la correlación de Pearson para medir la silitud entre muestras. Generealmente se espera una correlación bastante alta (&gt;0.95) entre todas las muestras, además se esperan ver las muestras agrupadas de manera similar a lo observado en el PCA.\nLas muestras que muestran valores bajos de correlación con las demas muestras (&lt;0.80) representan outliers.\n\n# Estraemos la matix rlog del objeto\nrld_mat &lt;- assay(rld) \n\n# Calculamos las correlaciones\nrld_cor &lt;- cor(rld_mat)\n\n#heatmap\npheatmap(rld_cor, color =  brewer.pal(6, \"Blues\"))\n\n\n\n\nMatriz de correlaciones entre las muestras."
+  },
+  {
+    "objectID": "rnaseq/deseq/ejemplo.html#deseq2",
+    "href": "rnaseq/deseq/ejemplo.html#deseq2",
+    "title": "Caso práctico",
+    "section": "DESeq2",
+    "text": "DESeq2\nPara realizar el calculo ejecutamos la funcion DESeq(), que requiere como input un objeto del tipo DESeqDataSet (la variable dds). Reasignando el resultado a la misma variable continuamos llenando los slots del objeto DESeqDataSet.\n\ndds &lt;- DESeq(dds)\n\nusing pre-existing size factors\n\n\nestimating dispersions\n\n\ngene-wise dispersion estimates\n\n\nmean-dispersion relationship\n\n\nfinal dispersion estimates\n\n\nfitting model and testing\n\ndds\n\nclass: DESeqDataSet \ndim: 15365 8 \nmetadata(1): version\nassays(4): counts mu H cooks\nrownames(15365): 1/2-SBSRNA4 A1BG ... ZZEF1 ZZZ3\nrowData names(26): baseMean baseVar ... deviance maxCooks\ncolnames(8): Mov10_kd_2 Mov10_kd_3 ... Irrel_kd_2 Irrel_kd_3\ncolData names(3): sampletype MOVexpr sizeFactor"
+  },
+  {
+    "objectID": "rnaseq/deseq/ejemplo.html#wald-test",
+    "href": "rnaseq/deseq/ejemplo.html#wald-test",
+    "title": "Caso práctico",
+    "section": "Wald test",
+    "text": "Wald test\nLa función results() devuelve los valores de log2 fold changes y los p-values para el Wald test de la comparación.\n\nres &lt;- results(dds, contrast = c('sampletype', 'MOV10_overexpression', 'control'))\n\nhead(as.data.frame(res))\n\n\n\nFC y valores p\n\n\n\n\n\n\n\n\n\n\n\n\nbaseMean\nlog2FoldChange\nlfcSE\nstat\npvalue\npadj\n\n\n\n\n1/2-SBSRNA4\n45.67985\n0.3753332\n0.2597951\n1.4447276\n0.1485344\n0.2442718\n\n\nA1BG\n61.13287\n0.2664358\n0.2195424\n1.2135962\n0.2249020\n0.3369021\n\n\nA1BG-AS1\n175.74157\n-0.0562199\n0.1362360\n-0.4126656\n0.6798516\n0.7715430\n\n\nA2LD1\n89.65925\n0.4218562\n0.1922733\n2.1940443\n0.0282322\n0.0630414\n\n\nA4GALT\n64.59690\n1.0013568\n0.2160868\n4.6340497\n0.0000036\n0.0000241\n\n\nAAAS\n1454.28689\n-0.0430074\n0.0680939\n-0.6315892\n0.5276553\n0.6432932\n\n\n\n\n\n\n\nas.data.frame(mcols(res, use.names = TRUE))\n\n\n\nDescripción de los resultados\n\n\n\n\n\n\n\n\ntype\ndescription\n\n\n\n\nbaseMean\nintermediate\nmean of normalized counts for all samples\n\n\nlog2FoldChange\nresults\nlog2 fold change (MLE): sampletype MOV10_overexpression vs control\n\n\nlfcSE\nresults\nstandard error: sampletype MOV10 overexpression vs control\n\n\nstat\nresults\nWald statistic: sampletype MOV10 overexpression vs control\n\n\npvalue\nresults\nWald test p-value: sampletype MOV10 overexpression vs control\n\n\npadj\nresults\nBH adjusted p-values\n\n\n\n\n\n\n\nNota: Algunos valores de p pueden aparecer como NA en la tabla de resultados, esto puede ser debido a que baseMean pueda ser cero, que una fila contenga un valor considerado outlier, o que esa fila sea filtrada por el filtro independiente."
+  },
+  {
+    "objectID": "rnaseq/deseq/ejemplo.html#contracción-de-los-fc-para-visualización-y-clasificación.",
+    "href": "rnaseq/deseq/ejemplo.html#contracción-de-los-fc-para-visualización-y-clasificación.",
+    "title": "Caso práctico",
+    "section": "Contracción de los FC para visualización y clasificación.",
+    "text": "Contracción de los FC para visualización y clasificación.\nLa reducción del tamaño del efecto (estimaciones de LFC) es útil para la visualización y clasificación de genes\n\nresultsNames(dds)\n\n[1] \"Intercept\"                                 \n[2] \"sampletype_MOV10_knockdown_vs_control\"     \n[3] \"sampletype_MOV10_overexpression_vs_control\"\n\n\n\nresLFC &lt;- lfcShrink(dds, coef=\"sampletype_MOV10_overexpression_vs_control\", type=\"ashr\")\n\nhead(as.data.frame(resLFC))\n\n\n\nFC y valores p\n\n\n\n\n\n\n\n\n\n\n\nbaseMean\nlog2FoldChange\nlfcSE\npvalue\npadj\n\n\n\n\n1/2-SBSRNA4\n45.67985\n0.1868058\n0.1902838\n0.1485344\n0.2442718\n\n\nA1BG\n61.13287\n0.1510142\n0.1684756\n0.2249020\n0.3369021\n\n\nA1BG-AS1\n175.74157\n-0.0423753\n0.1183626\n0.6798516\n0.7715430\n\n\nA2LD1\n89.65925\n0.2728795\n0.1627217\n0.0282322\n0.0630414\n\n\nA4GALT\n64.59690\n0.7830021\n0.2372903\n0.0000036\n0.0000241\n\n\nAAAS\n1454.28689\n-0.0396237\n0.0653723\n0.5276553\n0.6432932"
+  },
+  {
+    "objectID": "rnaseq/deseq/ejemplo.html#genes-diferencialmente-expresados",
+    "href": "rnaseq/deseq/ejemplo.html#genes-diferencialmente-expresados",
+    "title": "Caso práctico",
+    "section": "Genes diferencialmente expresados",
+    "text": "Genes diferencialmente expresados\nPara selecionar los genes diferecialmente expresados debemos fijar el umbral. En este caso elegimos un FC = 1.5 y un valor de p ajustado de 0.05\n\n#|label: DGE\n\npadj.cutoff &lt;- 0.05\nlfc.cutoff &lt;- log2(1.5)\n\ndf.ashr &lt;- as.data.frame(resLFC)\n\ngenes.ashr.up &lt;- rownames(df.ashr[df.ashr$log2FoldChange &gt;= lfc.cutoff & df.ashr$padj &lt;= padj.cutoff, ])\ngenes.ashr.down &lt;- rownames(df.ashr[df.ashr$log2FoldChange &lt;= -1 * lfc.cutoff & df.ashr$padj &lt;= padj.cutoff, ])\n\nhead(genes.ashr.up)\n\n[1] \"A4GALT\"  \"ABCA1\"   \"ABHD14B\" \"ABL2\"    \"ACADVL\"  \"ACAN\"   \n\nhead(genes.ashr.down)\n\n[1] \"ABCA9\"    \"ACTBL2\"   \"ACTL8\"    \"ACTR3B\"   \"ADAMTS16\" \"ADH1C\"   \n\n\n\nVolcano plot\n\ncreateVolcanoPlot(df.ashr, lfc.cutoff, padj.cutoff, max.overlaps = 30)\n\n\n\n\nVolcano plot (MOV10_overexpression vs control)\n\n\n\n\n\n\nHeatmap\nHeatmap de los genes diferecialmente expresados.\n\ndf.norm &lt;- counts(dds, normalized = TRUE)\n\ndf.dge &lt;- df.norm[rownames(df.norm) %in% c(genes.ashr.up, genes.ashr.down), ]\n\ncrearHeatMap(df.dge, metadata)\n\n\n\n\nHeatmap"
+  },
+  {
+    "objectID": "rnaseq/deseq/ejemplo.html#referencias",
+    "href": "rnaseq/deseq/ejemplo.html#referencias",
+    "title": "Caso práctico",
+    "section": "Referencias",
+    "text": "Referencias\n\n“MOV10 and FMRP regulate AGO2 association with microRNA recognition elements”\n(Kenny, P.J. et al, Cell Reports, 11 December 2014).\n\n\nhttps://bookdown.org/ggiaever/2024_RNA-seq-analysis/\n\n\nhttps://bioconductor.org/packages/release/bioc/html/DESeq2.html"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Tumbleweed",
+    "section": "",
+    "text": "Hoy en día, debido al avance de la técnología podemos disponer de una gran cantidad de datos, pero los métodos tradicionales de analizar esta información han quedado obsoletos. No queda más remedio que recurrir a herramientas informaticas. El campo de la biológia no es una excepción, donde existen multitud de bases de datos procedentes de experimentos, y los nuevas técnologías en el laboratorio pueden devolver cantidades masivas de información.\nEn mi experiencia al usuario novel puede llegar a costarle mucho el comenzar con un lenguaje de programacíon. No se sienten capaces o despues de intentarlo durante un tiempo abandonan por sentirse incapaces de obtener resultados.\nCon el proyecto web Tumbleweed se pretende acercar, mediante turoriales y guías, estas herramientas bioinformáticas a usarios sin experiencia previa en programación.\n\nJosé Antonio López\nTécnico especilista de laboratorio"
+  },
+  {
+    "objectID": "rnaseq/deseq/introduccion.html",
+    "href": "rnaseq/deseq/introduccion.html",
+    "title": "Análisis de expresión diferencial",
+    "section": "",
+    "text": "Podría decirse que el uso más comun de los datos de transcriptoma es la busqueda de genes expresados diferencialmente. Encontrar que genes se expresan diferencialmente entre diferentes condiciones es una parte integral en la comprensión de las bases moleculares de la variación fenotípica.\nUn gran número de métodos computacionales se han desarrollado para el análisis de expresión diferencial que difieren ligeramente en su métodología."
+  },
+  {
+    "objectID": "rnaseq/deseq/introduccion.html#deseq2",
+    "href": "rnaseq/deseq/introduccion.html#deseq2",
+    "title": "Análisis de expresión diferencial",
+    "section": "DESeq2",
+    "text": "DESeq2\nDESeq2 (Differential gene expression analysis based on the negative binomial distribution) es un paquete de bioconductor ampliamente utilizado en este tipos de análisis.\nEl punto de partida en el análisis en las matriz de cuentas, siendo el objetivo identificar los genes que estan diferencialmente expresados entre las muestras.\n\n\n\n\n\nDESeq2 comienza estimando los factores de escala, a continuación estima la dispersión de los genes. Por ultimo, DESeq2 ajusta un modelo linear generalizado y genera la lista de genes diferencialmente expresados.\n\nEstimación del factor de tamaño.\nDESeq2 actua sobre una matriz de cuentas (cuentas no normalizadas). Se supone que las cuentas reflejan la abundacia de genes, pero estas tambien dependen de otros factores como la longitud del gen, los sesgos de secuenciación o la composición de la biblioteca.\n\nLongitud del gen\n\nComo se observa en la figura el gen 1 y el 2 tienen similares niveles de expresión, pero muchas más lecturas se asignan al gen 2, esto podría no tener relación con la biología y podría reflejar unicamente el hecho de que el gen 2 es mas largo que el gen 1. Para el análisis de expresión diferencial, como los niveles de expresión se comparan entre muestras (y no los niveles de expresión entre los genes de una misma muestra), no es recomendable su uso para estimar el factor de tamaño.\n\n\nProfundidad de secuenciación.\nLos experimentos de secuenciación producen decenas de millones de lecturas. Una parte de las lecturas de secuenciación se descartaran durante los procesos de control de calidad, alineación y conteo, lo que implica que el número total de lecturas para cada muestra será diferente.\n\nComo se muestra en la figura, todos los genes parecen ser expresados a un nivel mayor en la muestra 1 que en la muestra 2. Probablemente es debido a que la muestra 1 tiene muchas más lecturas que la muestra 2.\n\n\nComposición de la librería\n\nImaginemos que una celula expresa unicamente 2 genes (gen 1 y gen 2) y asumamos que un tratamiento con un fármaco induce una fuerte expresión del gen 3. Si la normalización se realiza usando unicamente el número total de cuentas, entonces las cuentas del gen 1 se dividirían por 15 en las celulas control, mientras que serían divididas por 165 en las celulas tratadas, lo que nos llevaría a la conclusión erronea de que el tratamiento ha reducido 11 veces la expresión del gen 1. La composición de la libreria ha cambiado pero no el nivel de expresión del gen 1.\nEn un caso real, unos pocos genes expresados de forma muy diferencial, diferencias en el número de genes expresados entre muestras o la presencia de contaminantes pueden sesgar la composición de la librería.\n\n\nEl método de normalización de DESeq2\nDESeq2 estima los factores de tamaño teniendo en cuentra el tamaño de la librería y su composicion, usando el método de la mediana de los ratios\n\nPaso 1: DESeq2 crea una muestra de pseudo-referencia calculando la média geométrica por cada gen.\nPaso 2: Por cada gen en cada muestra, se calcula la relación cuentas/pseudo-referencia.\nPaso 3: El valor de la mediana de todas los ratios calculados para una muestra es tomado como el factor de tamaño para esa muestra.\nPaso 4: Los valores normalizados se obtienen dividiendo los valores de las cuentas por el factor de tamaño correspondiente a cada muestra.\n\n\n\n\nModelo\nSi observamos la distribucíon de cuentas de una muestra típica en RNA-seq: \nEs obvio que los datos no estan normalmente distribuidos, Los valores son valores enteros y siempre positivos (variable discreta). Podemos observar que hay una gran cantidad de genes con valores muy bajos o cero, y solo unos pocos genes con valores muy altos.\nLos datos de cuentas de RNA-seq se ajustan mejor a una distribución binomial negativa. \\[K_{ij} \\sim NB(mean = µ_{ij},  dispersion = \\alpha_i)\\]\n\n\nEstimación de la dispersión.\nEstimar la dispersión para cada gen sería sencillo de tener muchas replicas para cada condicion, pero en este caso los experimentos suelen tener a menudo solo 3 replicas. DESeq2 asume que los genes con niveles similares de expresión tendran similar dispersión.\n\nPaso 1: La dispersión de cada gen es estimada por separado. Dado los valores de recuento de las replicas se calcula la dispersión más probable. Los genes con bajos recuentos tienen dispersiones mucho mayores que los genes con mayor nivel de expresión.\nPaso 2: Se ajusta una curva a la dispersión de genes. Los genes tendrán diferente variabilidad biológica, pero en todos los genes habrá una distribución de dispersión razonable.\nPaso 3: Reducción de las estimaciones de la dispersión de los genes hacia los valores predichos por la curva usando el método empírico de Bayes. La reducción de la dispersión es particularmente importante para reducir los falsos positivos en el análisis de expresión diferencial. .\n\n\n\nModelo linear generalizado.\nDESeq2 ajusta un modelo linear generalizado de la forma: \\[log2(q_{ij}) = \\Sigma x_j.β_i\\]\nEn el caso de un diseño simple con una condicion (un tratamiento por ejemplo), el modelo se puede escribir como: \\[log2(q_{ij}) = \\beta_0 + \\beta_1.x_j + \\epsilon\\] _0$ es el log2 del nivel de expresion in las muestras control\n\\(\\beta_1\\) es el log2FC entre celulas tratadas y control\n\\(x_j\\) = 0 si la muestra j es de tipo control\n\\(x_j\\) = 1 si la muestra j es de tipo muestra tratada.\n\n\nHipótesis\nLa hipótesis nula \\(H_0\\) es que no hay expresión diferencial entre los grupos, lo que equivale a decir que log2FC = 0. La prueba de Wald determinará si los datos proporcionan suficiente evidencia para concluir que este valor es realmente diferente de cero.\n\n\nCorrección de pruebas multiples\nUn valor de p de 0.05 significa que sólo hay un 5% de posibilidades de obtener estos datos si no existe una diferencia real, es decir, hay un 5% de posibilidades de que se tome una decision equivocada (un falso positivo).\nEn un análisis de RNA-seq podríamos tener 20000 genes y solo una fracción de ellos se expresan de manera diferencial. Supongamos un tratamiento que modifica la expresión de 1000 genes.  El primer histograma de la figura muestra los valores de p para los genes verdaderamente modificados, el segundo histograma muestra la distribución de los valoras de p para los genes no modificados. Los valores se distribuyen uniformemente entre 0 y 1. Podemos ver que el 5% de estos genes parecen significativos, aunque es sólo por casualidad. De 19000 genes 950 falsos positivos. Por lo tanto los valores de la prueba de Wald deben de corregirse para evitar un exceso de falsos positivos. Por defecto DESeq2 usa el método de Benjamini-Hochberg para ajustar los valores de p.\n\n\nFiltrado independiente\nLos genes con muy pocas cuentas tipicamente son no significantes debido a su alta dispersión. Sin embargo estos genes influyen en la correción de pruebas multiples, mejorando la resolución si estos genes son eliminados. DESeq2 usa como criterio de filtrado la media de las cuentas normalizadas. Los genes con un valor de expresion media inferior a cierto umbral son eliminados. El umbral usado es definido automaticamente por el softeare. Se elige maximizando el número de genes que tendrían un valor de p ajustado significativo.\n\n\nReferencias\n\nLaurent Gatto and Axelle Loriot. UCLouvain-CBIO/WSBIM2122: Omics data analysis. https://github.com/UCLouvain-CBIO/WSBIM2122.\n\n\nHarvard Chan Bioinformatics Core (HBC). https://hbctraining.github.io/DGE_workshop/"
+  },
+  {
+    "objectID": "enrfun/introduccion.html",
+    "href": "enrfun/introduccion.html",
+    "title": "Enriquecimiento Funcional",
+    "section": "",
+    "text": "La interpretación de una lista de genes diferencialmente expresados suele ser más util en terminos de vías biológicas.\nDado que los genes actuan colectivamente, un modelo más cercano a la biológia subyacente es aquel en el que las vías biológicas son las que se expresan diferencialmente.\nUna aproximación sería intentar hacer el análisis de expresión diferencial directamente a nivel de vía biológica, o indirectamente buscando la sobrerepresentación de los genes diferencialmente expresados en cada vía de interes.\nBases de datos como Reactome o KEGG anotan información de la literatura sobre los genes y las reacciones que forman las vías biológicas. Otras bases de datos como The Gene Ontology (GO) y Molecular Signatures Database (MSigDB) definen las vías biológicas en terminos de conjuntos de genes."
+  },
+  {
+    "objectID": "enrfun/introduccion.html#vías-biológicas-diferencialmente-expresadas",
+    "href": "enrfun/introduccion.html#vías-biológicas-diferencialmente-expresadas",
+    "title": "Enriquecimiento Funcional",
+    "section": "Vías biológicas diferencialmente expresadas",
+    "text": "Vías biológicas diferencialmente expresadas\nPara encontras estas vía diferencialmente expresadas en terminos de conjunto de genes diferencialmente expresados, es detectanto un enriquecimiento funcional:\n\nBuscar genes diferencialmente expresados (DE).\nPara cada conjunto de genes, verificar si estos genes DE pertenecen a ese conjunto en una proporcion que excede la expectativa de encontrarlo solo por azar.\n\nEn el caso de que un conjunto de genes contiene más genes DE que los que se podrían esperar por puro azar, decimos que este conjunto de genes esta enriquecido en genes DE"
+  },
+  {
+    "objectID": "enrfun/introduccion.html#análisis-de-sobrerepresentación-ora",
+    "href": "enrfun/introduccion.html#análisis-de-sobrerepresentación-ora",
+    "title": "Enriquecimiento Funcional",
+    "section": "Análisis de sobrerepresentación (ORA)",
+    "text": "Análisis de sobrerepresentación (ORA)\nLa forma de valorar si un conjunto de genes esta enriquecido o no es a traves de la prueba exacta de Fisher (prueba hipergeométrica). La prueba es útil para los datos categóricos que resultan de clasificar los objetos en dos formas diferentes. Se utiliza para examinar la significación de la asociación entre los dos tipos de clasificación. En nuestro caso si un gen es DE o no dentro de un conjunto de genes.\nEl valor de p se calcula con la función de distribución hipergeométrica. \\[ \\textrm{Pr}(X &gt;= k)=\\sum_{x=k}^{\\textrm{min}(m, n)} \\frac{ {m\\choose x} {N-m\\choose n-x} }{ {N\\choose n} }\\,. \\]\n\nN: Número total de genes (background).\nm: Número de genes en la distribución que estan anotados en el conjunto de genes de interes.\nn: Tamaño de la lista de genes de interes.\nk: Número de genes de la lista que estan anotados en el conjunto de genes.\n\nEjemplo: Supongamos que tenemos 17980 genes detectados en un estudio de RNA-seq, y 57 genes estan diferencialmente expresados. Entre estos 28 estan anotados en un conjunto de genes.\n\n\n\n\n\n\n\ngene.not.interest\ngene.in.interest\n\n\n\n\nIn_category\n2613\n28\n\n\nnot_in_category\n15310\n29\n\n\n\n\n\n\n\n\n\n    Fisher's Exact Test for Count Data\n\ndata:  df\np-value = 1\nalternative hypothesis: true odds ratio is greater than 1\n95 percent confidence interval:\n 0.110242      Inf\nsample estimates:\nodds ratio \n 0.1767937"
+  },
+  {
+    "objectID": "enrfun/introduccion.html#análisis-de-gene-ontology",
+    "href": "enrfun/introduccion.html#análisis-de-gene-ontology",
+    "title": "Enriquecimiento Funcional",
+    "section": "Análisis de Gene Ontology",
+    "text": "Análisis de Gene Ontology\nEs un análisis de enriquecimiento funcional aplicado a cada uno de los conjuntos de genes de la base da datos de GO Gene Ontology (GO) es una representación estructurada y estandarizada del conocimiento biológico. GO describe conceptos, tambien conocidos como términos, que estan interconectados a traves de relaciones definidas formalmente. GO esta diseñado para ser independiente de la especie.\n\nOntologías\nUn término GO pertenece a una de las siguientes tres ontologías: Biological Process (BP), Molecular Function (MF) y Cellular Component (CC).\nEl producto de un gen puede asociarse con o localizarse en una o más componentes celulares y estar activo en uno o más procesos biológicos durante los cuales realiza una o más funciones moleculares.\nDentro de una ontología los términos GO estan relacionados unos con otros a través de relaciones jerarquicas que describen cuando un término GO es más general o nó."
+  },
+  {
+    "objectID": "enrfun/introduccion.html#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea",
+    "href": "enrfun/introduccion.html#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea",
+    "title": "Enriquecimiento Funcional",
+    "section": "Análisis de enriquecimiento de conjuntos de genes (GSEA)",
+    "text": "Análisis de enriquecimiento de conjuntos de genes (GSEA)\nEl análisis de enriquecimiento ORA se basa en los genes identificados como diferencialmente expresados. Pero tiene la limitación de que necesita una lista minimamente grande de genes. Existen contextos donde los cambios de expresión diferencial puede ser pequeña. Los cambios moleculares más relevantes, si bien pequeños, ocurren de forma coordinada en una misma vía biológica. En estos contextos el método ORA suele fallar.\nGSEA aborda directamente esta limitación. Todos los genes se pueden utilizar en GSEA (y no solamente los genes DE), esto hace posible detectar situaciones donde todos los genes en el conjunto predefinido cambian un poco pero de manera coordinada.\nEn GSEA los genes se clasifican segun su fenotipo, Dado un conjunto de genes S definido a priori, el objetivo de GSEA es determinar si los miembros de S se distribuyen aleatoriamente en toda la lista de genes clasificados (L) o se encuentran principalmente en la parte superior o inferior.\n\n\n\n\n\nHay tres elementos claves en GSEA:\n\nEnrichment Score (ES): representa el grado al cual el conjunto S esta sobrerepresentado an la parte superior o inferior de la lista de genes clasificados L.\nNivel de significancia de ES: el valor de p es calculado mediante permutaciones.\nAjuste para pruebas multiples."
   }
 ]

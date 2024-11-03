@@ -117,6 +117,17 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-r" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">R</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-r">    
+        <li>
+    <a class="dropdown-item" href="../R/introduccion.html">
+ <span class="dropdown-text">Introducción a R</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-rna-seq" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">RNA-seq</span>
     </a>
@@ -127,7 +138,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="../rnaseq/deseq/ejemplo.html">
- <span class="dropdown-text">Caso practico</span></a>
+ <span class="dropdown-text">Caso práctico</span></a>
   </li>  
     </ul>
   </li>
@@ -142,10 +153,21 @@ window.Quarto = {
   </li>  
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text">About</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-presentaciones" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Presentaciones</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-presentaciones">    
+        <li>
+    <a class="dropdown-item" href="../Taller/usaR/usaR.html">
+ <span class="dropdown-text">Usa R!</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../Taller/ggplot2/ggplot2.html">
+ <span class="dropdown-text">ggplot2</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -162,13 +184,13 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#vías-biológicas-diferencialmente-expresadas" id="toc-vías-biológicas-diferencialmente-expresadas" class="nav-link active" data-scroll-target="#vías-biológicas-diferencialmente-expresadas"><span class="header-section-number">1</span> Vías biológicas diferencialmente expresadas</a></li>
-  <li><a href="#análisis-de-sobrerepresentación-ora" id="toc-análisis-de-sobrerepresentación-ora" class="nav-link" data-scroll-target="#análisis-de-sobrerepresentación-ora"><span class="header-section-number">2</span> Análisis de sobrerepresentación (ORA)</a></li>
-  <li><a href="#análisis-de-gene-ontology" id="toc-análisis-de-gene-ontology" class="nav-link" data-scroll-target="#análisis-de-gene-ontology"><span class="header-section-number">3</span> Análisis de Gene Ontology</a>
+  <li><a href="#vías-biológicas-diferencialmente-expresadas" id="toc-vías-biológicas-diferencialmente-expresadas" class="nav-link active" data-scroll-target="#vías-biológicas-diferencialmente-expresadas">Vías biológicas diferencialmente expresadas</a></li>
+  <li><a href="#análisis-de-sobrerepresentación-ora" id="toc-análisis-de-sobrerepresentación-ora" class="nav-link" data-scroll-target="#análisis-de-sobrerepresentación-ora">Análisis de sobrerepresentación (ORA)</a></li>
+  <li><a href="#análisis-de-gene-ontology" id="toc-análisis-de-gene-ontology" class="nav-link" data-scroll-target="#análisis-de-gene-ontology">Análisis de Gene Ontology</a>
   <ul class="collapse">
-  <li><a href="#ontologías" id="toc-ontologías" class="nav-link" data-scroll-target="#ontologías"><span class="header-section-number">3.1</span> Ontologías</a></li>
+  <li><a href="#ontologías" id="toc-ontologías" class="nav-link" data-scroll-target="#ontologías">Ontologías</a></li>
   </ul></li>
-  <li><a href="#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" id="toc-análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" class="nav-link" data-scroll-target="#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea"><span class="header-section-number">4</span> Análisis de enriquecimiento de conjuntos de genes (GSEA)</a></li>
+  <li><a href="#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" id="toc-análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" class="nav-link" data-scroll-target="#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea">Análisis de enriquecimiento de conjuntos de genes (GSEA)</a></li>
   </ul>
 </nav>
     </div>
@@ -201,8 +223,8 @@ window.Quarto = {
 <p>Dado que los genes actuan colectivamente, un modelo más cercano a la biológia subyacente es aquel en el que las vías biológicas son las que se expresan diferencialmente.</p>
 <p>Una aproximación sería intentar hacer el análisis de expresión diferencial directamente a nivel de vía biológica, o indirectamente buscando la sobrerepresentación de los genes diferencialmente expresados en cada vía de interes.</p>
 <p>Bases de datos como <a href="https://reactome.org/">Reactome</a> o <a href="https://www.genome.jp/kegg/">KEGG</a> anotan información de la literatura sobre los genes y las reacciones que forman las vías biológicas. Otras bases de datos como <a href="https://geneontology.org/">The Gene Ontology (GO)</a> y <a href="https://www.gsea-msigdb.org/gsea/msigdb">Molecular Signatures Database (MSigDB)</a> definen las vías biológicas en terminos de conjuntos de genes.</p>
-<section id="vías-biológicas-diferencialmente-expresadas" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="vías-biológicas-diferencialmente-expresadas"><span class="header-section-number">1</span> Vías biológicas diferencialmente expresadas</h2>
+<section id="vías-biológicas-diferencialmente-expresadas" class="level2">
+<h2 class="anchored" data-anchor-id="vías-biológicas-diferencialmente-expresadas">Vías biológicas diferencialmente expresadas</h2>
 <p>Para encontras estas vía diferencialmente expresadas en terminos de conjunto de genes diferencialmente expresados, es detectanto un <em>enriquecimiento funcional</em>:</p>
 <ul>
 <li>Buscar genes diferencialmente expresados (DE).</li>
@@ -210,8 +232,8 @@ window.Quarto = {
 </ul>
 <p>En el caso de que un conjunto de genes contiene más genes DE que los que se podrían esperar por puro azar, decimos que este conjunto de genes esta <strong>enriquecido</strong> en genes DE</p>
 </section>
-<section id="análisis-de-sobrerepresentación-ora" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="análisis-de-sobrerepresentación-ora"><span class="header-section-number">2</span> Análisis de sobrerepresentación (ORA)</h2>
+<section id="análisis-de-sobrerepresentación-ora" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-sobrerepresentación-ora">Análisis de sobrerepresentación (ORA)</h2>
 <p>La forma de valorar si un conjunto de genes esta enriquecido o no es a traves de la <a href="https://es.wikipedia.org/wiki/Prueba_exacta_de_Fisher">prueba exacta de Fisher</a> (prueba hipergeométrica). La prueba es útil para los datos categóricos que resultan de clasificar los objetos en dos formas diferentes. Se utiliza para examinar la significación de la asociación entre los dos tipos de clasificación. En nuestro caso si un gen es DE o no dentro de un conjunto de genes.</p>
 <p>El valor de p se calcula con la función de distribución hipergeométrica. <span class="math display">\[ \textrm{Pr}(X &gt;= k)=\sum_{x=k}^{\textrm{min}(m, n)} \frac{ {m\choose x} {N-m\choose n-x} }{ {N\choose n} }\,. \]</span></p>
 <ul>
@@ -264,11 +286,11 @@ odds ratio
 </div>
 </div>
 </section>
-<section id="análisis-de-gene-ontology" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="análisis-de-gene-ontology"><span class="header-section-number">3</span> Análisis de Gene Ontology</h2>
+<section id="análisis-de-gene-ontology" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-gene-ontology">Análisis de Gene Ontology</h2>
 <p>Es un análisis de enriquecimiento funcional aplicado a cada uno de los conjuntos de genes de la <a href="https://geneontology.org/">base da datos de GO</a> Gene Ontology (GO) es una representación estructurada y estandarizada del conocimiento biológico. GO describe conceptos, tambien conocidos como <strong>términos</strong>, que estan interconectados a traves de relaciones definidas formalmente. GO esta diseñado para ser independiente de la especie.</p>
-<section id="ontologías" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="ontologías"><span class="header-section-number">3.1</span> Ontologías</h3>
+<section id="ontologías" class="level3">
+<h3 class="anchored" data-anchor-id="ontologías">Ontologías</h3>
 <p>Un <strong>término GO</strong> pertenece a una de las siguientes tres ontologías: <em>Biological Process (BP)</em>, <em>Molecular Function (MF)</em> y <em>Cellular Component (CC)</em>.</p>
 <p>El producto de un gen puede asociarse con o localizarse en una o más componentes celulares y estar activo en uno o más procesos biológicos durante los cuales realiza una o más funciones moleculares.</p>
 <p>Dentro de una ontología los <strong>términos GO</strong> estan relacionados unos con otros a través de relaciones jerarquicas que describen cuando un término GO es más general o nó.</p>
@@ -279,8 +301,8 @@ odds ratio
 </div>
 </section>
 </section>
-<section id="análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea"><span class="header-section-number">4</span> Análisis de enriquecimiento de conjuntos de genes (GSEA)</h2>
+<section id="análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea">Análisis de enriquecimiento de conjuntos de genes (GSEA)</h2>
 <p>El análisis de enriquecimiento ORA se basa en los genes identificados como diferencialmente expresados. Pero tiene la limitación de que necesita una lista minimamente grande de genes. Existen contextos donde los cambios de expresión diferencial puede ser pequeña. Los cambios moleculares más relevantes, si bien pequeños, ocurren de forma coordinada en una misma vía biológica. En estos contextos el método ORA suele fallar.</p>
 <p>GSEA aborda directamente esta limitación. Todos los genes se pueden utilizar en GSEA (y no solamente los genes DE), esto hace posible detectar situaciones donde todos los genes en el conjunto predefinido cambian un poco pero de manera coordinada.</p>
 <p>En GSEA los genes se clasifican segun su fenotipo, Dado un conjunto de genes S definido a priori, el objetivo de GSEA es determinar si los miembros de S se distribuyen aleatoriamente en toda la lista de genes clasificados (L) o se encuentran principalmente en la parte superior o inferior.</p>

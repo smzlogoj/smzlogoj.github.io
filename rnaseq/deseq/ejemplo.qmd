@@ -1,5 +1,5 @@
 ---
-title: "Caso practico"
+title: "Caso práctico"
 execute:
     warning: false
     message: false
@@ -80,7 +80,7 @@ crearHeatMap <-function(datos, metadatos) {
 
 ## Análisis exploratorio de los datos.
 ### Cargar datos
-
+Para ilustrar el uso de DESeq usaremos el dataset MOV10.
 Cargamos los datos de la matriz de cuentas sin normalizar:
 
 ```{r}
@@ -272,6 +272,9 @@ crearHeatMap(df.dge, metadata)
 ```
 
 ## Referencias
+> "MOV10 and FMRP regulate AGO2 association with microRNA recognition elements"  
+>(Kenny, P.J. et al, Cell Reports, 11 December 2014).
+
 > https://bookdown.org/ggiaever/2024_RNA-seq-analysis/
 
 > https://bioconductor.org/packages/release/bioc/html/DESeq2.html
