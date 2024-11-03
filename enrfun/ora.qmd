@@ -1,0 +1,164 @@
+---
+title: "ORA (MOV10)"
+execute:
+    warning: false
+    message: false
+    echo: true
+format: html
+---
+Vamos a realizar un análisis de sobrerepresentación con los genes diferencialmente expresados del dataset MOV10 ([enlace](../rnaseq/deseq/ejemplo.qmd)).
+
+Para realizar el análisis utilizaremos el paquete de Bioconductor [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html), tambien usaremos el paquete [org.Hs.eg.db](https://bioconductor.org/packages/release/data/annotation/html/org.Hs.eg.db.html).
+
+```{r}
+#| label: load-packages
+
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(enrichplot)
+library(pathview)
+```
+
+## Cargar datos
+Cargamos los datos de los genes diferencialmente expresados.
+
+```{r}
+#| label: load-data
+
+df.fc <- read.csv('../rnaseq/deseq/data/resultado.csv')
+
+padj.cutoff <- 0.05
+lfc.cutoff <- log2(1.5)
+
+genes.up <- df.fc$X[df.fc$log2FoldChange >= lfc.cutoff & df.fc$padj <= padj.cutoff]
+genes.down <- df.fc$X[df.fc$log2FoldChange <= -1 * lfc.cutoff & df.fc$padj <= padj.cutoff]
+
+genes.dge <- c(genes.up, genes.down)
+allgenes <- df.fc$X
+```
+## Análisis GO
+El paquete clusterProfiler implementa la función **enrichGO()**.
+
+### Biological Process
+
+```{r}
+#| label: GO-BP
+
+go.BP <- enrichGO(gene          = genes.dge,
+                  universe      = allgenes,
+                  OrgDb         = org.Hs.eg.db,
+                  keyType       = "SYMBOL",
+                  ont           = "BP",
+                  pAdjustMethod = "BH"
+                )
+
+head(go.BP)
+```
+```{r}
+#| label: barplot-gobp
+#| fig-height: 8
+
+barplot(go.BP, showCategory = 15)
+dotplot(go.BP, showCategory = 15)
+```
+
+### Molecular Function
+
+```{r}
+#| label: GO-mf
+
+go.MF <- enrichGO(gene          = genes.dge,
+                  universe      = allgenes,
+                  OrgDb         = org.Hs.eg.db,
+                  keyType       = "SYMBOL",
+                  ont           = "MF",
+                  pAdjustMethod = "BH"
+                )
+
+head(go.MF)
+```
+```{r}
+#| label: barplot-gomf
+#| fig-height: 8
+
+barplot(go.MF, showCategory = 15)
+dotplot(go.MF, showCategory = 15)
+```
+
+### Cellular Component
+
+```{r}
+#| label: GO-CC
+
+go.CC <- enrichGO(gene          = genes.dge,
+                  universe      = allgenes,
+                  OrgDb         = org.Hs.eg.db,
+                  keyType       = "SYMBOL",
+                  ont           = "CC",
+                  pAdjustMethod = "BH"
+                )
+
+head(go.CC)
+```
+```{r}
+#| label: barplot-gocc
+#| fig-height: 8
+
+barplot(go.CC, showCategory = 15)
+dotplot(go.CC, showCategory = 15)
+```
+
+## KEGG pathway over-representation analysis
+El paquete **clusterProfiler** soporta todos los organismos que tienen anotación de la base da datos [KEGG](https://www.kegg.jp/). Para realizar el análisis de sobrerepresentación usaremos la función **enrichKEGG()**. Esta función no acepta los genes con nombre (*SYMBOL*), el valor debe de ser *ENTREZID*. Podemos traducir los simbolos usando la función **bitr()**(Biological Id TranslatoR).
+
+```{r}
+#| label: enrichKegg
+
+allgenes.entrezid <- bitr(allgenes, 
+                          fromType = 'SYMBOL',
+                          toType = 'ENTREZID',
+                          OrgDb = 'org.Hs.eg.db'
+                          )
+genes.dge.entrezid <- bitr(genes.dge, 
+                          fromType = 'SYMBOL',
+                          toType = 'ENTREZID',
+                          OrgDb = 'org.Hs.eg.db'
+                          )
+head(genes.dge.entrezid)
+```
+```{r}
+kegg <- enrichKEGG(gene         = genes.dge.entrezid$ENTREZID,
+                   organism     = 'hsa',
+                   universe     = allgenes.entrezid$ENTREZID)
+
+head(kegg)
+```
+
+```{r}
+#| label: dotplot-kegg
+
+dotplot(kegg, showCategory = 15)
+```
+
+En el paquete **clusterProfiler** viene incluida la funcion **browseKEGG()** que ayuda a explorar los vías enriquecidas de KEGG con los genes de interes.
+La función **browseKEGG()** abrira la ruta especificada en un navegador destacando los genes de interes.
+
+```{r}
+#| label: hsa04512
+browseKEGG(kegg, 'hsa04512')
+```
+![](../assets/hsa04512_20241103_195314.png){width=70% fig-align="center"}
+
+```{r}
+#| label: hsa04151
+browseKEGG(kegg, 'hsa04151')
+```
+![](../assets/hsa04151_20241103_195304.png){width=70% fig-align="center"}
+
+## Referencias
+```{r}
+#| label: citation
+
+citation("clusterProfiler")
+
+```

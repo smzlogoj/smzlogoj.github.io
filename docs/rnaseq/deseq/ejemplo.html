@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Caso práctico – Tumbleweed</title>
+<title>Caso práctico (MOV10) – Tumbleweed</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -143,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="../../rnaseq/deseq/ejemplo.html">
- <span class="dropdown-text">Caso práctico</span></a>
+ <span class="dropdown-text">Caso práctico (MOV10)</span></a>
   </li>  
     </ul>
   </li>
@@ -155,6 +155,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../../enrfun/introduccion.html">
  <span class="dropdown-text">Enriquecimiento Funcional</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../enrfun/ora.html">
+ <span class="dropdown-text">ORA (MOV10)</span></a>
   </li>  
     </ul>
   </li>
@@ -206,6 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#volcano-plot" id="toc-volcano-plot" class="nav-link" data-scroll-target="#volcano-plot">Volcano plot</a></li>
   <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap">Heatmap</a></li>
   </ul></li>
+  <li><a href="#guardar-resultados" id="toc-guardar-resultados" class="nav-link" data-scroll-target="#guardar-resultados">Guardar resultados</a></li>
   <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
   </ul>
 </nav>
@@ -215,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Caso práctico</h1>
+<h1 class="title">Caso práctico (MOV10)</h1>
 </div>
 
 
@@ -884,17 +889,15 @@ colData names(3): sampletype MOVexpr sizeFactor</code></pre>
 <h2 class="anchored" data-anchor-id="genes-diferencialmente-expresados">Genes diferencialmente expresados</h2>
 <p>Para selecionar los genes diferecialmente expresados debemos fijar el umbral. En este caso elegimos un FC = 1.5 y un valor de p ajustado de 0.05</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|label: DGE</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>padj.cutoff <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>lfc.cutoff <span class="ot">&lt;-</span> <span class="fu">log2</span>(<span class="fl">1.5</span>)</span>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>padj.cutoff <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>lfc.cutoff <span class="ot">&lt;-</span> <span class="fu">log2</span>(<span class="fl">1.5</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>df.ashr <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(resLFC)</span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>df.ashr <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(resLFC)</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>genes.ashr.up <span class="ot">&lt;-</span> <span class="fu">rownames</span>(df.ashr[df.ashr<span class="sc">$</span>log2FoldChange <span class="sc">&gt;=</span> lfc.cutoff <span class="sc">&amp;</span> df.ashr<span class="sc">$</span>padj <span class="sc">&lt;=</span> padj.cutoff, ])</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>genes.ashr.down <span class="ot">&lt;-</span> <span class="fu">rownames</span>(df.ashr[df.ashr<span class="sc">$</span>log2FoldChange <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">*</span> lfc.cutoff <span class="sc">&amp;</span> df.ashr<span class="sc">$</span>padj <span class="sc">&lt;=</span> padj.cutoff, ])</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(genes.ashr.up)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>genes.ashr.up <span class="ot">&lt;-</span> <span class="fu">rownames</span>(df.ashr[df.ashr<span class="sc">$</span>log2FoldChange <span class="sc">&gt;=</span> lfc.cutoff <span class="sc">&amp;</span> df.ashr<span class="sc">$</span>padj <span class="sc">&lt;=</span> padj.cutoff, ])</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>genes.ashr.down <span class="ot">&lt;-</span> <span class="fu">rownames</span>(df.ashr[df.ashr<span class="sc">$</span>log2FoldChange <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">*</span> lfc.cutoff <span class="sc">&amp;</span> df.ashr<span class="sc">$</span>padj <span class="sc">&lt;=</span> padj.cutoff, ])</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(genes.ashr.up)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "A4GALT"  "ABCA1"   "ABHD14B" "ABL2"    "ACADVL"  "ACAN"   </code></pre>
 </div>
@@ -936,6 +939,16 @@ colData names(3): sampletype MOVexpr sizeFactor</code></pre>
 </div>
 </div>
 </section>
+</section>
+<section id="guardar-resultados" class="level2">
+<h2 class="anchored" data-anchor-id="guardar-resultados">Guardar resultados</h2>
+<p>Podemos exportar los datos a ficheros csv</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(df.ashr, <span class="st">'data/resultado.csv'</span>, <span class="at">row.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">counts</span>(dds, <span class="at">normalized =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'data/cuentas_normalizadas.csv'</span>, <span class="at">row.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="referencias" class="level2">
 <h2 class="anchored" data-anchor-id="referencias">Referencias</h2>

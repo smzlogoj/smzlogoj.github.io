@@ -17,6 +17,7 @@ website:
       - text: Enriquecimiento funcional
         menu:
           - enrfun/introduccion.qmd
+          - enrfun/ora.qmd
       - text: Presentaciones
         menu:
           - Taller/usaR/usaR.qmd

@@ -1,5 +1,5 @@
 ---
-title: "Caso práctico"
+title: "Caso práctico (MOV10)"
 execute:
     warning: false
     message: false
@@ -237,7 +237,7 @@ head(as.data.frame(resLFC))
 Para selecionar los genes diferecialmente expresados debemos fijar el umbral. En este caso elegimos un FC = 1.5 y un valor de p ajustado de 0.05
 
 ```{r}
-#|label: DGE
+#| label: DGE
 
 padj.cutoff <- 0.05
 lfc.cutoff <- log2(1.5)
@@ -270,6 +270,18 @@ df.dge <- df.norm[rownames(df.norm) %in% c(genes.ashr.up, genes.ashr.down), ]
 
 crearHeatMap(df.dge, metadata)
 ```
+
+## Guardar resultados
+Podemos exportar los datos a ficheros csv
+```{r}
+#| label: csv
+
+write.csv(df.ashr, 'data/resultado.csv', row.names = TRUE)
+
+write.csv(counts(dds, normalized = TRUE), 
+                    'data/cuentas_normalizadas.csv', row.names = TRUE)
+```
+
 
 ## Referencias
 > "MOV10 and FMRP regulate AGO2 association with microRNA recognition elements"  
