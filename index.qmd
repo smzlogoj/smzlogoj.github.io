@@ -19,7 +19,7 @@ about:
 
 Hoy en día, debido al avance de la técnología podemos disponer de una gran cantidad de datos, pero los métodos tradicionales de analizar esta información han quedado obsoletos. No queda más remedio que recurrir a herramientas informaticas. El campo de la biológia no es una excepción, donde existen multitud de bases de datos procedentes de experimentos, y los nuevas técnologías en el laboratorio pueden devolver cantidades masivas de información.
 
-En mi experiencia al usuario novel puede llegar a costarle mucho el comenzar con un lenguaje de programacíon. No se sienten capaces o despues de intentarlo durante un tiempo abandonan por sentirse incapaces de obtener resultados.
+Al usuario novel puede llegar a costarle mucho el comenzar con un lenguaje de programacíon. No se siente capaz o despues de intentarlo durante un tiempo abandonan por no poder obtener resultados.
 
 Con el proyecto web **Tumbleweed** se pretende acercar, mediante turoriales y guías,  estas herramientas bioinformáticas a usarios sin experiencia previa en programación.
 
