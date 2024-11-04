@@ -19,6 +19,7 @@ website:
           - enrfun/introduccion.qmd
           - enrfun/ora.qmd
           - enrfun/gprofiler.qmd
+          - enrfun/gsea.qmd
       - text: Presentaciones
         menu:
           - presentaciones/usaR/usaR.qmd

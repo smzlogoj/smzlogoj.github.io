@@ -1,0 +1,219 @@
+---
+title: "GSEA (MOV10)"
+execute:
+    warning: false
+    message: false
+    echo: true
+    cache: true
+format: html
+---
+La hípotesis de GSEA es que cambios pequeños (que no serían detectados por los métodos ORA) pero coordinadosen conjuntos de genes funcionalmente relacionados también pueden tener efectos significativos. En este caso se consideran todos los genes estudiados. Este tipo de análisis puede ser útil en los casos que el análisis de expresión diferencial generé una lista pequeña de genes DE.
+
+Vamos a realizar un análisis de sobrerepresentación con los genes diferencialmente expresados del dataset MOV10 ([enlace](../rnaseq/deseq/ejemplo.qmd)).
+
+Para realizar el análisis utilizaremos el paquete de Bioconductor [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html), tambien usaremos el paquete [org.Hs.eg.db](https://bioconductor.org/packages/release/data/annotation/html/org.Hs.eg.db.html).
+
+```{r}
+#| label: load-packages
+
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(enrichplot)
+library(pathview)
+library(ggplotify)
+library(ggpubr)
+```
+
+## Cargar datos
+Cargamos los datos del análisis de expresion diferecial y creamos una lista de los genes ordenados por su FC.
+
+```{r}
+#| label: load-data
+
+df.fc <- read.csv('../rnaseq/deseq/data/resultado.csv')
+df.fc <- df.fc[order(df.fc$log2FoldChange, decreasing = TRUE), ]
+
+geneList <- df.fc$log2FoldChange
+names(geneList) <- df.fc$X
+
+head(geneList)
+```
+## GO Gene Set Enrichment Analysis
+
+### Biological Process
+
+```{r}
+#| label: gsea-gobp
+
+go.BP <- gseGO(geneList    = geneList,
+              OrgDb        = org.Hs.eg.db,
+              keyType      = 'SYMBOL',
+              ont          = "BP",
+              minGSSize    = 100,
+              maxGSSize    = 500,
+              verbose      = FALSE)
+head(go.BP)
+```
+
+```{r}
+#| label: dotplot-gobp
+#| fig-height: 8
+
+dotplot(go.BP, showCategory = 15)
+```
+
+```{r}
+#| label: gsea-plot-gobp
+#| fig-height: 8
+#| fig-width: 8
+f1 <- as.grob(gseaplot2(go.BP, geneSetID = 1, title = go.BP$Description[1]))
+f2 <- as.grob(gseaplot2(go.BP, geneSetID = 2, title = go.BP$Description[2]))
+f3 <- as.grob(gseaplot2(go.BP, geneSetID = 3, title = go.BP$Description[3]))
+f4 <- as.grob(gseaplot2(go.BP, geneSetID = 4, title = go.BP$Description[4]))
+
+ggarrange(f1, f2, f3, f4,
+          ncol = 2, nrow = 2
+        )
+
+```
+### Molecular Functions
+
+```{r}
+#| label: gsea-gomf
+
+go.MF <- gseGO(geneList    = geneList,
+              OrgDb        = org.Hs.eg.db,
+              keyType      = 'SYMBOL',
+              ont          = "MF",
+              minGSSize    = 100,
+              maxGSSize    = 500,
+              verbose      = FALSE)
+head(go.MF)
+```
+
+```{r}
+#| label: dotplot-gomf
+#| fig-height: 8
+
+dotplot(go.MF, showCategory = 15)
+```
+
+```{r}
+#| label: gsea-plot-gomf
+#| fig-height: 8
+#| fig-width: 8
+f1 <- as.grob(gseaplot2(go.MF, geneSetID = 1, title = go.MF$Description[1]))
+f2 <- as.grob(gseaplot2(go.MF, geneSetID = 2, title = go.MF$Description[2]))
+f3 <- as.grob(gseaplot2(go.MF, geneSetID = 3, title = go.MF$Description[3]))
+f4 <- as.grob(gseaplot2(go.MF, geneSetID = 4, title = go.MF$Description[4]))
+
+ggarrange(f1, f2, f3, f4,
+          ncol = 2, nrow = 2
+        )
+
+```
+### Cellular Components
+
+```{r}
+#| label: gsea-gocc
+
+go.CC <- gseGO(geneList    = geneList,
+              OrgDb        = org.Hs.eg.db,
+              keyType      = 'SYMBOL',
+              ont          = "CC",
+              minGSSize    = 100,
+              maxGSSize    = 500,
+              verbose      = FALSE)
+head(go.CC)
+```
+
+```{r}
+#| label: dotplot-gocc
+#| fig-height: 8
+
+dotplot(go.CC, showCategory = 15)
+```
+
+```{r}
+#| label: gsea-plot-goCC
+#| fig-height: 8
+#| fig-width: 8
+f1 <- as.grob(gseaplot2(go.CC, geneSetID = 1, title = go.CC$Description[1]))
+f2 <- as.grob(gseaplot2(go.CC, geneSetID = 2, title = go.CC$Description[2]))
+f3 <- as.grob(gseaplot2(go.CC, geneSetID = 3, title = go.CC$Description[3]))
+f4 <- as.grob(gseaplot2(go.CC, geneSetID = 4, title = go.CC$Description[4]))
+
+ggarrange(f1, f2, f3, f4,
+          ncol = 2, nrow = 2
+        )
+
+```
+## KEGG pathway gene set enrichment analysis
+
+Primero debemos de obtener los valores de ENTREZID de los genes.
+```{r}
+#| label: genes-entrezid
+
+allgenes.entrezid <- bitr(names(geneList), 
+                          fromType = 'SYMBOL',
+                          toType = 'ENTREZID',
+                          OrgDb = 'org.Hs.eg.db'
+                          )
+geneList.kegg <- geneList
+names(geneList.kegg) <- allgenes.entrezid$ENTREZID
+
+head(geneList.kegg)
+```
+
+```{r}
+#| label: gsea-kegg
+
+
+gsea.kegg <- gseKEGG(geneList     = geneList.kegg,
+                     organism     = 'hsa',
+                     minGSSize    = 120,
+                     verbose      = FALSE)
+
+head(gsea.kegg)
+```
+
+```{r}
+#| label: dotplot-gsea.kegg
+#| fig-height: 8
+
+dotplot(gsea.kegg, showCategory = 15)
+```
+```{r}
+#| label: gsea-plot-gsea.kegg
+#| fig-height: 8
+#| fig-width: 8
+f1 <- as.grob(gseaplot2(gsea.kegg, geneSetID = 1, title = gsea.kegg$Description[1]))
+f2 <- as.grob(gseaplot2(gsea.kegg, geneSetID = 2, title = gsea.kegg$Description[2]))
+f3 <- as.grob(gseaplot2(gsea.kegg, geneSetID = 3, title = gsea.kegg$Description[3]))
+f4 <- as.grob(gseaplot2(gsea.kegg, geneSetID = 4, title = gsea.kegg$Description[4]))
+
+ggarrange(f1, f2, f3, f4,
+          ncol = 2, nrow = 2
+        )
+
+```
+
+### Pathways
+
+```{r}
+#| label: hsa05168
+hsa05168 <- pathview(gene.data  = geneList.kegg,
+                     pathway.id = "hsa05168",
+                     species    = "hsa",
+                     limit      = list(gene=max(abs(geneList.kegg)), cpd=1))
+```
+![](hsa05168.pathview.png){width=70% fig-align="center"}
+
+```{r}
+#| label: hsa04080
+hsa04080 <- pathview(gene.data  = geneList.kegg,
+                     pathway.id = "hsa04080",
+                     species    = "hsa",
+                     limit      = list(gene=max(abs(geneList.kegg)), cpd=1))
+```
+![](hsa04080.pathview.png){width=70% fig-align="center"}

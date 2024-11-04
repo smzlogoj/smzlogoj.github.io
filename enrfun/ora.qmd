@@ -4,6 +4,7 @@ execute:
     warning: false
     message: false
     echo: true
+    cache: true
 format: html
 ---
 Vamos a realizar un análisis de sobrerepresentación con los genes diferencialmente expresados del dataset MOV10 ([enlace](../rnaseq/deseq/ejemplo.qmd)).
@@ -32,6 +33,12 @@ lfc.cutoff <- log2(1.5)
 
 genes.up <- df.fc$X[df.fc$log2FoldChange >= lfc.cutoff & df.fc$padj <= padj.cutoff]
 genes.down <- df.fc$X[df.fc$log2FoldChange <= -1 * lfc.cutoff & df.fc$padj <= padj.cutoff]
+
+## datos para pathway
+geneList <- df.fc$log2FoldChange[df.fc$X %in% c(genes.up, genes.down)]
+names(geneList) <- c(genes.up, genes.down)
+geneList <- geneList[order(geneList, decreasing = TRUE)]
+
 
 genes.dge <- c(genes.up, genes.down)
 allgenes <- df.fc$X
@@ -154,6 +161,39 @@ browseKEGG(kegg, 'hsa04512')
 browseKEGG(kegg, 'hsa04151')
 ```
 ![](../assets/hsa04151_20241103_195304.png){width=70% fig-align="center"}
+
+## Pathways
+
+```{r}
+
+genes.dge.entrezid <- bitr(names(geneList), 
+                          fromType = 'SYMBOL',
+                          toType = 'ENTREZID',
+                          OrgDb = 'org.Hs.eg.db'
+                          )
+names(geneList) <- genes.dge.entrezid$ENTREZID
+```
+
+```{r}
+#| label: hsa04512-pathway
+hsa04512 <- pathview(gene.data  = geneList,
+                     pathway.id = "hsa04512",
+                     species    = "hsa",
+                     limit      = list(gene=max(abs(geneList)), cpd=1))
+```
+![](hsa04512.pathview.png){width=70% fig-align="center"}
+
+```{r}
+#| label: hsa04151-pathway
+hsa04151<- pathview(gene.data  = geneList,
+                     pathway.id = "hsa04151",
+                     species    = "hsa",
+                     limit      = list(gene=max(abs(geneList)), cpd=1))
+```
+![](hsa04151.pathview.png){width=70% fig-align="center"}
+
+
+
 
 ## Referencias
 ```{r}

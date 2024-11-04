@@ -1,0 +1,12 @@
+clusterProfiler
+BiocGenerics
+Biobase
+S4Vectors
+IRanges
+AnnotationDbi
+org.Hs.eg.db
+enrichplot
+pathview
+ggplot2
+ggpubr
+ggplotify

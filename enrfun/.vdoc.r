@@ -13,15 +13,20 @@
 #
 #
 #| label: load-packages
-library(gprofiler2)
 
-```
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(enrichplot)
+library(pathview)
 #
 #
-#| label: Cargar-datos
+#
+#
+#
+#
+#| label: load-data
 
 df.fc <- read.csv('../rnaseq/deseq/data/resultado.csv')
-df.fc <- df.fc[order(df.fc$log2FoldChange, decreasing = TRUE), ]
 
 padj.cutoff <- 0.05
 lfc.cutoff <- log2(1.5)
@@ -29,58 +34,174 @@ lfc.cutoff <- log2(1.5)
 genes.up <- df.fc$X[df.fc$log2FoldChange >= lfc.cutoff & df.fc$padj <= padj.cutoff]
 genes.down <- df.fc$X[df.fc$log2FoldChange <= -1 * lfc.cutoff & df.fc$padj <= padj.cutoff]
 
+## datos para pathway
+geneList <- df.fc$log2FoldChange[df.fc$X %in% c(genes.up, genes.down)]
+names(geneList) <- c(genes.up, genes.down)
+geneList <- geneList[order(geneList, decreasing = TRUE)]
+
+
 genes.dge <- c(genes.up, genes.down)
 allgenes <- df.fc$X
 ```
 #
-#| label: ejecutar-gprofiler
+#
+#
+#
+#
+#
+#| label: GO-BP
 
-gost.res <- gost(query = genes.dge,
-                organism = 'hsapiens',
-                ordered_query = TRUE,
-                correction_method = 'fdr',
-                custom_bg = allgenes,
-                highlight = TRUE
+go.BP <- enrichGO(gene          = genes.dge,
+                  universe      = allgenes,
+                  OrgDb         = org.Hs.eg.db,
+                  keyType       = "SYMBOL",
+                  ont           = "BP",
+                  pAdjustMethod = "BH"
                 )
 
-head(gost.res$result, 3)
+head(go.BP)
+```
+#
+#| label: barplot-gobp
+#| fig-height: 8
+
+barplot(go.BP, showCategory = 15)
+dotplot(go.BP, showCategory = 15)
+#
+#
+#
+#
+#
+#| label: GO-mf
+
+go.MF <- enrichGO(gene          = genes.dge,
+                  universe      = allgenes,
+                  OrgDb         = org.Hs.eg.db,
+                  keyType       = "SYMBOL",
+                  ont           = "MF",
+                  pAdjustMethod = "BH"
+                )
+
+head(go.MF)
+```
+#
+#| label: barplot-gomf
+#| fig-height: 8
+
+barplot(go.MF, showCategory = 15)
+dotplot(go.MF, showCategory = 15)
+#
+#
+#
+#
+#
+#| label: GO-CC
+
+go.CC <- enrichGO(gene          = genes.dge,
+                  universe      = allgenes,
+                  OrgDb         = org.Hs.eg.db,
+                  keyType       = "SYMBOL",
+                  ont           = "CC",
+                  pAdjustMethod = "BH"
+                )
+
+head(go.CC)
+```
+#
+#| label: barplot-gocc
+#| fig-height: 8
+
+barplot(go.CC, showCategory = 15)
+dotplot(go.CC, showCategory = 15)
+#
+#
+#
+#
+#
+#
+#| label: enrichKegg
+
+allgenes.entrezid <- bitr(allgenes, 
+                          fromType = 'SYMBOL',
+                          toType = 'ENTREZID',
+                          OrgDb = 'org.Hs.eg.db'
+                          )
+genes.dge.entrezid <- bitr(genes.dge, 
+                          fromType = 'SYMBOL',
+                          toType = 'ENTREZID',
+                          OrgDb = 'org.Hs.eg.db'
+                          )
+head(genes.dge.entrezid)
+```
+#
+kegg <- enrichKEGG(gene         = genes.dge.entrezid$ENTREZID,
+                   organism     = 'hsa',
+                   universe     = allgenes.entrezid$ENTREZID)
+
+head(kegg)
+#
+#
+#
+#| label: dotplot-kegg
+
+dotplot(kegg, showCategory = 15)
+#
+#
+#
+#
+#
+#
+#| label: hsa04512
+browseKEGG(kegg, 'hsa04512')
 ```
 #
 #
 #
-#| label: gprofiler-plot
+#| label: hsa04151
+browseKEGG(kegg, 'hsa04151')
+```
+#
+#
+#
+#
+#
 
-gostplot(gost.res, capped = TRUE, interactive = TRUE)
+genes.dge.entrezid <- bitr(names(geneList), 
+                          fromType = 'SYMBOL',
+                          toType = 'ENTREZID',
+                          OrgDb = 'org.Hs.eg.db'
+                          )
+names(geneList) <- genes.dge.entrezid$ENTREZID
 #
 #
 #
-#| label: link
-gost.link <- gost(query = genes.dge,
-                organism = 'hsapiens',
-                ordered_query = TRUE,
-                correction_method = 'fdr',
-                custom_bg = allgenes,
-                highlight = TRUE, 
-                as_short_link = TRUE
-                )
+#| label: hsa04512
+hsa04512 <- pathview(gene.data  = names(geneList),
+                     pathway.id = "hsa04512",
+                     species    = "hsa",
+                     limit      = list(gene=max(abs(geneList)), cpd=1))
+```
+#
+#
+#
+#| label: hsa04512
+hsa04151<- pathview(gene.data  = names(geneList),
+                     pathway.id = "hsa04512",
+                     species    = "hsa",
+                     limit      = list(gene=max(abs(geneList)), cpd=1))
+```
+#
+#
+#
+#
+#
+#
+#
+#| label: citation
 
-gost.link
-#
-#
-#
-#
-#
-#
-#| label: REVIGO
+citation("clusterProfiler")
 
-gprofiler_results <- gost.res$result[order(gost.res$result$p_value, decreasing = TRUE),]
-gprofiler_results <- gprofiler_results[grep('GO:', gprofiler_results$term_id), ]
-
-GO.pval <- gprofiler_results[, c('term_id', 'p_value')]
-
-write.table(GO.pval, "results/GOs_oe.txt", quote=FALSE, row.names = FALSE, col.names = FALSE)
-
-head(GO.pval)
+#
 #
 #
 #
