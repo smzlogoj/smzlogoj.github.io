@@ -209,7 +209,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#cellular-component" id="toc-cellular-component" class="nav-link" data-scroll-target="#cellular-component">Cellular Component</a></li>
   </ul></li>
   <li><a href="#kegg-pathway-over-representation-analysis" id="toc-kegg-pathway-over-representation-analysis" class="nav-link" data-scroll-target="#kegg-pathway-over-representation-analysis">KEGG pathway over-representation analysis</a></li>
-  <li><a href="#pathways" id="toc-pathways" class="nav-link" data-scroll-target="#pathways">Pathways</a></li>
   <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
   </ul>
 </nav>
@@ -951,14 +950,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">browseKEGG</span>(kegg, <span class="st">'hsa04151'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../assets/hsa04151_20241103_195304.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
-</figure>
-</div>
-</section>
-<section id="pathways" class="level2">
-<h2 class="anchored" data-anchor-id="pathways">Pathways</h2>
+<p><img src="../assets/hsa04151_20241103_195304.png" class="img-fluid quarto-figure quarto-figure-center" style="width:70.0%"> ## Pathways</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>genes.dge.entrezid <span class="ot">&lt;-</span> <span class="fu">bitr</span>(<span class="fu">names</span>(geneList), </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">fromType =</span> <span class="st">'SYMBOL'</span>,</span>
