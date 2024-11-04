@@ -1,0 +1,112 @@
+---
+title: "Convertir Ensembl IDs"
+execute:
+    warning: false
+    message: false
+    echo: true
+    cache: true
+format: html
+---
+
+Los [**Ensembl IDs**](https://www.ensembl.org/info/genome/stable_ids/index.html) son identificadores estables que se usan en las bases de datos para etiquetar inequivocamente, genes, transcripciones, exones o proteínas. A diferencia de los nombres de los genes que pueden cambiar como resultado de las mejoras en el conocimiento científico.
+
+## Cargar datos
+Para el ejemplo vamos a utilizar un dataset de *Drosophila melanogaster*.
+```{r}
+#| label: load-data
+df.mcf <- read.csv('data/mcf_normalized_counts.csv', row.names = 1)
+
+
+head(df.mcf)
+```
+
+## BioMart
+El paquete [**biomaRt**](https://bioconductor.org/packages/release/bioc/html/biomaRt.html) de Bioconductor, es una interfaz de conexion a las bases de datos de [**BioMart**](https://www.ensembl.org/info/data/biomart/index.html).
+
+Seleccionamos la base de datos.
+```{r}
+#| label: identificar-database
+library(biomaRt)
+
+listEnsembl()
+ensembl <- useEnsembl(biomart = 'genes')
+
+ensembl
+```
+
+Seleccionamos el dataset.
+```{r}
+#| label: dataset
+
+searchDatasets(mart = ensembl, pattern = 'melanogaster')
+```
+
+Necesitamos la base de datos *genes* y el dataset *dmelanogaster_gene_ensembl*
+
+```{r}
+#| label: selec-database
+
+ensembl <- useEnsembl(biomart = 'genes', dataset = 'dmelanogaster_gene_ensembl')
+
+ensembl
+```
+
+Construimos una consulta y la lanzamos contra el servidor *Ensembl BioMart*.
+```{r}
+#| label: query
+
+genesBM <- getBM(filters = 'ensembl_gene_id', 
+                  attributes = c("ensembl_gene_id","entrezgene_id",'external_gene_name'),
+                  values = rownames(df.mcf),
+                  mart = ensembl
+                 )
+
+head(genesBM)
+```
+::: {.callout-note}
+En ocasiones el servidor y sus mirrors pueden estar caidos. Es cuestion de esperar un tiempo.
+:::
+
+Observando los resultados de la consulta, se muestra que el nombre de los genes (*external_gene_name*) puede aparece duplicado, mientras que el *esembl_gene_id* es unico.
+```{r}
+head(genesBM[duplicated(genesBM$external_gene_name), ], 10)
+```
+
+El dataset original (*df.mcf*) tiene 11342 genes, mientras que la consulta tiene 10474, luego hay genes que no han podido ser traducidos.
+```{r}
+#| label: dimensiones
+dim(df.mcf)
+
+dim(genesBM)
+```
+
+Por ultimo, vamos a unir los resultados de la consulta al dataset original. Es evidente que no podemos añadirlos como columnas nuevas, ya que no tienen la misma longitud. Además nos tenemos que asegurar que añadimos los datos de manera que los ensembles coincidan.
+
+```{r}
+#| label: left-join
+
+library(reshape2)
+samples <- names(df.mcf)
+df.mcf$ensembl_gene_id <- rownames(df.mcf)
+
+df <- merge(df.mcf, genesBM, 
+            by =  'ensembl_gene_id', 
+            all.x = TRUE)
+df <- df[, c('ensembl_gene_id', 'entrezgene_id', 'external_gene_name', samples)]
+
+head(df)
+```
+Al realizar la consulta puede ocurrir que se generen duplicados. 
+```{r}
+#| label: duplicados
+
+head(df[duplicated(df$ensembl_gene_id), ], 10)
+```
+Tambien se puede dar el caso de datos faltantes de los genes que no se han 'traducido'.
+```{r}
+#| label: datos-faltantes
+
+head(df[!complete.cases(df),])
+
+dim(df[!complete.cases(df),])
+```

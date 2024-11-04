@@ -20,6 +20,9 @@ website:
           - enrfun/ora.qmd
           - enrfun/gprofiler.qmd
           - enrfun/gsea.qmd
+      - text: Herramientas
+        menu:
+          - tools/ensembl.qmd
       - text: Presentaciones
         menu:
           - presentaciones/usaR/usaR.qmd

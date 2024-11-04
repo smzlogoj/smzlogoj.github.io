@@ -48,6 +48,15 @@ El paquete clusterProfiler implementa la función **enrichGO()**.
 
 ### Biological Process
 
+::: {.callout-important}
+En este ejemplo vamos a utilizar el nombre del gen (*SYMBOL*) para las consultas ya que es el dato que tenemos en el dataset. Pero esto no es recomendable ya que el nombre del gen puede ser ambiguo. Es mejor utilizar *ENSEMBL* o *ENTREZID*. En este caso podemos añadir el parametro ***readable = TRUE*** a la función **enrichGO()** para que traduzca los genes ID a nombre de genes.
+:::
+```{r}
+#| label: keytypes
+
+keytypes(org.Hs.eg.db)
+```
+
 ```{r}
 #| label: GO-BP
 
