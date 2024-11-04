@@ -18,10 +18,11 @@ website:
         menu:
           - enrfun/introduccion.qmd
           - enrfun/ora.qmd
+          - enrfun/gprofiler.qmd
       - text: Presentaciones
         menu:
-          - Taller/usaR/usaR.qmd
-          - Taller/ggplot2/ggplot2.qmd
+          - presentaciones/usaR/usaR.qmd
+          - presentaciones/ggplot2/ggplot2.qmd
 
 format:
   html:

@@ -1,0 +1,664 @@
+---
+title: "Usa R!"
+subtitle: "Una introducción a la programación"
+author: "José Antonio López Gómez"
+format: 
+    revealjs:
+        theme: simple
+        highlight-style: dracula
+---
+
+## ¿Qué es "programar"?
+
+Programar es el proceso de crear un conjunto de instrucciones para decirle a la computadora cómo realizar una tarea.
+
+## ¿Cómo programar?
+
+La tarea de "programar" no se centra exclusivamente en escribir código, si no que conlleva una serie de pasos previos antes de "codificar" las instrucciones.
+
+. . .
+
+-   Descomponer un problema complejo en partes más pequeñas.
+-   Reconocimiento de patrones repetitivos.
+-   Resolución de los problemas paso a paso.
+-   Escribir el código.
+
+## ¿Qué es un "lenguaje de programación"?
+
+Un lenguaje de programación es un lenguaje formal (es decir, un lenguaje con reglas gramaticales bien definidas) que proporciona al programador la capacidad y habilidad de escribir instrucciones o secuencias de órdenes para controlar el comportamiento de un sistema informático.
+
+## ¿El entorno de R?
+
+R es un conjunto integrado de software para la manipulación, cálculo y visualización de datos. Entre otras cosas tiene:
+
+-   Tratamiento y almacenamiento de datos eficaz.
+-   Conjunto de operadores para el calculo sobre matrices.
+-   Conjunto integrado de herramientas para el análisis y visualización de datos.
+-   Un simple y efectivo lenguaje de programación.
+-   Ampliamente utilizado en investigación cientifica.
+
+## ¿Qué es un "Programa"?
+
+Un programa informático es una secuencia de instrucciones basadas en un lenguaje de programación que el ordenador interpreta para resolver un problema.
+
+## ¿Cuales son los elementos básicos de un programa?
+
+. . .
+
+-   **Instrucciones:** conjunto de ordenes que indican al ordenador como realizar una tarea específica (asignar un valor a una variable, ejecutar un bucle que itera sobre una lista de datos).
+
+. . .
+
+-   **Funciones:** conjunto de instrucciones que permiten realizar una tarea específica (ANOVA, plot de datos, etc..). Se pueden imaginar como una máquina que toma ciertos datos, realiza una operación y devuelve un resultado.
+
+## ¿Cuales son los elementos básicos de un programa? {.smaller}
+
+-   **Datos:** pueden ser números, texto, imagénes, etc.. . En resumen cualquier tipo de información que el programa manipule. En general, son la razon de ser de muchas aplicaciones.
+
+. . .
+
+-   **Operadores:** son las herramientas que permiten realizar operaciones sobre los datos (sumar, multiplicar, comparar, asignar, etc..).
+
+. . .
+
+-   **Variables:** actuan como contenedores de información permitiendo que un programa conserve información y realice operaciones sobre esta información, en cierto modo se puede decir que son la "memoria" del programa.
+
+## "¡Hola Mundo!"
+
+El programa **"¡Hola Mundo!"** suele ser el primer ejercicio típico en la introducción del estudio de un lenguaje de programación.
+
+```{r}
+#| echo: true
+#| output-location: column-fragment
+saludo <- "¡Hola Mundo!"
+
+saludo
+```
+
+## Usando funciones
+
+##### - head()
+
+Para ilustrar el uso de la función **head()** utilizaremos el dataset [*iris*](https://es.wikipedia.org/wiki/Conjunto_de_datos_flor_iris) que viene con la instalación de **R-Base**.
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df <- iris
+
+head(df)
+```
+
+## Usando funciones
+
+##### - pairs()
+
+Para ilustrar el uso de la función [**pairs()**](https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/pairs) utilizaremos el dataset [*iris*](https://es.wikipedia.org/wiki/Conjunto_de_datos_flor_iris) que viene con la instalación de **R-Base**.
+
+```{r}
+#| echo: true
+#| output-location: column-fragment
+df <- iris
+
+pairs(df, col = df$Species)
+```
+
+## Estructuras de control de flujo {.smaller}
+
+Se llaman estructuras de control de flujo a las instrucciones que permiten controlar las acciones de un algoritmo o programa. Estas son de gran utilidad para determinar la lógica y el orden en que ocurren las operaciones.
+
+-   **if, else:** if("si") es usado cuando deseamos que una operación se ejecute únicamente cuando una condición se cumple. else("de otro modo") es usado para indicar que hacer en cado de que la condición de un if no se cumpla.
+
+-   **for:** nos permite ejecutar un bucle, realizando una misma operación para cada elemento de un conjunto de datos.
+
+## if, else
+
+```{r}
+#| echo: true
+#| output-location: fragment
+variable_1 <- 5
+
+if (variable_1 >10) {
+    print('la variable_1 es mayor que 10')
+} else {
+    print('la variable_1 NO es mayor que 10 ')
+}
+```
+
+## for
+
+```{r}
+#| echo: true
+#| output-location: fragment
+estaciones <- c('primavera', 'verano', 'otoño', 'invierno')
+
+for(estacion in estaciones){
+    print(toupper(estacion))
+}
+```
+
+## Variables
+
+Las variables actuan como contenedores de información ("memoria") del programa. La estructura de esa información es muy heterogenea, podemos tener información simple(el número 5, el texto "¡Hola Mundo!", etc..) o mucho más compleja (matriz de RNA-seq, con miles de filas y columnas).
+
+En base al tipo de información que contienen las variables las podemos clasificar en simples o complejas.
+
+## Variables simples {.smaller}
+
+| Tipo de dato | Descripción                        | Definición           |
+|--------------|------------------------------------|----------------------|
+| Numeric      | Números decimales                  | numero \<- 1.0       |
+| Integer      | Números enteros                    | entero \<- 1         |
+| Character    | Cadenas de texto                   | texto \<- "un texto" |
+| Complex      | Números complejos                  | complejo \<- 3 + 2i  |
+| Logical      | TRUE o FALSE                       | 5 \< 6; 5 == 5       |
+| Factor       | Es una variable de tipo categórica |                      |
+
+## Variables complejas {.smaller}
+
+La estructura de la información contenida en estas variables es más compleja. Además estas variables tienen métodos y atributos que facilitan acceder a la información que contienen.
+
+-   **Vectores:** Los vectores almacena una secuencia de valores simples todos del mismo tipo.
+
+-   **Listas:** A diferencia de los vectores las listas es una colección de elementos que pueden ser de diferente tipo.
+
+-   **Matrices:**Una matriz es una estructura bidimensional que almacena números.
+
+-   **Data Frames:** Un Data Frame es una estructura bidimensional que puede almacenar tipos de datos mixtos.
+
+## Vectores
+
+La forma más habitual de crear un vector es usando la función **c()**
+
+```{r}
+#| echo: true
+#| output-location: fragment
+vector_numeros <- c(2, 4, 6, 8)
+print(vector_numeros)
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+seq_numeros <- 10:20
+print(seq_numeros)
+```
+
+```{r}
+#| echo: true
+#| output-location: fragment
+comb_vect <- c(vector_numeros, seq_numeros)
+print(comb_vect)
+```
+
+## Aritmetica de Vectores
+
+Las operaciones aritmeticas con vectores se realizan posicion a posicion.
+
+```{r}
+#| echo: true
+#| output-location: fragment
+vector_numeros <- seq(10, 50, by = 5)
+print(vector_numeros)
+print(vector_numeros + 1)
+print(vector_numeros / 2)
+```
+
+## Aritmetica de Vectores
+
+Dos vectores
+
+```{r}
+#| echo: true
+#| output-location: fragment
+vector_numeros_1 <- c(1, 2, 3, 4)
+vector_numeros_2 <- c(1, 1, 0, 0)
+print(vector_numeros_1 - vector_numeros_2)
+print(vector_numeros_1 * vector_numeros_2)
+```
+
+## Aritmetica de Vectores
+
+Vectores texto y números
+
+```{r}
+#| echo: true
+#| output-location: fragment
+letras <- c('A', 'B', 'C', 'D')
+numeros <- c(1, 2, 3, 4)
+print(paste0(letras, numeros))
+print(paste0(numeros, letras))
+```
+
+## Elementos vector
+
+```{r}
+#| echo: true
+#| output-location: fragment
+numeros <- 10:20
+numeros
+
+numeros[4]
+numeros[-4]
+numeros[c(4:8)]
+numeros[-c(4:8)]
+numeros[c(2, 10)]
+```
+
+## Elementos vector
+
+```{r}
+#| echo: true
+#| output-location: fragment
+numeros <- 10:20
+numeros
+
+numeros[-c(4:8)]
+
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+numeros <- numeros[-c(4:8)]
+numeros
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+numeros <- c(numeros, c(1, 2, 3))
+numeros
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+numeros <- numeros[order(numeros, decreasing = TRUE)]
+numeros
+```
+
+## Mascara lógica
+
+```{r}
+#| echo: true
+#| output-location: fragment
+numeros <- 10:20
+numeros
+
+numeros < 15
+numeros[numeros < 15]
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+mascara_logica <- numeros == 10
+mascara_logica
+!mascara_logica
+numeros[!mascara_logica]
+```
+
+## Conclusion {.smaller}
+
+Para seleccionar subconjuntos de datos lo podemos realizar de dos formas:
+
+-   **Vector de indices**
+
+```{r}
+#| echo: true
+#| output-location: fragment
+numeros <- runif(10, min = 1, max = 1000)
+numeros
+
+numeros[c(1, 5, 10)]
+```
+
+-   **Mascara lógica**
+
+```{r}
+#| echo: true
+#| output-location: fragment
+numeros[numeros < 500]
+```
+
+## Data Frame {.smaller}
+
+Un data frame es una estructura de datos bidimensional pudiendo almacenar datos mixtos(texto, números, etc ..). Un data frame es una lista de vectores (columnas) de la misma longitd.
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df <- iris
+
+dim(df)
+head(df)
+summary(df)
+```
+
+## Structure of an Arbitrary R Object {.smaller}
+
+La función [**str()**](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/str) muestra la estructura interna de un Objeto(variable compleja) de R.
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df <- iris
+
+str(df)
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df$Sepal.Length
+```
+
+## Seleccionar una columna {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df$Sepal.Length
+df[, c('Sepal.Length')]
+df[, c(1)]
+```
+
+## Seleccionar varias filas y columnas {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df[1:10, c('Sepal.Length', 'Species')]
+df[c(30, 40, 100), c(5, 2, 4)]
+```
+
+## Subset {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df[df$Species == 'versicolor' & df$Sepal.Length > 6, ]
+```
+
+## Columnas {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df$Sepal.Ratio <- df$Sepal.Length / df$Sepal.Width
+df$Petal.Ratio <- df$Petal.Length / df$Petal.Width
+head(df, 3)
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df.ratio <- df[, c('Species', 'Sepal.Ratio', 'Petal.Ratio')]
+head(df.ratio, 3)
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df$Sepal.Ratio <- NULL
+df$Petal.Ratio <- NULL
+head(df, 3)
+```
+
+## Crear dataframe {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df.ratio <- data.frame(
+                Species = df$Species,
+                Sepal.Ratio = df$Sepal.Length / df$Sepal.Width,
+                Petal.Ratio = df$Petal.Length / df$Petal.Width
+            )
+head(df.ratio)
+```
+
+## Función aggregate {.smaller}
+
+La función [**aggregate()**](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/aggregate) es muy util para calcular estadisticos por subconjuntos del data frame.
+
+```{r}
+#| echo: true
+#| output-location: fragment
+aggregate(df[, c(1:4)], by = list(Species = df$Species), FUN = mean)
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+aggregate(df[, c(1:4)], by = list(Species = df$Species), FUN = sd)
+```
+## Drosophila melanogaster {.smaller}
+
+Para el análisis de expresión diferencial vamos a utilizar el paquete [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html).
+
+Debemos familiarizarnos con la función a usar:
+
+* [Manual de referencia](https://bioconductor.org/packages/release/bioc/manuals/DESeq2/man/DESeq2.pdf)
+* [Vignettes](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)
+
+La función **DESeq()** recibe como paramatro un objeto de la clase **DESeqDataSet**. Este tipo de variable almacena los valores de entrada, calculos intermedios y resultados del análisis.
+
+```{.r}
+dds <- DeSeqDataSetFromMatrix(countData, colData, design)
+```
+
+* countData: Es una matriz númerica (muestras en columnas).
+* colData: DataFrame con al menos una columna, las filas corresponden a las columnas del countData.
+* design: Expresa como las cuentas para cada gen dependen de las variables en colData.
+
+
+## Drosophila Melanogaster {.smaller}
+
+ ![](FlowChart.png){width="80%"}
+
+## Raw counts {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df <- read.csv('data/modencodefly_count_table.csv')
+
+dim(df)
+
+head(df)
+```
+
+## Metadatos {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+phenodata <- read.csv('data/modencodefly_phenodata.csv')
+dim(phenodata)
+
+head(phenodata, 20)
+```
+
+## Fenotipos seleccionados {.smaller}
+
+Queremos seleccionar las muestras que corresponden con el stage 'L1Larvae' y 'L2Larvae'.
+
+```{r}
+#| echo: true
+#| output-location: fragment
+fenotipos <- c('L1Larvae', 'L2Larvae')
+
+df.fenotipos <- phenodata[phenodata$stage %in% fenotipos, c('sample.id', 'stage')]
+
+df.fenotipos$stage <- as.factor(df.fenotipos$stage)
+
+df.fenotipos
+```
+
+## Filtrar el dataset por las muestras seleccionadas {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+head(names(df), 15)
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df.sub <- df[, df.fenotipos$sample.id]
+
+head(df.sub)
+```
+
+## Añadir genes {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+rownames(df.sub) <- df$gene
+
+head(df.sub)
+```
+
+## *TIP* {.smaller}
+
+``` r
+fenotipos <- c('L1Larvae', 'L2Larvae')
+df.fenotipos <- phenodata[phenodata$stage %in% fenotipos, c('sample.id', 'stage')]
+
+df.sub <- df[, df.fenotipos$sample.id]
+rownames(df.sub) <- df$gene
+```
+
+. . .
+
+#### ¿No es más sencillo?
+
+``` r
+df.sub <- df[, c('SRX008026', 'SRX008174 ', 'SRX008201', 'SRX008239', 'SRX008008 ', 
+                 ' SRX008168', 'SRX008211', 'SRX008255', 'SRX008261')]
+rownames(df.sub) <- df$gene
+```
+
+## Eliminar genes con pocas counts {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+head(rowSums(df.sub))
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+keep <- rowSums(df.sub) >= 10
+head(keep)
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+df.sub  <- df.sub [keep, ]
+head(df.sub)
+dim(df.sub)
+```
+
+## DESeq2 {.smaller}
+
+Para el análisis de expresión diferencial vamos a utilizar el paquete [**DESeq2**](https://bioconductor.org/packages/release/bioc/html/DESeq2.html).
+
+Vignettes: [Analyzing RNA-seq data with DESeq2](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)
+
+``` r
+install.packages("BiocManager")
+```
+
+. . .
+
+``` r
+BiocManager::install("DESeq2")
+```
+
+## DESeq2 {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+library(DESeq2)
+coldata <- data.frame(stage = df.fenotipos$stage)
+rownames(coldata) <- df.fenotipos$sample.id
+head(coldata)
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+dds <- DESeqDataSetFromMatrix(
+                    countData = df.sub,
+                    colData = coldata,
+                    design = ~stage
+            )
+
+dds
+```
+
+## DESeq2 {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+dds <- DESeq(dds)
+dds
+```
+
+. . .
+
+```{r}
+#| echo: true
+#| output-location: fragment
+res <- results(dds, contrast = c('stage', 'L1Larvae', 'L2Larvae'))
+res
+```
+
+## Guardar resultados {.smaller}
+
+Guardamos los resultados del análisis diferencial y los datos normalizados
+
+```{r}
+#| echo: true
+#| output-location: fragment
+write.csv(res, 'data/DGE.csv')
+
+write.csv(counts(dds, normalized=TRUE), 'data/normalized_counts.csv')
+```
+
+
+
+[Volver](../../index.html)

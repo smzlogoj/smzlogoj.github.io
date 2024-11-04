@@ -1,0 +1,460 @@
+---
+title: "ggplot2"
+subtitle: "Elegant Graphics for Data Analysis"
+author: "José Antonio López Gómez"
+format: 
+    revealjs:
+        theme: simple
+        highlight-style: dracula
+        logo: logo.png
+        footer: ggplot2
+        transition: slide
+        background-transition: fade
+
+---
+## ¿Qué es ggplot2?
+**ggplot2** es un paquete de R para producir visualizaciones de datos. A diferencia de otros paquetes graficos, **ggplot2** usa un framework conceptual basado en la gramática de los gráficos. Esto permite crear gráficos de diferentes elementos, en lugar de estar limitados a un conjunto de gráficos predeterminados.
+A día de hoy es el lider indiscutible en representaciones gráficas en R.
+
+## Estructura
+Existen 7 elementos que se unen como un conjunto de instrucciones para dibujar un gráfico. Un gráfico presenta al menos tres elementos: Data, mapping, layer.
+
+![](capas.png){width=70%}
+
+
+## Estructura {.smaller}
+* **Data:** Los datos que se van a representar, generalmente será un data frame.
+
+* **Mappings:**Características estéticas (aes) que describiran cómo queremos que los datos se vean en el gráfico (posición, color, relleno, forma, tamaño, etc..).
+
+* **Layers:** Es la capa que muestra como aparecen los datos. Cada una de ellas tiene 3 partes importantes:
+    - **Geometría:** (geom) Determina como se muestra cada punto, linea, etc..
+    - **Transformación estadisticas:** (stat) Que puede computar nuevas variables de los datos.
+    - **Ajuste de posición:** Determina donde se muestra cada parte de datos.
+
+## Instalación
+El paquete ggplot2 no se encuentra en R-base, para su uso es necesario descargarlo e instalarlo desde los repositorios de [**CRAN**](https://cran.r-project.org/).
+
+```{.r}
+install.packages('ggplot2')
+```
+Para poder usarlo hay que cargarlo en el sistema usando la función **library()**
+
+```{r}
+#| echo: true
+#| output-location: fragment
+library('ggplot2')
+```
+
+
+## Diamonds {.smaller}
+En el paquete ggplot2 esta incluido el dataset Diamonds que contiene el precio y otros atributos de 54.000 diamantes.
+```{r}
+#| echo: true
+#| output-location: fragment
+library('ggplot2')
+df <- diamonds
+summary(df)
+```
+## Scatterplot {.smaller}
+Vamos a representar carat (quilates) vs price
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = carat, y = price)) +
+    geom_point()
+```
+## Scatterplot  {.smaller}
+Añadimos un tema y cambiamos el color de los puntos
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = carat, y = price)) +
+    geom_point(color = 'steelblue') +
+    theme_bw()
+```
+## Scatterplot  {.smaller}
+Coloreamos los puntos agrupados por la variable cut. Además movemos la leyenda a la parte superior 
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = carat, y = price)) +
+    geom_point(aes(color = cut)) +
+    theme_bw() +
+    theme(legend.position = 'top')
+```
+## Scatterplot  {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = carat, y = price)) +
+    geom_point(aes(color = cut)) +
+    theme_bw() +
+    theme(legend.position = 'top') +
+    facet_wrap(~ cut)
+```
+## Boxplot {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(y = price)) +
+    geom_boxplot()
+```
+## Boxplot {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = cut, y = price)) +
+    geom_boxplot(color = 'navy') +
+    theme_bw()
+```
+## Boxplot {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = cut, y = price)) +
+    geom_boxplot(aes(fill = cut), color = 'navy') +
+    theme_bw() +
+    theme(legend.position = 'top')
+```
+## Boxplot {.smaller}
+Añadimos una 3ª variable, la variable 'color'
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = cut, y = price)) +
+    geom_boxplot(aes(fill = color), color = 'navy') +
+    theme_bw() +
+    theme(legend.position = 'top')
+```
+## Boxplot {.smaller}
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = cut, y = price)) +
+    geom_boxplot(aes(fill = color), color = 'navy') +
+    theme_bw() +
+    theme(legend.position = 'top') +
+    facet_wrap(~ color)
+```
+## Histogram {.smaller}
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = price)) +
+    geom_histogram(color = 'navy', fill = 'steelblue') +
+    theme_bw()
+```
+## Histogram {.smaller}
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = price)) +
+    geom_histogram(aes(color = color), fill = 'white') +
+    theme_bw()
+```
+## Bar Chart {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = clarity)) +
+    geom_bar(color = 'navy', fill = 'white') +
+    theme_bw()
+```
+## Bar Chart {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = clarity)) +
+    geom_bar(aes(color = clarity, fill = clarity)) +
+    theme_bw() +
+    theme(legend.position = 'top')
+```
+## Bar Chart {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = clarity)) +
+    geom_bar(aes(color = cut, fill = cut)) +
+    theme_bw() +
+    theme(legend.position = 'top')
+```
+## Bar Chart {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = clarity)) +
+    geom_bar(aes(color = cut, fill = cut), position = position_dodge()) +
+    theme_bw() +
+    theme(legend.position = 'top')
+```
+## Bar Chart {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = clarity, y = price)) +
+    geom_bar(color = 'navy', stat = 'identity') +
+    theme_bw()
+```
+## Bar Chart {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = clarity, y = price)) +
+    geom_col(color = 'navy') +
+    theme_bw()
+```
+## Bar Chart {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = clarity, y = price)) +
+    geom_bar(aes(color = cut, fill = cut), position = position_dodge(),  stat = 'identity') +
+    theme_bw() +
+    theme(legend.position = 'top')
+```
+## Pie Chart {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+
+ggplot(df, aes(x = '', y = price)) +
+    geom_bar(aes(fill = clarity), stat = 'identity') +
+    theme_bw() +
+    coord_polar('y')
+```
+
+## Volcano Plot {.smaller}
+Vamos a realizar el volcano plot correspondiente al análisis diferencial de los datos de Drosophila melanogaster.
+Eliminamos las filas con 0 o NA values
+
+```{r}
+#| echo: true
+#| output-location: fragment
+dge <- read.csv('data/DGE.csv')
+dge <- dge[dge$padj != 0, ]
+dge <- dge[complete.cases(dge), ]
+
+head(dge)
+```
+## Volcano Plot {.smaller}
+Seleccionamos los valores de FC = 2 y padj = 0.0000001 de corte.
+
+```{r}
+#| echo: true
+#| output-location: fragment
+padj.cutoff <- 0.0000001
+lfc.cutoff <- log2(2)
+```
+. . .
+```{r}
+#| echo: true
+#| output-location: fragment
+dge$class <- 'none'
+dge[dge$log2FoldChange >= lfc.cutoff & dge$padj <= padj.cutoff, c('class')] <- 'UP'
+dge[dge$log2FoldChange <= -1 * lfc.cutoff & dge$padj <= padj.cutoff, c('class')] <- 'DOWN'
+
+head(dge)
+```
+## Volcano Plot {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+ggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +
+    geom_point() +
+    theme_bw()
+```
+
+## Volcano Plot {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: fragment
+ggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +
+    geom_point() +
+    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype="dashed", 
+                              color = "black", linewidth = 0.2) +
+    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype="dashed", 
+                              color = "black", linewidth = 0.2) +
+    theme_bw()
+```
+## Volcano Plot {.smaller}
+```{r}
+#| echo: true
+#| output-location: fragment
+ggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +
+    geom_point(aes(color = class)) +
+    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype="dashed", 
+                              color = "black", linewidth = 0.2) +
+    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype="dashed", 
+                              color = "black", linewidth = 0.2) +
+    theme_bw()
+```
+
+## Volcano Plot {.smaller}
+```{r}
+#| echo: true
+#| output-location: fragment
+colors <- c("UP"="#FC4E07", "none"="#E7B800", "DOWN"="#00AFBB")
+ggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj))) +
+    geom_point(aes(color = class)) +
+    scale_color_manual(values = colors) +
+    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype="dashed", 
+                              color = "black", linewidth = 0.2) +
+    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype="dashed", 
+                              color = "black", linewidth = 0.2) +
+    theme_bw()
+```
+## Volcano Plot {.smaller}
+```{r}
+#| echo: true
+#| output-location: fragment
+library(ggrepel)
+ggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj), label = X)) +
+    geom_point(aes(color = class)) +
+    scale_color_manual(values = colors) +
+    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype="dashed", 
+                              color = "black", linewidth = 0.2) +
+    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype="dashed", 
+                              color = "black", linewidth = 0.2) +
+    geom_label_repel(data = dge[dge$class %in% c('UP', 'DOWN'), ], 
+                            size= 4, color = 'firebrick',  point.padding=unit(0.5, "lines"), max.overlaps = 30) +
+    theme_bw()
+```
+## Volcano Plot {.smaller}
+```{r}
+#| echo: false
+#| output-location: fragment
+library(ggrepel)
+ggplot(dge, aes(x = log2FoldChange, y = -1 * log10(padj), label = X)) +
+    geom_point(aes(color = class)) +
+    scale_color_manual(values = colors) +
+    geom_hline(yintercept = -1 * log10(padj.cutoff ), linetype="dashed", 
+                              color = "black", linewidth = 0.2) +
+    geom_vline(xintercept=c(-1 * lfc.cutoff ,lfc.cutoff ), linetype="dashed", 
+                              color = "black", linewidth = 0.2) +
+    geom_label_repel(data = dge[dge$class %in% c('UP', 'DOWN'), ], 
+                            size= 4, color = 'firebrick',  point.padding=unit(0.5, "lines"), max.overlaps = 30) +
+    theme_bw()
+```
+## TOP Genes
+```{r}
+#| echo: true
+#| output-location: fragment
+dge <- dge[order(dge$log2FoldChange, decreasing = TRUE), ]
+genes.up <- dge[1:40, c('X')]
+genes.down <- dge[(nrow(dge) - 30):nrow(dge), c('X')]
+
+genes.up
+genes.down
+```
+## TOP Genes
+```{r}
+#| echo: true
+#| output-location: fragment
+df.norm <- read.csv('data/normalized_counts.csv')
+head(df.norm)
+```
+. . .
+```{r}
+#| echo: true
+#| output-location: fragment
+df.norm <- df.norm[df.norm$X %in% c(genes.up, genes.down), ]
+rownames(df.norm) <- df.norm$X
+df.norm$X <- NULL
+dim(df.norm)
+```
+## Heatmap {.smaller}
+```{r}
+#| echo: true
+#| output-location: column-fragment
+#| fig-height: 12
+library(pheatmap)
+
+pheatmap(df.norm)
+```
+## Heatmap {.smaller}
+```{r}
+#| echo: true
+#| output-location: column-fragment
+#| fig-height: 12
+
+pheatmap(df.norm,
+        scale = 'row'
+)
+```
+## Heatmap {.smaller}
+```{r}
+#| echo: true
+#| output-location: column-fragment
+#| fig-height: 10
+
+pheatmap(df.norm,
+        scale = 'row',
+        cutree_cols =  2,
+        cutree_rows = 2,
+        color = colorRampPalette(
+            c("steelblue", 
+                "white", 
+                "firebrick3")
+            )(100),
+)
+```
+## Heatmap {.smaller}
+```{r}
+coldata <- data.frame(stage = c(rep('L1Larvae', 4), rep('L2larvae', 5)))
+rownames(coldata) <- names(df.norm)
+```
+```{r}
+#| echo: true
+#| output-location: column-fragment
+#| fig-height: 10
+
+pheatmap(df.norm,
+        scale = 'row',
+        cutree_cols =  2,
+        cutree_rows = 2,
+        color = colorRampPalette(
+            c("steelblue", 
+                "white", 
+                "firebrick3")
+            )(100),
+        annotation_col = coldata
+)
+```
+
+[Volver](../../index.html)

@@ -1,0 +1,9 @@
+format:
+  revealjs: 
+    menu: false
+    progress: false
+    theme: simple
+    highlight-style: dracula
+    transition: slide
+    background-transition: fade
+search: false
