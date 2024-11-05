@@ -116,7 +116,7 @@ dim(df[!complete.cases(df),])
 ## AnnotationDbi
 
 [**Bioconductor**](https://bioconductor.org/) proporciona varias fuentes de anotaciones, entre ellos hay varios paquetes. 
-Los paquetes a nivel de organismo (p. ej.*org.Mm.eg.db*) usan un identificador de gen central (p. ej. *Entrez Gene id*) y contiene asignaciones entre este y otros tipos de identificadores. El nombre de los paquetes es del tipo org.<Ab>.<id>.db (p. ej. *org.Mm.eg.db*), donde <Ab> es una abreviatura de 2 letras del organismo (p. ej. Mm, mus musculus), y <id> es una abrebiatura en minuscula que describe el tipo de indentificador central (p. ej. eg, entrez gene).
+Los paquetes a nivel de organismo (p. ej.*org.Mm.eg.db*) usan un identificador de gen central (p. ej. *Entrez Gene id*) y contiene asignaciones entre este y otros tipos de identificadores. El nombre de los paquetes es del tipo org.&lt;Ab&gt;.&lt;id&gt;.db (p. ej. *org.Mm.eg.db*), donde &lt;Ab&gt; es una abreviatura de 2 letras del organismo (p. ej. Mm, mus musculus), y &lt;id&gt; es una abreviatura en minuscula que describe el tipo de indentificador central (p. ej. eg, entrez gene).
 
 En nuestro caso nos interesa el paquete [**org.Dm.eg.db**](https://www.bioconductor.org/packages/release/data/annotation/html/org.Dm.eg.db.html).
 
