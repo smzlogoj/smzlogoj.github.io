@@ -1,2 +1,9 @@
 biomaRt
 reshape2
+BiocGenerics
+Biobase
+S4Vectors
+IRanges
+AnnotationDbi
+org.Dm.eg.db
+clusterProfiler

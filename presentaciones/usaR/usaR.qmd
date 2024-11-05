@@ -479,7 +479,7 @@ dds <- DeSeqDataSetFromMatrix(countData, colData, design)
 ```{r}
 #| echo: true
 #| output-location: fragment
-df <- read.csv('data/modencodefly_count_table.csv')
+df <- read.csv('data/mcf_count_table.csv')
 
 dim(df)
 
@@ -491,10 +491,10 @@ head(df)
 ```{r}
 #| echo: true
 #| output-location: fragment
-phenodata <- read.csv('data/modencodefly_phenodata.csv')
-dim(phenodata)
+metadata <- read.csv('data/mcf_metadata.csv')
+dim(metadata)
 
-head(phenodata, 20)
+head(metadata, 20)
 ```
 
 ## Fenotipos seleccionados {.smaller}
@@ -506,7 +506,7 @@ Queremos seleccionar las muestras que corresponden con el stage 'L1Larvae' y 'L2
 #| output-location: fragment
 fenotipos <- c('L1Larvae', 'L2Larvae')
 
-df.fenotipos <- phenodata[phenodata$stage %in% fenotipos, c('sample.id', 'stage')]
+df.fenotipos <- metadata[metadata$stage %in% fenotipos, c('sample.id', 'stage')]
 
 df.fenotipos$stage <- as.factor(df.fenotipos$stage)
 
@@ -545,7 +545,7 @@ head(df.sub)
 
 ``` r
 fenotipos <- c('L1Larvae', 'L2Larvae')
-df.fenotipos <- phenodata[phenodata$stage %in% fenotipos, c('sample.id', 'stage')]
+df.fenotipos <- metadata[metadata$stage %in% fenotipos, c('sample.id', 'stage')]
 
 df.sub <- df[, df.fenotipos$sample.id]
 rownames(df.sub) <- df$gene

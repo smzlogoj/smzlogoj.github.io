@@ -848,12 +848,12 @@ José Antonio López Gómez
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 966.32078 751.33195 274.96682 512.54796 105.94039  31.49493 863.46292
- [8] 828.40673 111.20975 162.09763</code></pre>
+<pre><code> [1]  61.36541 758.74971 763.54476 303.55781 455.14907 888.45747 474.89038
+ [8] 208.67839 541.49104 914.85561</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a>numeros[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 966.3208 105.9404 162.0976</code></pre>
+<pre><code>[1]  61.36541 455.14907 914.85561</code></pre>
 </div>
 </div>
 <ul>
@@ -864,7 +864,7 @@ José Antonio López Gómez
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 274.96682 105.94039  31.49493 111.20975 162.09763</code></pre>
+<pre><code>[1]  61.36541 303.55781 455.14907 474.89038 208.67839</code></pre>
 </div>
 </div>
 </section>
@@ -1170,7 +1170,7 @@ José Antonio López Gómez
 <section id="raw-counts" class="slide level2 smaller">
 <h2>Raw counts</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/modencodefly_count_table.csv'</span>)</span>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/mcf_count_table.csv'</span>)</span>
 <span id="cb105-2"><a></a></span>
 <span id="cb105-3"><a></a><span class="fu">dim</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1340,14 +1340,14 @@ José Antonio López Gómez
 <section id="metadatos" class="slide level2 smaller">
 <h2>Metadatos</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a></a>phenodata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/modencodefly_phenodata.csv'</span>)</span>
-<span id="cb109-2"><a></a><span class="fu">dim</span>(phenodata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a></a>metadata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/mcf_metadata.csv'</span>)</span>
+<span id="cb109-2"><a></a><span class="fu">dim</span>(metadata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 147   3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a></a><span class="fu">head</span>(phenodata, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a></a><span class="fu">head</span>(metadata, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   sample.id num.tech.reps       stage
 1  SRX007811             5 Embryos0002
@@ -1379,7 +1379,7 @@ José Antonio López Gómez
 <div class="cell">
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a></a>fenotipos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'L1Larvae'</span>, <span class="st">'L2Larvae'</span>)</span>
 <span id="cb113-2"><a></a></span>
-<span id="cb113-3"><a></a>df.fenotipos <span class="ot">&lt;-</span> phenodata[phenodata<span class="sc">$</span>stage <span class="sc">%in%</span> fenotipos, <span class="fu">c</span>(<span class="st">'sample.id'</span>, <span class="st">'stage'</span>)]</span>
+<span id="cb113-3"><a></a>df.fenotipos <span class="ot">&lt;-</span> metadata[metadata<span class="sc">$</span>stage <span class="sc">%in%</span> fenotipos, <span class="fu">c</span>(<span class="st">'sample.id'</span>, <span class="st">'stage'</span>)]</span>
 <span id="cb113-4"><a></a></span>
 <span id="cb113-5"><a></a>df.fenotipos<span class="sc">$</span>stage <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df.fenotipos<span class="sc">$</span>stage)</span>
 <span id="cb113-6"><a></a></span>
@@ -1467,7 +1467,7 @@ FBgn0000018        66       162        49</code></pre>
 <section id="tip" class="slide level2 smaller">
 <h2><em>TIP</em></h2>
 <div class="sourceCode" id="cb121"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a></a>fenotipos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'L1Larvae'</span>, <span class="st">'L2Larvae'</span>)</span>
-<span id="cb121-2"><a></a>df.fenotipos <span class="ot">&lt;-</span> phenodata[phenodata<span class="sc">$</span>stage <span class="sc">%in%</span> fenotipos, <span class="fu">c</span>(<span class="st">'sample.id'</span>, <span class="st">'stage'</span>)]</span>
+<span id="cb121-2"><a></a>df.fenotipos <span class="ot">&lt;-</span> metadata[metadata<span class="sc">$</span>stage <span class="sc">%in%</span> fenotipos, <span class="fu">c</span>(<span class="st">'sample.id'</span>, <span class="st">'stage'</span>)]</span>
 <span id="cb121-3"><a></a></span>
 <span id="cb121-4"><a></a>df.sub <span class="ot">&lt;-</span> df[, df.fenotipos<span class="sc">$</span>sample.id]</span>
 <span id="cb121-5"><a></a><span class="fu">rownames</span>(df.sub) <span class="ot">&lt;-</span> df<span class="sc">$</span>gene</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

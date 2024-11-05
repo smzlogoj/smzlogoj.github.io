@@ -214,6 +214,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#cargar-datos" id="toc-cargar-datos" class="nav-link active" data-scroll-target="#cargar-datos">Cargar datos</a></li>
   <li><a href="#biomart" id="toc-biomart" class="nav-link" data-scroll-target="#biomart">BioMart</a></li>
+  <li><a href="#annotationdbi" id="toc-annotationdbi" class="nav-link" data-scroll-target="#annotationdbi">AnnotationDbi</a></li>
+  <li><a href="#biological-id-translator" id="toc-biological-id-translator" class="nav-link" data-scroll-target="#biological-id-translator">Biological id Translator</a></li>
   </ul>
 </nav>
     </div>
@@ -606,6 +608,7 @@ Note
 </div>
 </div>
 <p>Por ultimo, vamos a unir los resultados de la consulta al dataset original. Es evidente que no podemos añadirlos como columnas nuevas, ya que no tienen la misma longitud. Además nos tenemos que asegurar que añadimos los datos de manera que los ensembles coincidan.</p>
+<p>En este caso vamos a usar la funcion <strong>merge()</strong> (paquete <em>reshape2</em>) para unir los dataset. Lo vamos a realizar haciendo un <em>left join</em>, es decir vamos a conservar todas las observaciones del primer dataset (<em>df.mcf</em>) añadiendo las observaciones del segundo (<em>genesBM</em>) donde encuentre coincidencias. Si una observación del primer dataset no tiene coincidencia en el segundo las variables se añadiran con valores <em>NA</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">names</span>(df.mcf)</span>
@@ -1070,6 +1073,129 @@ Note
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df[<span class="sc">!</span><span class="fu">complete.cases</span>(df),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 909  12</code></pre>
+</div>
+</div>
+</section>
+<section id="annotationdbi" class="level2">
+<h2 class="anchored" data-anchor-id="annotationdbi">AnnotationDbi</h2>
+<p><a href="https://bioconductor.org/"><strong>Bioconductor</strong></a> proporciona varias fuentes de anotaciones, entre ellos hay varios paquetes. Los paquetes a nivel de organismo (p.&nbsp;ej.<em>org.Mm.eg.db</em>) usan un identificador de gen central (p.&nbsp;ej. <em>Entrez Gene id</em>) y contiene asignaciones entre este y otros tipos de identificadores. El nombre de los paquetes es del tipo org.<ab>.<id>.db (p.&nbsp;ej. <em>org.Mm.eg.db</em>), donde <ab> es una abreviatura de 2 letras del organismo (p.&nbsp;ej. Mm, mus musculus), y <id> es una abrebiatura en minuscula que describe el tipo de indentificador central (p.&nbsp;ej. eg, entrez gene).</id></ab></id></ab></p>
+<p>En nuestro caso nos interesa el paquete <a href="https://www.bioconductor.org/packages/release/data/annotation/html/org.Dm.eg.db.html"><strong>org.Dm.eg.db</strong></a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(org.Dm.eg.db)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">keytypes</span>(org.Dm.eg.db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ACCNUM"       "ALIAS"        "ENSEMBL"      "ENSEMBLPROT"  "ENSEMBLTRANS"
+ [6] "ENTREZID"     "ENZYME"       "EVIDENCE"     "EVIDENCEALL"  "FLYBASE"     
+[11] "FLYBASECG"    "FLYBASEPROT"  "GENENAME"     "GENETYPE"     "GO"          
+[16] "GOALL"        "MAP"          "ONTOLOGY"     "ONTOLOGYALL"  "PATH"        
+[21] "PMID"         "REFSEQ"       "SYMBOL"       "UNIPROT"     </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(org.Dm.eg.db, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">keys =</span> <span class="fu">rownames</span>(df.mcf), </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">keytype =</span> <span class="st">'ENSEMBL'</span>, </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">column =</span> <span class="st">'SYMBOL'</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(genes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FBgn0000008 FBgn0000014 FBgn0000015 FBgn0000017 FBgn0000018 FBgn0000024 
+        "a"     "abd-A"     "Abd-B"       "Abl"       "abo"       "Ace" </code></pre>
+</div>
+</div>
+<p>En este caso el resultado es un vector con los simbolos de los genes. Si lo prefereimos podemos convertirlo en un dataframe facilmente.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(genes)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(genes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">FBgn0000008</td>
+<td style="text-align: left;">a</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FBgn0000014</td>
+<td style="text-align: left;">abd-A</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FBgn0000015</td>
+<td style="text-align: left;">Abd-B</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FBgn0000017</td>
+<td style="text-align: left;">Abl</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FBgn0000018</td>
+<td style="text-align: left;">abo</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FBgn0000024</td>
+<td style="text-align: left;">Ace</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="biological-id-translator" class="level2">
+<h2 class="anchored" data-anchor-id="biological-id-translator">Biological id Translator</h2>
+<p>En el paquete para análisis de enriquecimiento, <a href="https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html"><strong>clusterProfiler</strong></a>, podemos encontrar la función <a href="https://yulab-smu.top/biomedical-knowledge-mining-book/useful-utilities.html"><strong>bitr()</strong></a> que permite cambiar de identificador.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clusterProfiler)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">bitr</span>(<span class="fu">rownames</span>(df.mcf), </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">fromType =</span> <span class="st">'ENSEMBL'</span>, </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">toType =</span> <span class="st">'SYMBOL'</span>, </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">OrgDb =</span> org.Dm.eg.db)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(genes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">ENSEMBL</th>
+<th style="text-align: left;">SYMBOL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">FBgn0000008</td>
+<td style="text-align: left;">a</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FBgn0000014</td>
+<td style="text-align: left;">abd-A</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FBgn0000015</td>
+<td style="text-align: left;">Abd-B</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FBgn0000017</td>
+<td style="text-align: left;">Abl</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FBgn0000018</td>
+<td style="text-align: left;">abo</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FBgn0000024</td>
+<td style="text-align: left;">Ace</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 
