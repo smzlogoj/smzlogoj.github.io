@@ -213,7 +213,12 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#ontologías" id="toc-ontologías" class="nav-link" data-scroll-target="#ontologías">Ontologías</a></li>
   </ul></li>
-  <li><a href="#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" id="toc-análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" class="nav-link" data-scroll-target="#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea">Análisis de enriquecimiento de conjuntos de genes (GSEA)</a></li>
+  <li><a href="#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" id="toc-análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea" class="nav-link" data-scroll-target="#análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea">Análisis de enriquecimiento de conjuntos de genes (GSEA)</a>
+  <ul class="collapse">
+  <li><a href="#descripción-de-gsea" id="toc-descripción-de-gsea" class="nav-link" data-scroll-target="#descripción-de-gsea">Descripción de GSEA</a></li>
+  <li><a href="#conjunto-leading-edge" id="toc-conjunto-leading-edge" class="nav-link" data-scroll-target="#conjunto-leading-edge">Conjunto Leading-Edge</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -328,18 +333,33 @@ odds ratio
 <h2 class="anchored" data-anchor-id="análisis-de-enriquecimiento-de-conjuntos-de-genes-gsea">Análisis de enriquecimiento de conjuntos de genes (GSEA)</h2>
 <p>El análisis de enriquecimiento ORA se basa en los genes identificados como diferencialmente expresados. Pero tiene la limitación de que necesita una lista minimamente grande de genes. Existen contextos donde los cambios de expresión diferencial puede ser pequeña. Los cambios moleculares más relevantes, si bien pequeños, ocurren de forma coordinada en una misma vía biológica. En estos contextos el método ORA suele fallar.</p>
 <p>GSEA aborda directamente esta limitación. Todos los genes se pueden utilizar en GSEA (y no solamente los genes DE), esto hace posible detectar situaciones donde todos los genes en el conjunto predefinido cambian un poco pero de manera coordinada.</p>
-<p>En GSEA los genes se clasifican segun su fenotipo, Dado un conjunto de genes S definido a priori, el objetivo de GSEA es determinar si los miembros de S se distribuyen aleatoriamente en toda la lista de genes clasificados (L) o se encuentran principalmente en la parte superior o inferior.</p>
+<section id="descripción-de-gsea" class="level3">
+<h3 class="anchored" data-anchor-id="descripción-de-gsea">Descripción de GSEA</h3>
+<p><strong>GSEA</strong> considera experimentos de perfiles de expresión de genes correspondientes a dos clases. Los genes son clasificados (genes <em>L</em>) basandose en la correlación entre su expresión y la distinción de clase usando una métrica adecuada (log2FoldChange o p-value).</p>
+<p>Dado a <em>priori</em> un conjunto de genes <em>S</em> (p.&nbsp;ej., genes que comparten la misma categoría GO). El objetivo de <strong>GSEA</strong> es determinar si los miembros de los genes <em>S</em> estan aleatoriamente distribuidos a traves de los genes <em>L</em> o se encuentran principalmente en la parte alta o baja.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://docs.gsea-msigdb.org/GSEA/GSEAUserGuideImages/enrichment-score.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="../assets/gsea.webp" class="img-fluid figure-img"></p>
+<figcaption>Ilustración GSEA</figcaption>
 </figure>
 </div>
-<p>Hay tres elementos claves en GSEA:</p>
-<ul>
-<li>Enrichment Score (ES): representa el grado al cual el conjunto S esta sobrerepresentado an la parte superior o inferior de la lista de genes clasificados L.</li>
-<li>Nivel de significancia de ES: el valor de p es calculado mediante permutaciones.</li>
-<li>Ajuste para pruebas multiples.</li>
-</ul>
+<p>Hay 3 elementos clave en el metodo de <strong>GSEA</strong>:</p>
+<ol type="1">
+<li><p><strong>Cálculo del Enrichment Score (ES):</strong> Se calcula el <em>ES</em> que refleja el grado por el cual un conjunto de genes <em>S</em> esta sobrerepresentado en los extremos de toda la lista de genes <em>L</em>. La magnitud del incremento depende de la correlación de los genes con el fenotipo.</p></li>
+<li><p><strong>Estimación del nivel de significancia de ES:</strong> Se calcula la significancía (p value) de <em>ES</em> usando un test de permutaciones basado en los fenotipos. Este test conserva la compleja estructura de correlación de los datos de expresión génica.</p></li>
+<li><p><strong>Ajuste de pruebas multiples:</strong> Se ajusta el nivel de significancia calculando el <em>FDR</em> para cada valor de <em>NES</em> (Normalized Enrichment Score).</p></li>
+</ol>
+</section>
+<section id="conjunto-leading-edge" class="level3">
+<h3 class="anchored" data-anchor-id="conjunto-leading-edge">Conjunto Leading-Edge</h3>
+<p>Los conjuntos de genes se pueden definir usando una variedad de métodos, pero no todos los miembros del conjunto de genes participan en los procesos biológicos. A veces es util extraer los genes que contribuyen al <em>ES</em>. Leading-edge, se define como el subconjunto de genes en los genes <em>S</em> que aparecen en la lista <em>L</em> antes, o despues del punto donde la suma alcanza la máxima desviación de cero.</p>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<blockquote class="blockquote">
+<p>Subramanian A, Tamayo P, Mootha VK, Mukherjee S, Ebert BL, Gillette MA, Paulovich A, Pomeroy SL, Golub TR, Lander ES, Mesirov JP. Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles. Proc Natl Acad Sci U S A. 2005 Oct 25;102(43) <a href="doi:%2010.1073/pnas.0506580102">doi: 10.1073/pnas.0506580102</a>. Epub 2005 Sep 30. PMID: 16199517; PMCID: PMC1239896.</p>
+</blockquote>
 
 
 </section>

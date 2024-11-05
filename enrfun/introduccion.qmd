@@ -75,12 +75,31 @@ El análisis de enriquecimiento ORA se basa en los genes identificados como dife
 
 GSEA aborda directamente esta limitación. Todos los genes se pueden utilizar en GSEA (y no solamente los genes DE), esto hace posible detectar situaciones donde todos los genes en el conjunto predefinido cambian un poco pero de manera coordinada.
 
-En GSEA los genes se clasifican segun su fenotipo, Dado un conjunto de genes S definido a priori, el objetivo de GSEA es determinar si los miembros de S se distribuyen aleatoriamente en toda la lista de genes clasificados (L) o se encuentran principalmente en la parte superior o inferior.
+### Descripción de GSEA
 
-![](https://docs.gsea-msigdb.org/GSEA/GSEAUserGuideImages/enrichment-score.jpg){fig-align="center"}
+**GSEA** considera experimentos de perfiles de expresión de genes correspondientes a dos clases. Los genes son clasificados (genes *L*) basandose en la correlación entre su expresión y la distinción de clase usando una métrica adecuada (log2FoldChange o p-value). 
 
-Hay tres elementos claves en GSEA:
+Dado a *priori* un conjunto de genes *S* (p. ej., genes que comparten la misma categoría GO). El objetivo de **GSEA** es determinar si los miembros de los genes *S* estan aleatoriamente distribuidos a traves de los genes *L* o se encuentran principalmente en la parte alta o baja.
 
-- Enrichment Score (ES): representa el grado al cual el conjunto S esta sobrerepresentado an la parte superior o inferior de la lista de genes clasificados L.
-- Nivel de significancia de ES: el valor de p es calculado mediante permutaciones.
-- Ajuste para pruebas multiples.
+![Ilustración GSEA](../assets/gsea.webp){fig-align="center"}
+
+Hay 3 elementos clave en el metodo de **GSEA**:
+
+1. **Cálculo del Enrichment Score (ES):** Se calcula el *ES* que refleja el grado por el cual un conjunto de genes *S* esta sobrerepresentado en los extremos de toda la lista de genes *L*. La magnitud del incremento depende de la correlación de los genes con el fenotipo.
+
+2. **Estimación del nivel de significancia de ES:** Se calcula la significancía (p value) de *ES* usando un test de permutaciones basado en los fenotipos. Este test conserva la compleja estructura de correlación de los datos de expresión génica.
+
+3. **Ajuste de pruebas multiples:** Se ajusta el nivel de significancia calculando el *FDR* para cada valor de *NES* (Normalized Enrichment Score).
+
+### Conjunto Leading-Edge
+
+Los conjuntos de genes se pueden definir usando una variedad de métodos, pero no todos los miembros del conjunto de genes participan en los procesos biológicos. A veces es util extraer los genes que contribuyen al *ES*.
+Leading-edge, se define como el subconjunto de genes en los genes *S* que aparecen en la lista *L* antes, o despues del punto donde la suma alcanza la máxima desviación de cero.
+
+
+## References
+
+>Subramanian A, Tamayo P, Mootha VK, Mukherjee S, Ebert BL, Gillette MA, Paulovich A, Pomeroy SL, Golub TR, Lander ES, Mesirov JP. 
+>Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles. 
+>Proc Natl Acad Sci U S A. 2005 Oct 25;102(43)
+>[doi: 10.1073/pnas.0506580102](doi: 10.1073/pnas.0506580102). Epub 2005 Sep 30. PMID: 16199517; PMCID: PMC1239896.
