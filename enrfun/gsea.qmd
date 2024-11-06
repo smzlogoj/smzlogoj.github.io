@@ -202,18 +202,24 @@ ggarrange(f1, f2, f3, f4,
 
 ```{r}
 #| label: hsa05168
+
+core <- geneInCategory(gsea.kegg)[['hsa05168']]
+
 hsa05168 <- pathview(gene.data  = geneList.kegg,
                      pathway.id = "hsa05168",
                      species    = "hsa",
-                     limit      = list(gene=max(abs(geneList.kegg)), cpd=1))
+                     limit      = list(gene=round(max(abs(geneList.kegg[core])),1), cpd=1))
 ```
 ![](hsa05168.pathview.png){width=70% fig-align="center"}
 
 ```{r}
-#| label: hsa04080
-hsa04080 <- pathview(gene.data  = geneList.kegg,
-                     pathway.id = "hsa04080",
+#| label: hsa04060
+
+core <- geneInCategory(gsea.kegg)[['hsa04060']]
+
+hsa04060 <- pathview(gene.data  = geneList.kegg,
+                     pathway.id = "hsa04060",
                      species    = "hsa",
-                     limit      = list(gene=max(abs(geneList.kegg)), cpd=1))
+                     limit      = list(gene=round(max(abs(geneList.kegg[core])), 1), cpd=1))
 ```
-![](hsa04080.pathview.png){width=70% fig-align="center"}
+![](hsa04060.pathview.png){width=70% fig-align="center"}

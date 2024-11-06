@@ -943,10 +943,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="pathways" class="level3">
 <h3 class="anchored" data-anchor-id="pathways">Pathways</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>hsa05168 <span class="ot">&lt;-</span> <span class="fu">pathview</span>(<span class="at">gene.data  =</span> geneList.kegg,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pathway.id =</span> <span class="st">"hsa05168"</span>,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">species    =</span> <span class="st">"hsa"</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limit      =</span> <span class="fu">list</span>(<span class="at">gene=</span><span class="fu">max</span>(<span class="fu">abs</span>(geneList.kegg)), <span class="at">cpd=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> <span class="fu">geneInCategory</span>(gsea.kegg)[[<span class="st">'hsa05168'</span>]]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>hsa05168 <span class="ot">&lt;-</span> <span class="fu">pathview</span>(<span class="at">gene.data  =</span> geneList.kegg,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pathway.id =</span> <span class="st">"hsa05168"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">species    =</span> <span class="st">"hsa"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limit      =</span> <span class="fu">list</span>(<span class="at">gene=</span><span class="fu">round</span>(<span class="fu">max</span>(<span class="fu">abs</span>(geneList.kegg[core])),<span class="dv">1</span>), <span class="at">cpd=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -954,14 +956,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>hsa04080 <span class="ot">&lt;-</span> <span class="fu">pathview</span>(<span class="at">gene.data  =</span> geneList.kegg,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pathway.id =</span> <span class="st">"hsa04080"</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">species    =</span> <span class="st">"hsa"</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limit      =</span> <span class="fu">list</span>(<span class="at">gene=</span><span class="fu">max</span>(<span class="fu">abs</span>(geneList.kegg)), <span class="at">cpd=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> <span class="fu">geneInCategory</span>(gsea.kegg)[[<span class="st">'hsa04060'</span>]]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>hsa04060 <span class="ot">&lt;-</span> <span class="fu">pathview</span>(<span class="at">gene.data  =</span> geneList.kegg,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pathway.id =</span> <span class="st">"hsa04060"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">species    =</span> <span class="st">"hsa"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limit      =</span> <span class="fu">list</span>(<span class="at">gene=</span><span class="fu">round</span>(<span class="fu">max</span>(<span class="fu">abs</span>(geneList.kegg[core])), <span class="dv">1</span>), <span class="at">cpd=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="hsa04080.pathview.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+<p><img src="hsa04060.pathview.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 

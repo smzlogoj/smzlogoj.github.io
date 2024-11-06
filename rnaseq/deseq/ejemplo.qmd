@@ -216,7 +216,9 @@ as.data.frame(mcols(res, use.names = TRUE))
 
 ```
 
-- **Nota:** Algunos valores de p pueden aparecer como **NA** en la tabla de resultados, esto puede ser debido a que baseMean pueda ser cero, que una fila contenga un valor considerado outlier, o que esa fila sea filtrada por el filtro independiente.
+::: {.callout-note}
+Algunos valores de p pueden aparecer como **NA** en la tabla de resultados, esto puede ser debido a que baseMean pueda ser cero, que una fila contenga un valor considerado outlier, o que esa fila sea filtrada por el filtro independiente.
+:::
 
 ## Contracción de los FC para visualización y clasificación.
 La reducción del tamaño del efecto (estimaciones de LFC) es útil para la visualización y clasificación de genes
@@ -287,6 +289,6 @@ write.csv(counts(dds, normalized = TRUE),
 > "MOV10 and FMRP regulate AGO2 association with microRNA recognition elements"  
 >(Kenny, P.J. et al, Cell Reports, 11 December 2014).
 
-> https://bookdown.org/ggiaever/2024_RNA-seq-analysis/
+> [RNA-seq analysis workshop](https://bookdown.org/ggiaever/2024_RNA-seq-analysis/)
 
-> https://bioconductor.org/packages/release/bioc/html/DESeq2.html
+> [Differential gene expression analysis based on the negative binomial distribution](https://bioconductor.org/packages/release/bioc/html/DESeq2.html)

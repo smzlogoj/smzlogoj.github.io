@@ -97,7 +97,7 @@
     </entry>
     <entry id="34" name="hsa:5728" type="gene"
         link="https://www.kegg.jp/dbget-bin/www_bget?hsa:5728">
-        <graphics name="PTEN, 10q23del, BZS, CWS1, DEC, GLM2, MHAM, MMAC1, PTEN1, PTENbeta, TEP1" fgcolor="#000000" bgcolor="#BFFFBF"
+        <graphics name="PTEN, 10q23del, BZS, CWS1, DEC, GLM2, MHAM, MMAC1, PTEN1, PTENbeta, PTENgama, TEP1" fgcolor="#000000" bgcolor="#BFFFBF"
              type="rectangle" x="404" y="651" width="46" height="17"/>
     </entry>
     <entry id="37" name="hsa:3667" type="gene"
@@ -325,8 +325,8 @@
         <graphics name="Apoptosis" fgcolor="#000000" bgcolor="#FFFFFF"
              type="roundrectangle" x="1182" y="735" width="110" height="25"/>
     </entry>
-    <entry id="153" name="path:hsa04012" type="map"
-        link="https://www.kegg.jp/dbget-bin/www_bget?hsa04012">
+    <entry id="153" name="path:map04012" type="map"
+        link="https://www.kegg.jp/dbget-bin/www_bget?map04012">
         <graphics name="ErbB signaling pathway" fgcolor="#000000" bgcolor="#FFFFFF"
              type="roundrectangle" x="369" y="284" width="110" height="34"/>
     </entry>
@@ -352,7 +352,7 @@
     </entry>
     <entry id="163" name="hsa:5728" type="gene"
         link="https://www.kegg.jp/dbget-bin/www_bget?hsa:5728">
-        <graphics name="PTEN, 10q23del, BZS, CWS1, DEC, GLM2, MHAM, MMAC1, PTEN1, PTENbeta, TEP1" fgcolor="#000000" bgcolor="#BFFFBF"
+        <graphics name="PTEN, 10q23del, BZS, CWS1, DEC, GLM2, MHAM, MMAC1, PTEN1, PTENbeta, PTENgama, TEP1" fgcolor="#000000" bgcolor="#BFFFBF"
              type="rectangle" x="423" y="803" width="46" height="17"/>
     </entry>
     <entry id="166" name="hsa:5894" type="gene"
@@ -370,8 +370,8 @@
         <graphics name="MAPK1, ERK, ERK-2, ERK2, ERT1, MAPK2, NS13, P42MAPK, PRKM1, PRKM2, p38, p40, p41, p41mapk, p42-MAPK..." fgcolor="#000000" bgcolor="#BFFFBF"
              type="rectangle" x="961" y="342" width="46" height="17"/>
     </entry>
-    <entry id="174" name="path:hsa04010" type="map"
-        link="https://www.kegg.jp/dbget-bin/www_bget?hsa04010">
+    <entry id="174" name="path:map04010" type="map"
+        link="https://www.kegg.jp/dbget-bin/www_bget?map04010">
         <graphics name="MAPK signaling pathway" fgcolor="#000000" bgcolor="#FFFFFF"
              type="roundrectangle" x="912" y="311" width="110" height="34"/>
     </entry>

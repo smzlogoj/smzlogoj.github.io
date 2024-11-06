@@ -170,6 +170,7 @@ browseKEGG(kegg, 'hsa04512')
 browseKEGG(kegg, 'hsa04151')
 ```
 ![](../assets/hsa04151_20241103_195304.png){width=70% fig-align="center"}
+
 ## Pathways
 
 ```{r}
@@ -184,21 +185,27 @@ names(geneList) <- genes.dge.entrezid$ENTREZID
 
 ```{r}
 #| label: hsa04512-pathway
+#| 
+core <- geneInCategory(kegg)[['hsa04512']]
+
 hsa04512 <- pathview(gene.data  = geneList,
                      pathway.id = "hsa04512",
                      species    = "hsa",
-                     limit      = list(gene=max(abs(geneList)), cpd=1))
+                     limit      = list(gene=round(max(abs(geneList[core])), 1), cpd=1))
 ```
 ![](hsa04512.pathview.png){width=70% fig-align="center"}
 
 ```{r}
 #| label: hsa04151-pathway
+core <- geneInCategory(kegg)[['hsa04151']]
+
 hsa04151<- pathview(gene.data  = geneList,
                      pathway.id = "hsa04151",
                      species    = "hsa",
-                     limit      = list(gene=max(abs(geneList)), cpd=1))
+                     limit      = list(gene=round(max(abs(geneList[core])), 1), cpd=1))
 ```
 ![](hsa04151.pathview.png){width=70% fig-align="center"}
+
 
 
 ## Referencias
