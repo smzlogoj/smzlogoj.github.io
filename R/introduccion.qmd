@@ -48,6 +48,16 @@ El IDE más popular para R es RStudio, aunque hay otros que tambien se pueden ut
 - [Visual Stuido Code](https://code.visualstudio.com/)
 - [Positron](https://github.com/posit-dev/positron)
 
+## ¿Por qué aprender R?
+
+El hecho de que R sea un lenguaje de programación disuade a algunos usuarios que piensan qe no saben programar. Esto no debería ser un impedimento. Primero, R es un lenguaje interpretado (no uno compilado), lo que significa que todos los comandos son directamente ejecutados sin necesidad de construir un programa completo. Segundo, la sintaxis de R es muy simple e intuitiva.
+
+R es gratuito, multiplataforma, multitud de librerias, en constante crecimiento, con una documentación en linea completa y de buena calidad, etc...
+
+### ¿Cómo funciona?
+
+Cuando se ejecuta R, las variables, funciones, datos, resultados, etc.., son almacenados en la memoria activa del ordenador en forma de *objetos* que tienen *nombre*. El usuario puede hacer acciones sobre estos *objetos* con *operadores* (aritméticos, lógicos, asignación, ...) y *funciones*.
+
 ## ¡Hola Mundo!
 El programa "¡Hola Mundo!" suele ser el primer ejercicio típico en la introducción del estudio de un lenguaje de programación.
 
@@ -59,6 +69,7 @@ saludo <- '¡Hola Mundo!'
 saludo
 ```
 En la primera linea el texto *'¡Hola Mundo!'* se asigna a la variable *saludo* usando el operador de asignación *<-* (es posible usar *=*, que es el operador usado en otros lenguajes de programación). En la segunda linea llamamos a la variable *saludo* y se muestra su contenido.
+
 
 ## Variables
 Las variables sirven para almacenar un valor (datos, información) que luego vamos a utilizar en algun procedimiento. En general partiremos de unos datos experimentales con los que haremos calculos o otros procedimientos teniendo como resultados datos intermedios. Para poder hacer referencia en R a esos datos, usaremos variables. En R existen varios tipos de objetos que permiten que el usuario pueda almacenar la información para realizar los procedimientos estadísticos y gráficos. En general podemos clasificar las variables en función del tipo de dato que van a almacenar. Así, tendremos variables simples (una variable que almacene el valor 10) o variables más complejas (una variable que almacene la tabla de resultados de un HPLC-MS).
@@ -72,3 +83,68 @@ Las variables sirven para almacenar un valor (datos, información) que luego vam
 | Complex      | Números complejos                  | complejo \<- 3 + 2i  |
 | Logical      | TRUE o FALSE                       | 5 \< 6; 5 == 5       |
 | Factor       | Es una variable de tipo categórica |                      |
+
+Las variables de tipo texto se entrecomillan (con comillas dobles o simples). Esto es necesario sino no podríamos distinguir un dato tipo texto del nombre de una variable. Por ejemplo *'saludo'* es un texto (información), mientras que *saludo* es el nombre de una variable que almacena el texto *'¡Hola Mundo!'*.
+
+Tambien hay que distinguir entre *100*, que es el número 100 y '100' que es el texto '100'. Sobre el número *100* podemos usar operadores matématicos, si lo intentamos sobre el texto *'100'*, recibiremos un error.
+
+```{r}
+#| label: variables-simples
+
+numero_a <- 100
+numero_b <- 10
+numero_a + numero_b
+
+valor_logico <- numero_a != numero_b
+valor_logico
+```
+
+```{.r}
+texto_a <- '100'
+
+texto_a + numero_a
+
+Error in `texto_a + numero_a`:
+! argumento no-numérico para operador binario
+```
+
+### Variables complejas
+
+Este tipo de variables almacenan datos más complejos que en el caso de las variables simples. Además este tipo de *objetos* suelen tener métodos y atributos que nos permiten acceder a los datos que contienen.
+
+- **Vectores:** Los vectores almacenan una secuencía de valores simples todos del mísmo tipo.
+- **Listas:** A diferencia de los vectores las listas es una colección de elementos que pueden ser de diferente tipo.
+- **Matrices:** Una matriz es una estructura bidimensional que almacena números.
+- **Data frames:** Un data frame es una estructura bidimensional que puede almacenar tipos de datos mixtos.
+
+## Funciones
+
+una función es un bloque de código que realiza una operación. Una función tiene tres componentes importantes:
+
+- Los **parámetros**, que son los valores que recibe la función como entrada.
+- El *código de la función*, que son las operaciones que hace la función.
+- el *resultado* (o *valor de retorno*), que es el valor final que entrega la función.
+
+En general usaremos las funciones que vienen con la instalación de R, o con la instalación de paquetes adicionales. Aunque podemos escribir nuestras propias funciones (para reutilizar código, por ejemplo).
+En R siempre aparecera el nombre de la función seguido por parentesis . Entre estos parentesis apareceran los parámetros que recibe la función. De la forma *esto_es_una_funcion(parametro_1, parametro2, ...)*.
+
+Ejemplo con la función **paste()**, que permite concatenar texto
+```{r}
+#| label: func-paste
+
+variable_a <- 'Esto'
+variable_b <- 'es'
+variable_c <- 'un ejemplo'
+
+texto <- paste(variable_a, variable_b, variable_c, sep = ' ')
+texto
+```
+La función *paste()* recibe como argumento las 3 variables definidas anteriormente y el parametro sep concatenando las 3 variables y separandolas por el valor de sep. El resultado de la función es almacenado en la variable texto.
+
+::: {.callout-tip}
+## ¿Cómo se que argumentos recibe una función?
+
+Con la instalación de R (y otros paquetes) tambien se instala la documentación que podemos consultar. usando el operador ? (p. ej. ?paste).
+
+Otra alternativa es buscar ayuda en internet, buscando 'paste documentation r'
+:::

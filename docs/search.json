@@ -214,7 +214,7 @@
     "href": "R/introduccion.html#variables",
     "title": "Introducción a R",
     "section": "Variables",
-    "text": "Variables\nLas variables sirven para almacenar un valor (datos, información) que luego vamos a utilizar en algun procedimiento. En general partiremos de unos datos experimentales con los que haremos calculos o otros procedimientos teniendo como resultados datos intermedios. Para poder hacer referencia en R a esos datos, usaremos variables. En R existen varios tipos de objetos que permiten que el usuario pueda almacenar la información para realizar los procedimientos estadísticos y gráficos. En general podemos clasificar las variables en función del tipo de dato que van a almacenar. Así, tendremos variables simples (una variable que almacene el valor 10) o variables más complejas (una variable que almacene la tabla de resultados de un HPLC-MS).\n\nVariables simples\n\n\n\n\n\n\n\n\nTipo de dato\nDescripción\nDefinición\n\n\n\n\nNumeric\nNúmeros decimales\nnumero &lt;- 1.0\n\n\nInteger\nNúmeros enteros\nentero &lt;- 1\n\n\nCharacter\nCadenas de texto\ntexto &lt;- “un texto”\n\n\nComplex\nNúmeros complejos\ncomplejo &lt;- 3 + 2i\n\n\nLogical\nTRUE o FALSE\n5 &lt; 6; 5 == 5\n\n\nFactor\nEs una variable de tipo categórica"
+    "text": "Variables\nLas variables sirven para almacenar un valor (datos, información) que luego vamos a utilizar en algun procedimiento. En general partiremos de unos datos experimentales con los que haremos calculos o otros procedimientos teniendo como resultados datos intermedios. Para poder hacer referencia en R a esos datos, usaremos variables. En R existen varios tipos de objetos que permiten que el usuario pueda almacenar la información para realizar los procedimientos estadísticos y gráficos. En general podemos clasificar las variables en función del tipo de dato que van a almacenar. Así, tendremos variables simples (una variable que almacene el valor 10) o variables más complejas (una variable que almacene la tabla de resultados de un HPLC-MS).\n\nVariables simples\n\n\n\n\n\n\n\n\nTipo de dato\nDescripción\nDefinición\n\n\n\n\nNumeric\nNúmeros decimales\nnumero &lt;- 1.0\n\n\nInteger\nNúmeros enteros\nentero &lt;- 1\n\n\nCharacter\nCadenas de texto\ntexto &lt;- “un texto”\n\n\nComplex\nNúmeros complejos\ncomplejo &lt;- 3 + 2i\n\n\nLogical\nTRUE o FALSE\n5 &lt; 6; 5 == 5\n\n\nFactor\nEs una variable de tipo categórica\n\n\n\n\nLas variables de tipo texto se entrecomillan (con comillas dobles o simples). Esto es necesario sino no podríamos distinguir un dato tipo texto del nombre de una variable. Por ejemplo ‘saludo’ es un texto (información), mientras que saludo es el nombre de una variable que almacena el texto ‘¡Hola Mundo!’.\nTambien hay que distinguir entre 100, que es el número 100 y ‘100’ que es el texto ‘100’. Sobre el número 100 podemos usar operadores matématicos, si lo intentamos sobre el texto ‘100’, recibiremos un error.\n\nnumero_a &lt;- 100\nnumero_b &lt;- 10\nnumero_a + numero_b\n\n[1] 110\n\nvalor_logico &lt;- numero_a != numero_b\nvalor_logico\n\n[1] TRUE\n\n\ntexto_a &lt;- '100'\n\ntexto_a + numero_a\n\nError in `texto_a + numero_a`:\n! argumento no-numérico para operador binario\n\n\nVariables complejas\nEste tipo de variables almacenan datos más complejos que en el caso de las variables simples. Además este tipo de objetos suelen tener métodos y atributos que nos permiten acceder a los datos que contienen.\n\nVectores: Los vectores almacenan una secuencía de valores simples todos del mísmo tipo.\nListas: A diferencia de los vectores las listas es una colección de elementos que pueden ser de diferente tipo.\nMatrices: Una matriz es una estructura bidimensional que almacena números.\nData frames: Un data frame es una estructura bidimensional que puede almacenar tipos de datos mixtos."
   },
   {
     "objectID": "enrfun/gprofiler.html",
@@ -306,5 +306,75 @@
     "title": "ORA (MOV10)",
     "section": "Pathways",
     "text": "Pathways\n\ngenes.dge.entrezid &lt;- bitr(names(geneList), \n                          fromType = 'SYMBOL',\n                          toType = 'ENTREZID',\n                          OrgDb = 'org.Hs.eg.db'\n                          )\nnames(geneList) &lt;- genes.dge.entrezid$ENTREZID\n\n\ncore &lt;- geneInCategory(kegg)[['hsa04512']]\n\nhsa04512 &lt;- pathview(gene.data  = geneList,\n                     pathway.id = \"hsa04512\",\n                     species    = \"hsa\",\n                     limit      = list(gene=round(max(abs(geneList[core])), 1), cpd=1))\n\n\n\n\n\n\n\ncore &lt;- geneInCategory(kegg)[['hsa04151']]\n\nhsa04151&lt;- pathview(gene.data  = geneList,\n                     pathway.id = \"hsa04151\",\n                     species    = \"hsa\",\n                     limit      = list(gene=round(max(abs(geneList[core])), 1), cpd=1))"
+  },
+  {
+    "objectID": "R/introduccion.html#por-qué-aprender-r",
+    "href": "R/introduccion.html#por-qué-aprender-r",
+    "title": "Introducción a R",
+    "section": "¿Por qué aprender R?",
+    "text": "¿Por qué aprender R?\nEl hecho de que R sea un lenguaje de programación disuade a algunos usuarios que piensan qe no saben programar. Esto no debería ser un impedimento. Primero, R es un lenguaje interpretado (no uno compilado), lo que significa que todos los comandos son directamente ejecutados sin necesidad de construir un programa completo. Segundo, la sintaxis de R es muy simple e intuitiva.\nR es gratuito, multiplataforma, multitud de librerias, en constante crecimiento, con una documentación en linea completa y de buena calidad, etc…\n\n¿Cómo funciona?\nCuando se ejecuta R, las variables, funciones, datos, resultados, etc.., son almacenados en la memoria activa del ordenador en forma de objetos que tienen nombre. El usuario puede hacer acciones sobre estos objetos con operadores (aritméticos, lógicos, asignación, …) y funciones."
+  },
+  {
+    "objectID": "R/introduccion.html#funciones",
+    "href": "R/introduccion.html#funciones",
+    "title": "Introducción a R",
+    "section": "Funciones",
+    "text": "Funciones\nuna función es un bloque de código que realiza una operación. Una función tiene tres componentes importantes:\n\nLos parámetros, que son los valores que recibe la función como entrada.\nEl código de la función, que son las operaciones que hace la función.\nel resultado (o valor de retorno), que es el valor final que entrega la función.\n\nEn general usaremos las funciones que vienen con la instalación de R, o con la instalación de paquetes adicionales. Aunque podemos escribir nuestras propias funciones (para reutilizar código, por ejemplo). En R siempre aparecera el nombre de la función seguido por parentesis . Entre estos parentesis apareceran los parámetros que recibe la función. De la forma esto_es_una_funcion(parametro_1, parametro2, …).\nEjemplo con la función paste(), que permite concatenar texto\n\nvariable_a &lt;- 'Esto'\nvariable_b &lt;- 'es'\nvariable_c &lt;- 'un ejemplo'\n\ntexto &lt;- paste(variable_a, variable_b, variable_c, sep = ' ')\ntexto\n\n[1] \"Esto es un ejemplo\"\n\n\nLa función paste() recibe como argumento las 3 variables definidas anteriormente y el parametro sep concatenando las 3 variables y separandolas por el valor de sep. El resultado de la función es almacenado en la variable texto.\n\n\n\n\n\n\n¿Cómo se que argumentos recibe una función?\n\n\n\nCon la instalación de R (y otros paquetes) tambien se instala la documentación que podemos consultar. usando el operador ? (p. ej. ?paste).\nOtra alternativa es buscar ayuda en internet, buscando ‘paste documentation r’"
+  },
+  {
+    "objectID": "R/vectores.html",
+    "href": "R/vectores.html",
+    "title": "Vectores",
+    "section": "",
+    "text": "Un vector almacena una secuencia de valore simples del misma clase. Es decir, todos sus elementos son del mismo tipo de dato simple."
+  },
+  {
+    "objectID": "R/vectores.html#crear-un-vector",
+    "href": "R/vectores.html#crear-un-vector",
+    "title": "Vectores",
+    "section": "Crear un vector",
+    "text": "Crear un vector\nLa forma más habitual de crear un vector es usando la función c() (combine). Tambien podemos usar las funciones seq()\n\nvector_numeros &lt;- c(2, 4, 6, 8)\n\nvector_numeros\n\n[1] 2 4 6 8\n\nseq_numeros &lt;- seq(2, 6)\nseq_numeros\n\n[1] 2 3 4 5 6\n\nseq_numeros2 &lt;- 2:6\nseq_numeros2\n\n[1] 2 3 4 5 6\n\nseq_numeros3 &lt;- seq(2, 6, by = 0.5)\nseq_numeros3\n\n[1] 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0\n\n\nLa función c() permite añadir elementos a un vector existente, o combinar dos vectores\n\nvector_numeros2 &lt;- c(1, 3, 5)\nvector_numeros2 &lt;- c(vector_numeros2, 7)\n\nvector_numeros2\n\n[1] 1 3 5 7\n\ncomb_vector &lt;- c(vector_numeros, vector_numeros2)\ncomb_vector\n\n[1] 2 4 6 8 1 3 5 7\n\nvector_caracteres &lt;- c('A', 'B', 'C')\nvector_caracteres\n\n[1] \"A\" \"B\" \"C\"\n\nvector_logico &lt;- c(TRUE, FALSE, TRUE)\nvector_logico\n\n[1]  TRUE FALSE  TRUE\n\nvector_logico2 &lt;- 10 == 5\nvector_logico2\n\n[1] FALSE\n\n\nLa función rep() permite construir vectores a partir de la repetición de otro vector.\n\nletras &lt;- c('A', 'B', 'C')\nletras\n\n[1] \"A\" \"B\" \"C\"\n\nletras_rep &lt;- rep(letras, times = 3)\nletras_rep\n\n[1] \"A\" \"B\" \"C\" \"A\" \"B\" \"C\" \"A\" \"B\" \"C\"\n\nletras_rep2 &lt;- rep(letras, each = 3)\nletras_rep2\n\n[1] \"A\" \"A\" \"A\" \"B\" \"B\" \"B\" \"C\" \"C\" \"C\""
+  },
+  {
+    "objectID": "R/vectores.html#aritmética-de-vectores",
+    "href": "R/vectores.html#aritmética-de-vectores",
+    "title": "Vectores",
+    "section": "Aritmética de vectores",
+    "text": "Aritmética de vectores\nLas operaciones aritméticas con vectores se hacen posición a posición.\n\nvector_numeros &lt;- seq(10, 50, by = 5)\nvector_numeros\n\n[1] 10 15 20 25 30 35 40 45 50\n\nvector_numeros + 1\n\n[1] 11 16 21 26 31 36 41 46 51\n\nvector_numeros / 2\n\n[1]  5.0  7.5 10.0 12.5 15.0 17.5 20.0 22.5 25.0\n\n\nDos vectores:\n\nvector_numeros_1 &lt;- c(1, 2, 3, 4)\nvector_numeros_2 &lt;- c(1, 1, 0, 0)\n\nvector_numeros_1 + vector_numeros_2\n\n[1] 2 3 3 4\n\nvector_numeros_1 - vector_numeros_2\n\n[1] 0 1 3 4\n\nvector_numeros_1 * vector_numeros_2\n\n[1] 1 2 0 0\n\nvector_numeros_1 / vector_numeros_2\n\n[1]   1   2 Inf Inf\n\n\nSe puede observar que en el resultado de la operación anterior en el vector resultante aparecen los valores Inf, es debido a que la división por 0 es indefinida (Infinito).\nDos vectores, diferente longitud:\n\nvector_numeros_1 &lt;- c(1, 2, 3, 4, 5, 6)\nvector_numeros_2 &lt;- c(1, 1, 0)\n\nvector_numeros_1 + vector_numeros_2\n\n[1] 2 3 3 5 6 6\n\nvector_numeros_1 - vector_numeros_2\n\n[1] 0 1 3 3 4 6\n\nvector_numeros_1 * vector_numeros_2\n\n[1] 1 2 0 4 5 0\n\nvector_numeros_1 / vector_numeros_2\n\n[1]   1   2 Inf   4   5 Inf\n\n\nLo que hace R es concatenar el vector de menor longitud consigo mísmo hasta rellenar los huecos hasta la longitud del mayor.\n\n\n\n\n\n\nImportant\n\n\n\nEs mejor evitar las operaciones con objetos de diferente longitud.\n\n\nVector númerico y vector de texto.\n\nletras &lt;- c('A', 'B', 'C', 'D')\nnumeros &lt;- c(1, 2, 3, 4, 5)\n\nresultado = paste(letras, numeros, sep=\"-\")\nresultado\n\n[1] \"A-1\" \"B-2\" \"C-3\" \"D-4\" \"A-5\"\n\n\nLa función paste() que concatena texto, pero numeros es un vector númerico. Internamente paste() llama a la función as.character() que convierte el tipo númerico a tipo texto.\n\nnumeros &lt;- c(1, 2, 3, 4, 5)\nnumeros\n\n[1] 1 2 3 4 5\n\ntexto_numeros &lt;- as.character(numeros)\ntexto_numeros\n\n[1] \"1\" \"2\" \"3\" \"4\" \"5\""
+  },
+  {
+    "objectID": "R/vectores.html#elementos-de-un-vector",
+    "href": "R/vectores.html#elementos-de-un-vector",
+    "title": "Vectores",
+    "section": "Elementos de un vector",
+    "text": "Elementos de un vector\nPara poder manipular los elementos contenidos en un vector vamos a hacerlo usando los corchetes ([]) de la forma vector[ ]\n\nnumeros &lt;- 10:20\nnumeros\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\n\nObtener el elemento en la posicion cuarta\n\nnumeros[4]\n\n[1] 13\n\n\nObterner todos los elementos menos el de la cuarta posicion\n\nnumeros[-4]\n\n [1] 10 11 12 14 15 16 17 18 19 20\n\nnumeros[c(4, 8)]\n\n[1] 13 17\n\nnumeros[c(4:8)]\n\n[1] 13 14 15 16 17\n\nnumeros[-c(4:8)]\n\n[1] 10 11 12 18 19 20\n\n\nEliminar los elementos de la posicion 1 y 5\n\nnumeros &lt;- 10:20\nnumeros\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\nnumeros &lt;- numeros[-c(1, 5)]\nnumeros\n\n[1] 11 12 13 15 16 17 18 19 20\n\n\nAñadir elementos nuevos.\n\nnumeros\n\n[1] 11 12 13 15 16 17 18 19 20\n\nnumeros &lt;- c(numeros, c(50, 100))\nnumeros\n\n [1]  11  12  13  15  16  17  18  19  20  50 100\n\n\n\n\n\n\n\n\nNote\n\n\n\nEn definitiva lo que estamos haciendo es usar vectores índices para seleccionar elementos del vector.\nvector[vector_indice]"
+  },
+  {
+    "objectID": "R/vectores.html#ordenar-un-vector",
+    "href": "R/vectores.html#ordenar-un-vector",
+    "title": "Vectores",
+    "section": "Ordenar un vector",
+    "text": "Ordenar un vector\nEn ocasiones nos puede interesar ordenar los elementos de un vector. Esto se puede realizar con la función order()\n\nnumeros\n\n [1]  11  12  13  15  16  17  18  19  20  50 100\n\norder(numeros, decreasing = TRUE)\n\n [1] 11 10  9  8  7  6  5  4  3  2  1\n\n\nLa función order devuelve el índice del vector ordenado, (no los valores).\n\nnumeros[order(numeros, decreasing = TRUE)]\n\n [1] 100  50  20  19  18  17  16  15  13  12  11"
+  },
+  {
+    "objectID": "R/vectores.html#mascara-lógica",
+    "href": "R/vectores.html#mascara-lógica",
+    "title": "Vectores",
+    "section": "Mascara lógica",
+    "text": "Mascara lógica\nOtra manera de seleccionar los elementos de un vector es usar una mascara lógica (vector de valores lógicos). De la manera vector[mascara_logica]\n\nnumeros &lt;- 10:20\nnumeros\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\nnumeros &lt; 15\n\n [1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE\n\nnumeros[numeros &lt;15]\n\n[1] 10 11 12 13 14"
+  },
+  {
+    "objectID": "R/vectores.html#máscara-lógica",
+    "href": "R/vectores.html#máscara-lógica",
+    "title": "Vectores",
+    "section": "Máscara lógica",
+    "text": "Máscara lógica\nOtra manera de seleccionar los elementos de un vector es usar una máscara lógica (vector de valores lógicos). De la manera vector[mascara_logica]\n\nnumeros &lt;- 10:20\nnumeros\n\n [1] 10 11 12 13 14 15 16 17 18 19 20\n\nnumeros &lt; 15\n\n [1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE\n\nnumeros[numeros &lt;15]\n\n[1] 10 11 12 13 14"
+  },
+  {
+    "objectID": "R/vectores.html#vectores-con-nombres",
+    "href": "R/vectores.html#vectores-con-nombres",
+    "title": "Vectores",
+    "section": "Vectores con nombres",
+    "text": "Vectores con nombres\nEn ocasiones puede ser interesante poner nombre a las posiciones de un vector.\n\nlog2FoldChange &lt;- c(-5.3823, -1.2634, -1.0972, -1.0904, -0.9888, -0.9792)\n\nlog2FoldChange\n\n[1] -5.3823 -1.2634 -1.0972 -1.0904 -0.9888 -0.9792\n\nensembles &lt;- c('ENSMUSG00000020000', \n               'ENSMUSG00000060036', \n               'ENSMUSG00000060613', \n               'ENSMUSG00000038092', \n               'ENSMUSG00000020926', \n               'ENSMUSG00000001435')\nensembles\n\n[1] \"ENSMUSG00000020000\" \"ENSMUSG00000060036\" \"ENSMUSG00000060613\"\n[4] \"ENSMUSG00000038092\" \"ENSMUSG00000020926\" \"ENSMUSG00000001435\"\n\nnames(log2FoldChange) &lt;- ensembles\n\nlog2FoldChange\n\nENSMUSG00000020000 ENSMUSG00000060036 ENSMUSG00000060613 ENSMUSG00000038092 \n           -5.3823            -1.2634            -1.0972            -1.0904 \nENSMUSG00000020926 ENSMUSG00000001435 \n           -0.9888            -0.9792 \n\nlog2FoldChange['ENSMUSG00000060613']\n\nENSMUSG00000060613 \n           -1.0972 \n\nlog2FoldChange[c('ENSMUSG00000060613', 'ENSMUSG00000001435')]\n\nENSMUSG00000060613 ENSMUSG00000001435 \n           -1.0972            -0.9792"
   }
 ]

@@ -191,9 +191,9 @@ comb_vect <- c(vector_numeros, seq_numeros)
 print(comb_vect)
 ```
 
-## Aritmetica de Vectores
+## Aritmética de Vectores
 
-Las operaciones aritmeticas con vectores se realizan posicion a posicion.
+Las operaciones aritméticas con vectores se realizan posición a posición.
 
 ```{r}
 #| echo: true
@@ -284,7 +284,7 @@ numeros <- numeros[order(numeros, decreasing = TRUE)]
 numeros
 ```
 
-## Mascara lógica
+## Máscara lógica
 
 ```{r}
 #| echo: true
@@ -307,11 +307,11 @@ mascara_logica
 numeros[!mascara_logica]
 ```
 
-## Conclusion {.smaller}
+## Conclusión {.smaller}
 
 Para seleccionar subconjuntos de datos lo podemos realizar de dos formas:
 
--   **Vector de indices**
+-   **Vector de índices**
 
 ```{r}
 #| echo: true
@@ -322,7 +322,7 @@ numeros
 numeros[c(1, 5, 10)]
 ```
 
--   **Mascara lógica**
+-   **Máscara lógica**
 
 ```{r}
 #| echo: true

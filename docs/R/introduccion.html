@@ -130,6 +130,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../R/introduccion.html">
  <span class="dropdown-text">Introducción a R</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../R/vectores.html">
+ <span class="dropdown-text">Vectores</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -217,11 +221,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#el-entorno-de-r" id="toc-el-entorno-de-r" class="nav-link" data-scroll-target="#el-entorno-de-r">El entorno de R</a></li>
   <li><a href="#qué-es-un-programa" id="toc-qué-es-un-programa" class="nav-link" data-scroll-target="#qué-es-un-programa">¿Qué es un “Programa”?</a></li>
   <li><a href="#qué-es-un-ide" id="toc-qué-es-un-ide" class="nav-link" data-scroll-target="#qué-es-un-ide">¿Qué es un IDE?</a></li>
+  <li><a href="#por-qué-aprender-r" id="toc-por-qué-aprender-r" class="nav-link" data-scroll-target="#por-qué-aprender-r">¿Por qué aprender R?</a>
+  <ul class="collapse">
+  <li><a href="#cómo-funciona" id="toc-cómo-funciona" class="nav-link" data-scroll-target="#cómo-funciona">¿Cómo funciona?</a></li>
+  </ul></li>
   <li><a href="#hola-mundo" id="toc-hola-mundo" class="nav-link" data-scroll-target="#hola-mundo">¡Hola Mundo!</a></li>
   <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables">Variables</a>
   <ul class="collapse">
   <li><a href="#variables-simples" id="toc-variables-simples" class="nav-link" data-scroll-target="#variables-simples">Variables simples</a></li>
+  <li><a href="#variables-complejas" id="toc-variables-complejas" class="nav-link" data-scroll-target="#variables-complejas">Variables complejas</a></li>
   </ul></li>
+  <li><a href="#funciones" id="toc-funciones" class="nav-link" data-scroll-target="#funciones">Funciones</a></li>
   </ul>
 </nav>
     </div>
@@ -293,6 +303,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://github.com/posit-dev/positron">Positron</a></li>
 </ul>
 </section>
+<section id="por-qué-aprender-r" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-aprender-r">¿Por qué aprender R?</h2>
+<p>El hecho de que R sea un lenguaje de programación disuade a algunos usuarios que piensan qe no saben programar. Esto no debería ser un impedimento. Primero, R es un lenguaje interpretado (no uno compilado), lo que significa que todos los comandos son directamente ejecutados sin necesidad de construir un programa completo. Segundo, la sintaxis de R es muy simple e intuitiva.</p>
+<p>R es gratuito, multiplataforma, multitud de librerias, en constante crecimiento, con una documentación en linea completa y de buena calidad, etc…</p>
+<section id="cómo-funciona" class="level3">
+<h3 class="anchored" data-anchor-id="cómo-funciona">¿Cómo funciona?</h3>
+<p>Cuando se ejecuta R, las variables, funciones, datos, resultados, etc.., son almacenados en la memoria activa del ordenador en forma de <em>objetos</em> que tienen <em>nombre</em>. El usuario puede hacer acciones sobre estos <em>objetos</em> con <em>operadores</em> (aritméticos, lógicos, asignación, …) y <em>funciones</em>.</p>
+</section>
+</section>
 <section id="hola-mundo" class="level2">
 <h2 class="anchored" data-anchor-id="hola-mundo">¡Hola Mundo!</h2>
 <p>El programa “¡Hola Mundo!” suele ser el primer ejercicio típico en la introducción del estudio de un lenguaje de programación.</p>
@@ -357,9 +376,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-
-
+<p>Las variables de tipo texto se entrecomillan (con comillas dobles o simples). Esto es necesario sino no podríamos distinguir un dato tipo texto del nombre de una variable. Por ejemplo <em>‘saludo’</em> es un texto (información), mientras que <em>saludo</em> es el nombre de una variable que almacena el texto <em>‘¡Hola Mundo!’</em>.</p>
+<p>Tambien hay que distinguir entre <em>100</em>, que es el número 100 y ‘100’ que es el texto ‘100’. Sobre el número <em>100</em> podemos usar operadores matématicos, si lo intentamos sobre el texto <em>‘100’</em>, recibiremos un error.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>numero_a <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>numero_b <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>numero_a <span class="sc">+</span> numero_b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 110</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>valor_logico <span class="ot">&lt;-</span> numero_a <span class="sc">!=</span> numero_b</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>valor_logico</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>texto_a <span class="ot">&lt;-</span> <span class="st">'100'</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>texto_a <span class="sc">+</span> numero_a</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">texto_a + numero_a</span><span class="st">`</span><span class="sc">:</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span> argumento no<span class="sc">-</span>numérico para operador binario</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="variables-complejas" class="level3">
+<h3 class="anchored" data-anchor-id="variables-complejas">Variables complejas</h3>
+<p>Este tipo de variables almacenan datos más complejos que en el caso de las variables simples. Además este tipo de <em>objetos</em> suelen tener métodos y atributos que nos permiten acceder a los datos que contienen.</p>
+<ul>
+<li><strong>Vectores:</strong> Los vectores almacenan una secuencía de valores simples todos del mísmo tipo.</li>
+<li><strong>Listas:</strong> A diferencia de los vectores las listas es una colección de elementos que pueden ser de diferente tipo.</li>
+<li><strong>Matrices:</strong> Una matriz es una estructura bidimensional que almacena números.</li>
+<li><strong>Data frames:</strong> Un data frame es una estructura bidimensional que puede almacenar tipos de datos mixtos.</li>
+</ul>
+</section>
+</section>
+<section id="funciones" class="level2">
+<h2 class="anchored" data-anchor-id="funciones">Funciones</h2>
+<p>una función es un bloque de código que realiza una operación. Una función tiene tres componentes importantes:</p>
+<ul>
+<li>Los <strong>parámetros</strong>, que son los valores que recibe la función como entrada.</li>
+<li>El <em>código de la función</em>, que son las operaciones que hace la función.</li>
+<li>el <em>resultado</em> (o <em>valor de retorno</em>), que es el valor final que entrega la función.</li>
+</ul>
+<p>En general usaremos las funciones que vienen con la instalación de R, o con la instalación de paquetes adicionales. Aunque podemos escribir nuestras propias funciones (para reutilizar código, por ejemplo). En R siempre aparecera el nombre de la función seguido por parentesis . Entre estos parentesis apareceran los parámetros que recibe la función. De la forma <em>esto_es_una_funcion(parametro_1, parametro2, …)</em>.</p>
+<p>Ejemplo con la función <strong>paste()</strong>, que permite concatenar texto</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>variable_a <span class="ot">&lt;-</span> <span class="st">'Esto'</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>variable_b <span class="ot">&lt;-</span> <span class="st">'es'</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>variable_c <span class="ot">&lt;-</span> <span class="st">'un ejemplo'</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>texto <span class="ot">&lt;-</span> <span class="fu">paste</span>(variable_a, variable_b, variable_c, <span class="at">sep =</span> <span class="st">' '</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>texto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Esto es un ejemplo"</code></pre>
+</div>
+</div>
+<p>La función <em>paste()</em> recibe como argumento las 3 variables definidas anteriormente y el parametro sep concatenando las 3 variables y separandolas por el valor de sep. El resultado de la función es almacenado en la variable texto.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Cómo se que argumentos recibe una función?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con la instalación de R (y otros paquetes) tambien se instala la documentación que podemos consultar. usando el operador ? (p.&nbsp;ej. ?paste).</p>
+<p>Otra alternativa es buscar ayuda en internet, buscando ‘paste documentation r’</p>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
