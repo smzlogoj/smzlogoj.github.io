@@ -160,3 +160,7 @@ genes <- bitr(rownames(df.mcf),
               OrgDb = org.Dm.eg.db)
 head(genes)
 ```
+
+## Referencias
+
+> [Open source software for Bioinformatics](https://bioconductor.org/)

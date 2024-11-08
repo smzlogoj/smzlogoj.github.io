@@ -209,6 +209,8 @@ hsa04151<- pathview(gene.data  = geneList,
 
 
 ## Referencias
+
+> [Harvard Chan Bioinformatics Core (HBC).](https://hbctraining.github.io/DGE_workshop/)
 ```{r}
 #| label: citation
 

@@ -115,7 +115,6 @@ DESeq2 usa como criterio de filtrado la media de las cuentas normalizadas. Los g
 ### Referencias
 
 > Laurent Gatto and Axelle Loriot. *UCLouvain-CBIO/WSBIM2122: Omics
-> data analysis.* https://github.com/UCLouvain-CBIO/WSBIM2122.
+> data analysis.* [https://github.com/UCLouvain-CBIO/WSBIM2122](https://github.com/UCLouvain-CBIO/WSBIM2122).
 
-> Harvard Chan Bioinformatics Core (HBC). 
-> https://hbctraining.github.io/DGE_workshop/
+> [Harvard Chan Bioinformatics Core (HBC).](https://hbctraining.github.io/DGE_workshop/)

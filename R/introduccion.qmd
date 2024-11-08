@@ -148,3 +148,7 @@ Con la instalación de R (y otros paquetes) tambien se instala la documentación
 
 Otra alternativa es buscar ayuda en internet, buscando 'paste documentation r'
 :::
+
+## Referencias
+
+> [An Introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)

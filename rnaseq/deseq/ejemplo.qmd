@@ -286,6 +286,8 @@ write.csv(counts(dds, normalized = TRUE),
 
 
 ## Referencias
+> [Harvard Chan Bioinformatics Core (HBC).](https://hbctraining.github.io/DGE_workshop/)
+
 > "MOV10 and FMRP regulate AGO2 association with microRNA recognition elements"  
 >(Kenny, P.J. et al, Cell Reports, 11 December 2014).
 

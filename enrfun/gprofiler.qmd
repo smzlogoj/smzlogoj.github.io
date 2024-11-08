@@ -96,9 +96,8 @@ Abrimos el fichero 'GOs_oe.txt' y copiamos y pegamos su contenido en la web de [
 
 ## Referencias
 
-> Harvard Chan Bioinformatics Core(HBC)
->https://github.com/hbctraining/DGE_workshop/tree/master
+> [Harvard Chan Bioinformatics Core (HBC).](https://github.com/hbctraining/DGE_workshop/tree/master)
 
-> g:Profiler: https://biit.cs.ut.ee/gprofiler/page/r
+> [g:Profiler](https://biit.cs.ut.ee/gprofiler/page/r)
 
-> REVIGO: http://revigo.irb.hr/
+> [REVIGO](http://revigo.irb.hr/)

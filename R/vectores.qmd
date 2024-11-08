@@ -205,3 +205,7 @@ log2FoldChange
 log2FoldChange['ENSMUSG00000060613']
 log2FoldChange[c('ENSMUSG00000060613', 'ENSMUSG00000001435')]
 ```
+
+## Referencias
+
+> [An Introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)

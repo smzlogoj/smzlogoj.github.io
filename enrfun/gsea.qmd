@@ -223,3 +223,13 @@ hsa04060 <- pathview(gene.data  = geneList.kegg,
                      limit      = list(gene=round(max(abs(geneList.kegg[core])), 1), cpd=1))
 ```
 ![](hsa04060.pathview.png){width=70% fig-align="center"}
+
+## Referencias
+
+> [Harvard Chan Bioinformatics Core (HBC).](https://hbctraining.github.io/DGE_workshop/)
+```{r}
+#| label: citation
+
+citation("clusterProfiler")
+
+```
