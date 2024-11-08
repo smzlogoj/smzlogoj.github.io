@@ -266,7 +266,7 @@ Heatmap de los genes diferecialmente expresados.
 #| label: HeatMap
 #| fig-cap: Heatmap
 #| fig-height: 14
-df.norm <- log2(counts(dds, normalized = TRUE) + 1)
+df.norm <- counts(dds, normalized = TRUE)
 
 df.dge <- df.norm[rownames(df.norm) %in% c(genes.ashr.up, genes.ashr.down), ]
 
