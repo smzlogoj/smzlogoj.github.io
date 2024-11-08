@@ -957,7 +957,7 @@ Note
 <h3 class="anchored" data-anchor-id="heatmap">Heatmap</h3>
 <p>Heatmap de los genes diferecialmente expresados.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df.norm <span class="ot">&lt;-</span> <span class="fu">counts</span>(dds, <span class="at">normalized =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df.norm <span class="ot">&lt;-</span> <span class="fu">log2</span>(<span class="fu">counts</span>(dds, <span class="at">normalized =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="dv">1</span>)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>df.dge <span class="ot">&lt;-</span> df.norm[<span class="fu">rownames</span>(df.norm) <span class="sc">%in%</span> <span class="fu">c</span>(genes.ashr.up, genes.ashr.down), ]</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
