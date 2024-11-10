@@ -11,6 +11,8 @@ website:
         menu:
           - R/introduccion.qmd
           - R/vectores.qmd
+          - R/listas.qmd
+          - R/dataframes.qmd
       - text: RNA-seq
         menu:
           - rnaseq/deseq/introduccion.qmd

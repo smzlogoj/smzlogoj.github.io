@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introducción a R – Tumbleweed</title>
+<title>Listas – Tumbleweed</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -138,6 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../R/listas.html">
  <span class="dropdown-text">Listas</span></a>
   </li>  
+        <li class="dropdown-header">R/dataframes.qmd</li>
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -220,23 +221,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#qué-es-programar" id="toc-qué-es-programar" class="nav-link active" data-scroll-target="#qué-es-programar">¿Qué es “Programar”?</a></li>
-  <li><a href="#qué-es-un-lenguaje-de-programación" id="toc-qué-es-un-lenguaje-de-programación" class="nav-link" data-scroll-target="#qué-es-un-lenguaje-de-programación">¿Qué es un lenguaje de programación?</a></li>
-  <li><a href="#el-entorno-de-r" id="toc-el-entorno-de-r" class="nav-link" data-scroll-target="#el-entorno-de-r">El entorno de R</a></li>
-  <li><a href="#qué-es-un-programa" id="toc-qué-es-un-programa" class="nav-link" data-scroll-target="#qué-es-un-programa">¿Qué es un “Programa”?</a></li>
-  <li><a href="#qué-es-un-ide" id="toc-qué-es-un-ide" class="nav-link" data-scroll-target="#qué-es-un-ide">¿Qué es un IDE?</a></li>
-  <li><a href="#por-qué-aprender-r" id="toc-por-qué-aprender-r" class="nav-link" data-scroll-target="#por-qué-aprender-r">¿Por qué aprender R?</a>
-  <ul class="collapse">
-  <li><a href="#cómo-funciona" id="toc-cómo-funciona" class="nav-link" data-scroll-target="#cómo-funciona">¿Cómo funciona?</a></li>
-  </ul></li>
-  <li><a href="#hola-mundo" id="toc-hola-mundo" class="nav-link" data-scroll-target="#hola-mundo">¡Hola Mundo!</a></li>
-  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables">Variables</a>
-  <ul class="collapse">
-  <li><a href="#variables-simples" id="toc-variables-simples" class="nav-link" data-scroll-target="#variables-simples">Variables simples</a></li>
-  <li><a href="#variables-complejas" id="toc-variables-complejas" class="nav-link" data-scroll-target="#variables-complejas">Variables complejas</a></li>
-  </ul></li>
-  <li><a href="#funciones" id="toc-funciones" class="nav-link" data-scroll-target="#funciones">Funciones</a></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
+  <li><a href="#crear-una-lista." id="toc-crear-una-lista." class="nav-link active" data-scroll-target="#crear-una-lista.">Crear una lista.</a></li>
+  <li><a href="#seleccionar-elementos-de-una-lista" id="toc-seleccionar-elementos-de-una-lista" class="nav-link" data-scroll-target="#seleccionar-elementos-de-una-lista">Seleccionar elementos de una lista</a></li>
+  <li><a href="#añadir-un-elemento-a-una-lista" id="toc-añadir-un-elemento-a-una-lista" class="nav-link" data-scroll-target="#añadir-un-elemento-a-una-lista">Añadir un elemento a una lista</a></li>
+  <li><a href="#eliminar-un-elemento-de-la-lista" id="toc-eliminar-un-elemento-de-la-lista" class="nav-link" data-scroll-target="#eliminar-un-elemento-de-la-lista">Eliminar un elemento de la lista</a></li>
   </ul>
 </nav>
     </div>
@@ -245,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introducción a R</h1>
+<h1 class="title">Listas</h1>
 </div>
 
 
@@ -262,200 +250,147 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="qué-es-programar" class="level2">
-<h2 class="anchored" data-anchor-id="qué-es-programar">¿Qué es “Programar”?</h2>
-<p>Programar es el proceso de crear un conjunto de instrucciones para decirle a la computadora cómo realizar una tarea. La tarea de “programar” no se centra exclusivamente en escribir código, si no que conlleva una serie de pasos previos antes de “codificar” las instrucciones.</p>
-<ul>
-<li>Descomponer un problema complejo en partes más pequeñas.</li>
-<li>Reconocimiento de patrones repetitivos.</li>
-<li>Resolución de los problemas paso a paso.</li>
-<li>Escribir el código.</li>
-</ul>
-</section>
-<section id="qué-es-un-lenguaje-de-programación" class="level2">
-<h2 class="anchored" data-anchor-id="qué-es-un-lenguaje-de-programación">¿Qué es un lenguaje de programación?</h2>
-<p>Un lenguaje de programación es un lenguaje formal (es decir, un lenguaje con reglas gramaticales bien definidas) que proporciona al programador la capacidad y habilidad de escribir instrucciones o secuencias de órdenes para controlar el comportamiento de un sistema informático.</p>
-</section>
-<section id="el-entorno-de-r" class="level2">
-<h2 class="anchored" data-anchor-id="el-entorno-de-r">El entorno de R</h2>
-<p>R es un conjunto integrado de software para la manipulación, cálculo y visualización de datos. Entre otras cosas tiene:</p>
-<ul>
-<li>Tratamiento y almacenamiento de datos eficaz.</li>
-<li>Conjunto de operadores para el calculo sobre matrices.</li>
-<li>Conjunto integrado de herramientas para el análisis y visualización de datos.</li>
-<li>Un simple y efectivo lenguaje de programación.</li>
-<li>Ampliamente utilizado en investigación cientifica.</li>
-</ul>
-</section>
-<section id="qué-es-un-programa" class="level2">
-<h2 class="anchored" data-anchor-id="qué-es-un-programa">¿Qué es un “Programa”?</h2>
-<p>Un programa informático es una secuencia de instrucciones basadas en un lenguaje de programación que el ordenador interpreta para resolver un problema. Los elementos básicos de un programa son:</p>
-<ul>
-<li><strong>Instrucciones:</strong> conjunto de ordenes que indican al ordenador como realizar una tarea específica (asignar un valor a una variable, ejecutar un bucle que itera sobre una lista de datos).</li>
-<li><strong>Datos:</strong> pueden ser números, texto, imagénes, etc.. . En resumen cualquier tipo de información que el programa manipule. En general, son la razon de ser de muchas aplicaciones.</li>
-<li><strong>Operadores:</strong> son las herramientas que permiten realizar operaciones sobre los datos (sumar, multiplicar, comparar, asignar, etc..).</li>
-<li><strong>Variables:</strong> actuan como contenedores de información permitiendo que un programa conserve información y realice operaciones sobre esta información, en cierto modo se puede decir que son la “memoria” del programa.</li>
-</ul>
-</section>
-<section id="qué-es-un-ide" class="level2">
-<h2 class="anchored" data-anchor-id="qué-es-un-ide">¿Qué es un IDE?</h2>
-<p>Un entorno de desarrollo integrado (IDE) es una aplicación de software que ayuda a los programadores a desarrollar código de software de manera eficiente y aumentando la productividad.</p>
-<p>El IDE más popular para R es RStudio, aunque hay otros que tambien se pueden utilizar:</p>
-<ul>
-<li><a href="https://posit.co/download/rstudio-desktop/">RStudio Desktop</a></li>
-<li><a href="https://jupyter.org/">Project Jupyter</a></li>
-<li><a href="https://code.visualstudio.com/">Visual Stuido Code</a></li>
-<li><a href="https://github.com/posit-dev/positron">Positron</a></li>
-</ul>
-</section>
-<section id="por-qué-aprender-r" class="level2">
-<h2 class="anchored" data-anchor-id="por-qué-aprender-r">¿Por qué aprender R?</h2>
-<p>El hecho de que R sea un lenguaje de programación disuade a algunos usuarios que piensan qe no saben programar. Esto no debería ser un impedimento. Primero, R es un lenguaje interpretado (no uno compilado), lo que significa que todos los comandos son directamente ejecutados sin necesidad de construir un programa completo. Segundo, la sintaxis de R es muy simple e intuitiva.</p>
-<p>R es gratuito, multiplataforma, multitud de librerias, en constante crecimiento, con una documentación en linea completa y de buena calidad, etc…</p>
-<section id="cómo-funciona" class="level3">
-<h3 class="anchored" data-anchor-id="cómo-funciona">¿Cómo funciona?</h3>
-<p>Cuando se ejecuta R, las variables, funciones, datos, resultados, etc.., son almacenados en la memoria activa del ordenador en forma de <em>objetos</em> que tienen <em>nombre</em>. El usuario puede hacer acciones sobre estos <em>objetos</em> con <em>operadores</em> (aritméticos, lógicos, asignación, …) y <em>funciones</em>.</p>
-</section>
-</section>
-<section id="hola-mundo" class="level2">
-<h2 class="anchored" data-anchor-id="hola-mundo">¡Hola Mundo!</h2>
-<p>El programa “¡Hola Mundo!” suele ser el primer ejercicio típico en la introducción del estudio de un lenguaje de programación.</p>
+<p>Las listas en <strong>R</strong> es un objeto consistente en una colección ordenada de objetos. No es necesario que los elementos sean del mismo tipo. Una lista puede contener, números, vectores, texto, data frames, etc..</p>
+<section id="crear-una-lista." class="level2">
+<h2 class="anchored" data-anchor-id="crear-una-lista.">Crear una lista.</h2>
+<p>Para crear una lista usaremos la funciín <strong>list()</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>saludo <span class="ot">&lt;-</span> <span class="st">'¡Hola Mundo!'</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>saludo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>alumno <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">nombre =</span> <span class="st">'Juan Perez'</span>, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">edad =</span> <span class="dv">16</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">notas =</span> <span class="fu">c</span>(<span class="at">matematicas =</span> <span class="fl">8.5</span>, <span class="at">fisica =</span> <span class="fl">8.0</span>, <span class="at">biologia =</span> <span class="fl">7.5</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               ) </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>alumno</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "¡Hola Mundo!"</code></pre>
+<pre><code>$nombre
+[1] "Juan Perez"
+
+$edad
+[1] 16
+
+$notas
+matematicas      fisica    biologia 
+        8.5         8.0         7.5 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(alumno)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 3
+ $ nombre: chr "Juan Perez"
+ $ edad  : num 16
+ $ notas : Named num [1:3] 8.5 8 7.5
+  ..- attr(*, "names")= chr [1:3] "matematicas" "fisica" "biologia"</code></pre>
 </div>
 </div>
-<p>En la primera linea el texto <em>‘¡Hola Mundo!’</em> se asigna a la variable <em>saludo</em> usando el operador de asignación <em>&lt;-</em> (es posible usar <em>=</em>, que es el operador usado en otros lenguajes de programación). En la segunda linea llamamos a la variable <em>saludo</em> y se muestra su contenido.</p>
+<p>Observamos que la variable <em>alumno</em> es un objeto de tipo <strong>List</strong> con 3 elementos (nombre, edad, notas)</p>
 </section>
-<section id="variables" class="level2">
-<h2 class="anchored" data-anchor-id="variables">Variables</h2>
-<p>Las variables sirven para almacenar un valor (datos, información) que luego vamos a utilizar en algun procedimiento. En general partiremos de unos datos experimentales con los que haremos calculos o otros procedimientos teniendo como resultados datos intermedios. Para poder hacer referencia en R a esos datos, usaremos variables. En R existen varios tipos de objetos que permiten que el usuario pueda almacenar la información para realizar los procedimientos estadísticos y gráficos. En general podemos clasificar las variables en función del tipo de dato que van a almacenar. Así, tendremos variables simples (una variable que almacene el valor 10) o variables más complejas (una variable que almacene la tabla de resultados de un HPLC-MS).</p>
-<section id="variables-simples" class="level3">
-<h3 class="anchored" data-anchor-id="variables-simples">Variables simples</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 19%">
-<col style="width: 50%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Tipo de dato</th>
-<th>Descripción</th>
-<th>Definición</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Numeric</td>
-<td>Números decimales</td>
-<td>numero &lt;- 1.0</td>
-</tr>
-<tr class="even">
-<td>Integer</td>
-<td>Números enteros</td>
-<td>entero &lt;- 1</td>
-</tr>
-<tr class="odd">
-<td>Character</td>
-<td>Cadenas de texto</td>
-<td>texto &lt;- “un texto”</td>
-</tr>
-<tr class="even">
-<td>Complex</td>
-<td>Números complejos</td>
-<td>complejo &lt;- 3 + 2i</td>
-</tr>
-<tr class="odd">
-<td>Logical</td>
-<td>TRUE o FALSE</td>
-<td>5 &lt; 6; 5 == 5</td>
-</tr>
-<tr class="even">
-<td>Factor</td>
-<td>Es una variable de tipo categórica</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Las variables de tipo texto se entrecomillan (con comillas dobles o simples). Esto es necesario sino no podríamos distinguir un dato tipo texto del nombre de una variable. Por ejemplo <em>‘saludo’</em> es un texto (información), mientras que <em>saludo</em> es el nombre de una variable que almacena el texto <em>‘¡Hola Mundo!’</em>.</p>
-<p>Tambien hay que distinguir entre <em>100</em>, que es el número 100 y ‘100’ que es el texto ‘100’. Sobre el número <em>100</em> podemos usar operadores matématicos, si lo intentamos sobre el texto <em>‘100’</em>, recibiremos un error.</p>
+<section id="seleccionar-elementos-de-una-lista" class="level2">
+<h2 class="anchored" data-anchor-id="seleccionar-elementos-de-una-lista">Seleccionar elementos de una lista</h2>
+<p>Podemos seleccionar los elementos de una lista usando su posición con doble corchete ([[…]]), o usando el nombre de esa posición ($…).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>numero_a <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>numero_b <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>numero_a <span class="sc">+</span> numero_b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>alumno[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 110</code></pre>
+<pre><code>[1] 16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>valor_logico <span class="ot">&lt;-</span> numero_a <span class="sc">!=</span> numero_b</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>valor_logico</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>alumno<span class="sc">$</span>edad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
+<pre><code>[1] 16</code></pre>
 </div>
-</div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>texto_a <span class="ot">&lt;-</span> <span class="st">'100'</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>texto_a <span class="sc">+</span> numero_a</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">texto_a + numero_a</span><span class="st">`</span><span class="sc">:</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span> argumento no<span class="sc">-</span>numérico para operador binario</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="variables-complejas" class="level3">
-<h3 class="anchored" data-anchor-id="variables-complejas">Variables complejas</h3>
-<p>Este tipo de variables almacenan datos más complejos que en el caso de las variables simples. Además este tipo de <em>objetos</em> suelen tener métodos y atributos que nos permiten acceder a los datos que contienen.</p>
-<ul>
-<li><strong>Vectores:</strong> Los vectores almacenan una secuencía de valores simples todos del mísmo tipo.</li>
-<li><strong>Listas:</strong> A diferencia de los vectores las listas es una colección de elementos que pueden ser de diferente tipo.</li>
-<li><strong>Matrices:</strong> Una matriz es una estructura bidimensional que almacena números.</li>
-<li><strong>Data frames:</strong> Un data frame es una estructura bidimensional que puede almacenar tipos de datos mixtos.</li>
-</ul>
-</section>
-</section>
-<section id="funciones" class="level2">
-<h2 class="anchored" data-anchor-id="funciones">Funciones</h2>
-<p>una función es un bloque de código que realiza una operación. Una función tiene tres componentes importantes:</p>
-<ul>
-<li>Los <strong>parámetros</strong>, que son los valores que recibe la función como entrada.</li>
-<li>El <em>código de la función</em>, que son las operaciones que hace la función.</li>
-<li>el <em>resultado</em> (o <em>valor de retorno</em>), que es el valor final que entrega la función.</li>
-</ul>
-<p>En general usaremos las funciones que vienen con la instalación de R, o con la instalación de paquetes adicionales. Aunque podemos escribir nuestras propias funciones (para reutilizar código, por ejemplo). En R siempre aparecera el nombre de la función seguido por parentesis . Entre estos parentesis apareceran los parámetros que recibe la función. De la forma <em>esto_es_una_funcion(parametro_1, parametro2, …)</em>.</p>
-<p>Ejemplo con la función <strong>paste()</strong>, que permite concatenar texto</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>variable_a <span class="ot">&lt;-</span> <span class="st">'Esto'</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>variable_b <span class="ot">&lt;-</span> <span class="st">'es'</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>variable_c <span class="ot">&lt;-</span> <span class="st">'un ejemplo'</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>texto <span class="ot">&lt;-</span> <span class="fu">paste</span>(variable_a, variable_b, variable_c, <span class="at">sep =</span> <span class="st">' '</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>texto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>alumno[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Esto es un ejemplo"</code></pre>
+<pre><code>matematicas      fisica    biologia 
+        8.5         8.0         7.5 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>alumno<span class="sc">$</span>notas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>matematicas      fisica    biologia 
+        8.5         8.0         7.5 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(alumno[<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 1
+ $ notas: Named num [1:3] 8.5 8 7.5
+  ..- attr(*, "names")= chr [1:3] "matematicas" "fisica" "biologia"</code></pre>
 </div>
 </div>
-<p>La función <em>paste()</em> recibe como argumento las 3 variables definidas anteriormente y el parametro sep concatenando las 3 variables y separandolas por el valor de sep. El resultado de la función es almacenado en la variable texto.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-¿Cómo se que argumentos recibe una función?
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Con la instalación de R (y otros paquetes) tambien se instala la documentación que podemos consultar. usando el operador ? (p.&nbsp;ej. ?paste).</p>
-<p>Otra alternativa es buscar ayuda en internet, buscando ‘paste documentation r’</p>
+<p>Algo que puede llevar a confusión con las listas, es que si selecionamos un elemento con un corchete simple ([…]), no devuelve el elemento. Devuelve una lista que contiene el elemento.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>alumno[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$edad
+[1] 16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(alumno[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 1
+ $ edad: num 16</code></pre>
 </div>
 </div>
 </section>
-<section id="referencias" class="level2">
-<h2 class="anchored" data-anchor-id="referencias">Referencias</h2>
-<blockquote class="blockquote">
-<p><a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html">An Introduction to R</a></p>
-</blockquote>
+<section id="añadir-un-elemento-a-una-lista" class="level2">
+<h2 class="anchored" data-anchor-id="añadir-un-elemento-a-una-lista">Añadir un elemento a una lista</h2>
+<p>Para añadir un elemento a una lista podemos usar la función <strong>append()</strong>. El parametro <strong>after</strong> indica en que posición se va a añadir el nuevo elmento.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>alumno <span class="ot">&lt;-</span> <span class="fu">append</span>(alumno, <span class="st">'JuanPerez@example.com'</span>, <span class="at">after =</span> <span class="dv">2</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>alumno <span class="ot">&lt;-</span> <span class="fu">setNames</span>(alumno, <span class="fu">c</span>(<span class="st">'nombre'</span>, <span class="st">'edad'</span>, <span class="st">'email'</span>, <span class="st">'notas'</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>alumno</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$nombre
+[1] "Juan Perez"
+
+$edad
+[1] 16
+
+$email
+[1] "JuanPerez@example.com"
+
+$notas
+matematicas      fisica    biologia 
+        8.5         8.0         7.5 </code></pre>
+</div>
+</div>
+</section>
+<section id="eliminar-un-elemento-de-la-lista" class="level2">
+<h2 class="anchored" data-anchor-id="eliminar-un-elemento-de-la-lista">Eliminar un elemento de la lista</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>alumno[<span class="sc">-</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$nombre
+[1] "Juan Perez"
+
+$edad
+[1] 16
+
+$notas
+matematicas      fisica    biologia 
+        8.5         8.0         7.5 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>alumno<span class="sc">$</span>email <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>alumno</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$nombre
+[1] "Juan Perez"
+
+$edad
+[1] 16
+
+$notas
+matematicas      fisica    biologia 
+        8.5         8.0         7.5 </code></pre>
+</div>
+</div>
 
 
 </section>

@@ -206,6 +206,46 @@ log2FoldChange['ENSMUSG00000060613']
 log2FoldChange[c('ENSMUSG00000060613', 'ENSMUSG00000001435')]
 ```
 
+## Valores faltantes 
+En algunos casos es posible que no se conozcan completamente los componentes de un vector. Cuando un elemento o valor está "no disponible" o es un "valor faltante" en el sentido estadístico, se le puede reservar un lugar dentro de un vector asignándole el valor especial **NA**. Los datos faltantes son comunes en los datos de *multi-omicas*, debido a una gran variedad de razones.
+
+```{r}
+#| label: vector-na
+
+vector_na <- c(10:15, NA, 20:25, NA)
+
+vector_na
+```
+::: {.callout-important}
+En general cualquier operación con un valor faltante **NA** dará como resultado un **NA**.
+:::
+```{r}
+#| label: mean-na
+
+mean(vector_na)
+```
+Afortunadamente las funciones en R suelen estar preparadas para manejar valores **NA**. Si leemos la [documentación](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/mean) de la función mean() en R.
+
+![](../assets/mean.png){fig-align="center"}
+
+Observamos que la función **mean** para el parámetro **na.rm** tomo el valor **FALSE** por defecto. Si cambiamos el valor a **TRUE** los valores faltantes son eliminados antes de realizar la media.
+
+```{r}
+#| label: media-sin-na
+
+mean(vector_na, na.rm = TRUE)
+
+```
+
+La función **is.na()** nos permite identificar los valores faltantes. Devuelve una máscara lógica que nos permite filtar el vector. 
+
+```{r}
+vector_na
+is.na(vector_na)
+
+vector_sin_na <- vector_na[!is.na(vector_na)]
+vector_sin_na
+```
 ## Referencias
 
 > [An Introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)

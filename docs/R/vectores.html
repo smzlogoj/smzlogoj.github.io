@@ -134,6 +134,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../R/vectores.html">
  <span class="dropdown-text">Vectores</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../R/listas.html">
+ <span class="dropdown-text">Listas</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -222,6 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#ordenar-un-vector" id="toc-ordenar-un-vector" class="nav-link" data-scroll-target="#ordenar-un-vector">Ordenar un vector</a></li>
   <li><a href="#máscara-lógica" id="toc-máscara-lógica" class="nav-link" data-scroll-target="#máscara-lógica">Máscara lógica</a></li>
   <li><a href="#vectores-con-nombres" id="toc-vectores-con-nombres" class="nav-link" data-scroll-target="#vectores-con-nombres">Vectores con nombres</a></li>
+  <li><a href="#valores-faltantes" id="toc-valores-faltantes" class="nav-link" data-scroll-target="#valores-faltantes">Valores faltantes</a></li>
   <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
   </ul>
 </nav>
@@ -581,6 +586,67 @@ ENSMUSG00000020926 ENSMUSG00000001435
 <div class="cell-output cell-output-stdout">
 <pre><code>ENSMUSG00000060613 ENSMUSG00000001435 
            -1.0972            -0.9792 </code></pre>
+</div>
+</div>
+</section>
+<section id="valores-faltantes" class="level2">
+<h2 class="anchored" data-anchor-id="valores-faltantes">Valores faltantes</h2>
+<p>En algunos casos es posible que no se conozcan completamente los componentes de un vector. Cuando un elemento o valor está “no disponible” o es un “valor faltante” en el sentido estadístico, se le puede reservar un lugar dentro de un vector asignándole el valor especial <strong>NA</strong>. Los datos faltantes son comunes en los datos de <em>multi-omicas</em>, debido a una gran variedad de razones.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>vector_na <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">15</span>, <span class="cn">NA</span>, <span class="dv">20</span><span class="sc">:</span><span class="dv">25</span>, <span class="cn">NA</span>)</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>vector_na</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 10 11 12 13 14 15 NA 20 21 22 23 24 25 NA</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En general cualquier operación con un valor faltante <strong>NA</strong> dará como resultado un <strong>NA</strong>.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(vector_na)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+<p>Afortunadamente las funciones en R suelen estar preparadas para manejar valores <strong>NA</strong>. Si leemos la <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/mean">documentación</a> de la función mean() en R.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/mean.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>Observamos que la función <strong>mean</strong> para el parámetro <strong>na.rm</strong> tomo el valor <strong>FALSE</strong> por defecto. Si cambiamos el valor a <strong>TRUE</strong> los valores faltantes son eliminados antes de realizar la media.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(vector_na, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17.5</code></pre>
+</div>
+</div>
+<p>La función <strong>is.na()</strong> nos permite identificar los valores faltantes. Devuelve una máscara lógica que nos permite filtar el vector.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>vector_na</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 10 11 12 13 14 15 NA 20 21 22 23 24 25 NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(vector_na)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[13] FALSE  TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>vector_sin_na <span class="ot">&lt;-</span> vector_na[<span class="sc">!</span><span class="fu">is.na</span>(vector_na)]</span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>vector_sin_na</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 10 11 12 13 14 15 20 21 22 23 24 25</code></pre>
 </div>
 </div>
 </section>

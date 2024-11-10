@@ -1,0 +1,65 @@
+---
+title: "Listas"
+format: 
+    html:
+     number-sections: false
+---
+
+Las listas en **R** es un objeto consistente en una colección ordenada de objetos. No es necesario que los elementos sean del mismo tipo. Una lista puede contener, números, vectores, texto, data frames, etc..
+
+## Crear una lista.
+Para crear una lista usaremos la funciín **list()**.
+```{r}
+#| label: crear-lista
+
+alumno <- list(nombre = 'Juan Perez', 
+                edad = 16, 
+                notas = c(matematicas = 8.5, fisica = 8.0, biologia = 7.5)
+               ) 
+
+alumno
+
+str(alumno)
+```
+
+Observamos que la variable *alumno* es un objeto de tipo **List** con 3 elementos (nombre, edad, notas)
+
+## Seleccionar elementos de una lista
+Podemos seleccionar los elementos de una lista usando su posición con doble corchete ([[...]]), o usando el nombre de esa posición ($...).
+```{r}
+alumno[[2]]
+alumno$edad
+
+alumno[[3]]
+alumno$notas
+
+str(alumno[3])
+```
+
+::: {.callout-note}
+Algo que puede llevar a confusión con las listas, es que si selecionamos un elemento con un corchete simple ([...]), no devuelve el elemento. Devuelve una lista que contiene el elemento.
+:::
+
+```{r}
+alumno[2]
+str(alumno[2])
+```
+
+## Añadir un elemento a una lista
+
+Para añadir un elemento a una lista podemos usar la función **append()**. El parametro **after** indica en que posición se va a añadir el nuevo elmento.
+
+```{r}
+alumno <- append(alumno, 'JuanPerez@example.com', after = 2)
+alumno <- setNames(alumno, c('nombre', 'edad', 'email', 'notas'))
+
+alumno
+```
+## Eliminar un elemento de la lista
+
+```{r}
+alumno[-3]
+
+alumno$email <- NULL
+alumno
+```

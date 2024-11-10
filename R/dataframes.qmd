@@ -1,0 +1,18 @@
+---
+title: "Data Frames"
+format: 
+    html:
+     number-sections: false
+---
+Un data frame es una estructura bidimentional puede almacenar datos mixtos. Un data frame es un caso particular de lista. Es una lista de vectores de la misma longitud.
+
+## Crear un data frame
+Podemos crear un data frame usando la función **data.frame()**.
+```{r}
+df <- data.frame(
+        muestra = c('Samp01', 'Samp02', 'Samp03', 'Samp04', 'Samp05'),
+        ph = c(5.3, 5.8, 5.0, 5.5, 5.3),
+        temp = c(18.6, 19.0, 19.2, 18.9, 19.2)
+    )
+df
+```
