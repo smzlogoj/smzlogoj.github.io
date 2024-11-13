@@ -2,6 +2,8 @@
 title: "ggplot2"
 subtitle: "Elegant Graphics for Data Analysis"
 author: "José Antonio López Gómez"
+execute:
+    cache: true
 format: 
     revealjs:
         theme: simple
@@ -224,26 +226,15 @@ ggplot(df, aes(x = clarity, y = price)) +
     geom_bar(color = 'navy', stat = 'identity') +
     theme_bw()
 ```
-## Bar Chart {.smaller}
+## Jitter {.smaller}
 
 ```{r}
 #| echo: true
 #| output-location: fragment
 
-ggplot(df, aes(x = clarity, y = price)) +
-    geom_col(color = 'navy') +
+ggplot(df, aes(x = cut, y = clarity)) +
+    geom_jitter(aes(color = color)) +
     theme_bw()
-```
-## Bar Chart {.smaller}
-
-```{r}
-#| echo: true
-#| output-location: fragment
-
-ggplot(df, aes(x = clarity, y = price)) +
-    geom_bar(aes(color = cut, fill = cut), position = position_dodge(),  stat = 'identity') +
-    theme_bw() +
-    theme(legend.position = 'top')
 ```
 ## Pie Chart {.smaller}
 

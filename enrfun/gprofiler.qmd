@@ -4,6 +4,7 @@ execute:
     warning: false
     message: false
     echo: true
+    cache: true
 format: html
 ---
 
@@ -53,7 +54,7 @@ head(gost.res$result, 3)
 gostplot(gost.res, capped = TRUE, interactive = TRUE)
 ```
 
-```{r}
+```{.r}
 #| label: link
 gost.link <- gost(query = genes.dge,
                 organism = 'hsapiens',

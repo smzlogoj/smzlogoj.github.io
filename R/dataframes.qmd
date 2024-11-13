@@ -16,3 +16,62 @@ df <- data.frame(
     )
 df
 ```
+
+### Importar datos
+En general no vamos a crear el data frame desde cero, sino que lo crearemos al importar datos desde un fichero (txt, excel, csv, tsv, etc..).
+Por ejemplo vamos a importar el dataset [palmerpenguins](https://cran.r-project.org/web/packages/palmerpenguins/readme/README.html) desde un archivo *csv*, usando la función **read.csv()**, algunas funciones similares son **read.table()**, **read.delim()**. El paquete [readxl](https://readxl.tidyverse.org/) permite extraer datos directamente de archivos *xlsx*.
+```{r}
+df <- read.csv('../data/penguins.csv')
+
+head(df)
+```
+
+## Estructura de un data frame
+```{r}
+str(df)
+```
+
+## Acceder a los elementos de un data frame
+Seleccionar elementos de un data frame funciona de manera similar a seleccionar los elementos de un vector, pero hay que tener en cuenta que el data frame tiene dos dimensiones. En este caso se debe de indicar la fila y la columna (**[fila, columna]**). Si se deja en blanco alguna posición, indica que se seleccionan todos los valores, es decir *df* es equivalente a *df[ , ]*.
+
+### Seleccionar columnas.
+Al seleccionar una columna se tiene como resultado un vector con todos los valores. Hay 3 maneras de seleccionar una columna. Usando la posición, el nombre o usando el método con $.
+
+```{r}
+head(df$bill_length_mm)
+
+head(df[, 3])
+
+head(df[, c('bill_length_mm')])
+```
+### Seleccionar filas
+En general usaremos un vector indice para selecionar las filas. En este caso el resultado es un data frame con las filas seleccionadas.
+```{r}
+head(df[100:150,])
+```
+### Seleccionar filas y columnas
+```{r}
+head(df[100:150, c('island', 'bill_length_mm', 'bill_depth_mm')])
+```
+### Usar máscaras lógicas. 
+Al igual que con los vectores se pueden usar máscaras lógicas para filtar los datos.
+Seleccionar los pinguinos 'Adelie' de la isla 'Torgersen'
+
+```{r}
+head(df[df$species == 'Adelie' & df$island == 'Torgersen', ])
+```
+
+## Modificar datos de un data frame
+### Añadir columnas
+
+```{r}
+df$bill_ratio <- df$bill_length_mm / df$bill_depth_mm
+
+head(df[, c('species', 'bill_length_mm', 'bill_depth_mm', 'bill_ratio')])
+```
+### Eliminar columnas
+```{r}
+df$bill_ratio <- NULL
+
+head(df)
+```
