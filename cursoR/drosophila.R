@@ -63,6 +63,7 @@ summary(df.fc)
 df.fc <- df.fc[complete.cases(df.fc), ]
 
 summary(df.fc)
+
 ### Volcano Plot
 padj.cutoff <- 0.0000001
 lfc.cutoff <- log2(2.5)
