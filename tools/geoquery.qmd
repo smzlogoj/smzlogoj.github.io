@@ -1,0 +1,69 @@
+---
+title: "Gene Expression Omnibus (GEO)"
+execute:
+    warning: false
+    message: false
+    echo: true
+    cache: true
+format: html
+---
+
+El servidor [**NCBI Gene Expression Omnibus (GEO)**](https://www.ncbi.nlm.nih.gov/geo/) es un repositorio público para un amplio rango de datos HTD. En el nivel básico de organización de GEO, existen cuatro tipos básicos de entidades (Muestra, Plataforma, Serie y Conjunto de datos). 
+
+## Plataforma
+Un registro de plataforma describe la lista de elementos en el array (p. ej. cDNAs, oligonucleotidos..). A cada registro se le asigna un único número de acceso (GEO accession) de la forma GPLxxx. 
+Por ejemplo el número [**GPL24676**](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL24676) corresponde a Illumina NovaSeq 6000 (Homo sapiens)
+
+## Muestras
+Un registro de muestra describe las condiciones bajo las cuales la muestra fue manipulada y la medida de la abundancia de cada elemento derivado de ella. A cada registro de muestra se le asigna un número de acceso único de la forma (GSMxxx)
+
+## Series
+Un registro de serie define un conjunto de muestras relacionadas. Una serie proporciona una descripción del experimento en su conjunto. Tambien pueden contener tablas que describen datos extraidos, conclusiones, etc..
+A cada registro se le asigna un número de la forma (GSExxx).
+
+## Conjuntos de datos.
+GEO DataSets (GDSxxx) son un conjunto de muestras GEO seleccionadas. Un registro GDS representan una colección biológicamente y estadísticamente comparables.
+
+## GEOquery
+GEOquery es un paquete de bioconductor que sirve para realizar consultas a NCBI Gene Expression Omnibus.
+
+```{.r}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("GEOquery")
+```
+
+### Caso práctico
+Consultaremos los datos correspondientes a la serie [**GSE282742**](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE282742).
+
+```{r}
+library(GEOquery)
+
+accession <- 'GSE282742'
+
+gse <- getGEO(accession, GSEMatrix = TRUE)
+gse[[1]]
+```
+
+```{r}
+gse[[1]]@experimentData@name
+gse[[1]]@experimentData@title
+gse[[1]]@experimentData@abstract
+```
+
+```{r}
+metadata <- pData(phenoData(gse[[1]]))[, 
+        c('description', 'age:ch1', 'disease state:ch1', 'Sex:ch1', 'tissue:ch1')]
+
+head(metadata)
+```
+
+#### Obtener archivos suplementarios
+```{r}
+suppl.file <- getGEOSuppFiles(accession, 
+                              baseDir = 'data', 
+                              fetch_files = TRUE)
+
+suppl.file
+```
