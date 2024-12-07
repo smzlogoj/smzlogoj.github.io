@@ -625,18 +625,17 @@ Note
 </div>
 </div>
 <p>Por ultimo, vamos a unir los resultados de la consulta al dataset original. Es evidente que no podemos añadirlos como columnas nuevas, ya que no tienen la misma longitud. Además nos tenemos que asegurar que añadimos los datos de manera que los ensembles coincidan.</p>
-<p>En este caso vamos a usar la funcion <strong>merge()</strong> (paquete <em>reshape2</em>) para unir los dataset. Lo vamos a realizar haciendo un <em>left join</em>, es decir vamos a conservar todas las observaciones del primer dataset (<em>df.mcf</em>) añadiendo las observaciones del segundo (<em>genesBM</em>) donde encuentre coincidencias. Si una observación del primer dataset no tiene coincidencia en el segundo las variables se añadiran con valores <em>NA</em></p>
+<p>En este caso vamos a usar la funcion <strong>merge()</strong> para unir los dataset. Lo vamos a realizar haciendo un <em>left join</em>, es decir vamos a conservar todas las observaciones del primer dataset (<em>df.mcf</em>) añadiendo las observaciones del segundo (<em>genesBM</em>) donde encuentre coincidencias. Si una observación del primer dataset no tiene coincidencia en el segundo las variables se añadiran con valores <em>NA</em></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">names</span>(df.mcf)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df.mcf<span class="sc">$</span>ensembl_gene_id <span class="ot">&lt;-</span> <span class="fu">rownames</span>(df.mcf)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">merge</span>(df.mcf, genesBM, </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span>  <span class="st">'ensembl_gene_id'</span>, </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[, <span class="fu">c</span>(<span class="st">'ensembl_gene_id'</span>, <span class="st">'entrezgene_id'</span>, <span class="st">'external_gene_name'</span>, samples)]</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">names</span>(df.mcf)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df.mcf<span class="sc">$</span>ensembl_gene_id <span class="ot">&lt;-</span> <span class="fu">rownames</span>(df.mcf)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">merge</span>(df.mcf, genesBM, </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span>  <span class="st">'ensembl_gene_id'</span>, </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[, <span class="fu">c</span>(<span class="st">'ensembl_gene_id'</span>, <span class="st">'entrezgene_id'</span>, <span class="st">'external_gene_name'</span>, samples)]</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">

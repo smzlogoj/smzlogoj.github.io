@@ -82,12 +82,11 @@ dim(genesBM)
 
 Por ultimo, vamos a unir los resultados de la consulta al dataset original. Es evidente que no podemos añadirlos como columnas nuevas, ya que no tienen la misma longitud. Además nos tenemos que asegurar que añadimos los datos de manera que los ensembles coincidan.
 
-En este caso vamos a usar la funcion **merge()** (paquete *reshape2*) para unir los dataset. Lo vamos a realizar haciendo un *left join*, es decir vamos a conservar todas las observaciones del primer dataset (*df.mcf*) añadiendo las observaciones del segundo (*genesBM*) donde encuentre coincidencias. Si una observación del primer dataset no tiene coincidencia en el segundo las variables se añadiran con valores *NA*
+En este caso vamos a usar la funcion **merge()** para unir los dataset. Lo vamos a realizar haciendo un *left join*, es decir vamos a conservar todas las observaciones del primer dataset (*df.mcf*) añadiendo las observaciones del segundo (*genesBM*) donde encuentre coincidencias. Si una observación del primer dataset no tiene coincidencia en el segundo las variables se añadiran con valores *NA*
 
 ```{r}
 #| label: left-join
 
-library(reshape2)
 samples <- names(df.mcf)
 df.mcf$ensembl_gene_id <- rownames(df.mcf)
 
